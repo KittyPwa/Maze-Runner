@@ -41,4 +41,11 @@ function Equipements(entity) {
         }
         return totalDamage
     }
+
+    this.toJSON  = function(){
+		let obj= {
+            equipements: mapToObjectRec(this.equipements),
+		}
+		return obj
+	}
 }

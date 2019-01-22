@@ -25,7 +25,7 @@ var globalTimer = null;
 var timer = null;
 
 function loadGames() {
-    game = load("game");
+    game = loadGame();
 }
 
 
@@ -43,6 +43,7 @@ function startVars(id) {
     }
     shop = gameState.shop
     loadImgs();
+    saveGame()
 }
 
 function updateGlobalValues() {

@@ -1,10 +1,206 @@
 //Utils
 function store(entity) {
-	localStorage.setItem(entity.id, JSON.stringify(item));	
+	console.log(entity)
+	console.log(JSON.stringify(entity))
+	localStorage.setItem(entity.id, JSON.stringify(entity));	
 }
 
 function load(id) {
+	console.log(JSON.parse(localStorage.getItem(id)))
 	return Object.assign(new Games(), JSON.parse(localStorage.getItem(id)));
+}
+
+
+function mapToJson(map) {
+    return JSON.stringify([...map]);
+}
+function jsonToMap(jsonStr) {
+    return new Map(JSON.parse(jsonStr));
+}
+
+function isString(myVar) {
+	return (typeof myVar === 'string' || myVar instanceof String)
+}
+
+function isPrimitive(test) {
+    return (test !== Object(test));
+};
+
+var typeMap = new Map()
+typeMap.set('mapper', mapper)
+typeMap.set('tester', tester)
+
+function mapper() {
+	this.objName = 'mapper'
+
+	this.and = new Map();
+
+	this.toJSON = function() {
+		let obj = {
+			objName: this.objName,
+			and: mapToObjectRec(this.and)
+		}
+		return obj
+	}
+}
+
+function tester() {
+	this.objName = 'tester'
+
+	this.bla = new Map()
+
+	this.and = new mapper();
+
+	this.andName = 'mapper'
+	
+	this.bla.set("d", this.and)
+
+	this.other = []
+
+	this.null = null;
+
+	this.int = 1;
+
+	this.string = 'string'
+	
+
+	this.toJSON  = function(){
+		let obj= {
+			objName: this.objName,
+			bla: mapToObjectRec(this.bla),
+			and: this.and,
+			other:this.other,
+			null: this.null,
+			int: this.int,
+			string: this.string,
+			andName: this.andName
+		}
+		return obj
+	}
+}
+
+/*function parseStoredJson(parsed) {
+	var typeString = null;
+	for (var key in parsed) {
+		if (parsed.hasOwnProperty(key)) {
+			/*if (isString(parsed[key]) && parsed[key].startsWith('Map')) {
+				element = parsed[key].substring(3,parsed[key].length)
+				console.log(element)
+				resultingElement = jsonToMap(element)
+				parsed[key] = resultingElement
+			} else {
+			if (!isPrimitive(parsed[key])) {
+				if (!Array.isArray(parsed[key])) {
+					if (parsed[key + 'Name'] !== undefined) {
+						typeString = parsed[key + 'Name']
+					}
+					console.log(parsed[key])
+					resultingElement = parseStoredJson(parsed[key])
+					console.log(resultingElement)
+					parsed[key] = Object.assign(new (typeMap.get(typeString)), resultingElement)
+				}
+			}
+			
+		}
+	}
+	return parsed
+}
+
+var test = new tester()
+test.bla.set("a","a")
+test.bla.set("b","b")
+test.bla.set("c","c")
+test.bla.get('d').and.set("thing", "there")
+test.bla.get('d').and.set("here", "everywhere")
+test.other.push("d")
+test.other.push("e")
+test.other.push(new mapper())
+var thing = JSON.stringify(test);
+//console.log(thing)
+var parsed  = JSON.parse(thing)
+console.log(test)
+parsed = Object.assign(new tester(),parseStoredJson(parsed)) 
+console.log()
+for (var key in parsed) {
+	console.log(parsed[key])
+}*/
+
+function mapToObjectRec(m) {
+    let lo = {}
+    for(let[k,v] of m) {
+		console.log(v)
+        if(v instanceof Map) {
+            lo[k] = mapToObjectRec(v)
+        }
+        else {
+			lo[k] = v
+        }
+	}
+    return lo
+}
+
+function objectToMap(o) {
+    let m = new Map()
+    for(let k of Object.keys(o)) {
+        if(o[k] instanceof Object) {
+            m.set(k, objectToMap(o[k]))   
+        }
+        else {
+            m.set(k, o[k])
+        }    
+    }
+    return m
+}
+
+var o = {}
+var m = new Map([ 
+ [ "a", "one"], 
+ [ "b", "two"], 
+ [ "c", "three"],
+ [ "d", new tester()],
+ [ "e", new Map([["f", "five"]])]
+]) 	
+
+//m.d.bla.set("a", "b")
+console.log(m)
+
+var o2 = mapToObjectRec(m)
+console.log(o2)
+var stringy = JSON.stringify(o2)
+console.log(JSON.stringify(o2))
+var parsed = JSON.parse(stringy)
+//console.log(parsed)
+var mappy = objectToMap(parsed)
+//console.log(mappy)
+/*var parsed = JSON.parse(thing)
+console.log(parsed)
+console.log(jsonToMap(parsed.bla))
+console.log(JSON.parse(thing))
+//console.log(jsonToMap(JSON.parse(thing)))
+//console.log(jsonToMap(mapToJson(test.bla)))
+/*var stringy = JSON.stringify(test)
+var newy = Object.assign(new tester(), JSON.parse(stringy))
+console.log(stringy)
+console.log(newy)*/
+
+/*
+
+var o2 = mapToObjectRec(test.map)
+console.log(o2)
+console.log(JSON.stringify(mapToObject(o2, test.map)))*/
+
+
+function objectToMap(o) {
+    let m = new Map()
+    for(let k of Object.keys(o)) {
+        if(o[k] instanceof Object) {
+            m.set(k, objectToMap(o[k]))   
+        }
+        else {
+            m.set(k, o[k])
+        }    
+    }
+    return m
 }
 
 function uuidv4() {

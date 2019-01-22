@@ -4,6 +4,7 @@ function toggleHideAndSelectGame() {
     selects = document.getElementsByClassName('chooseGame');
     gameStates = game.getAllGameStates()
     for (var i = 0; i < gameStates.length; i++) {
+        console.log(gameStates[i].id)
         selects[i].setAttribute('gameId',gameStates[i].id)
     }
 }
@@ -20,6 +21,10 @@ function toggleHideAndStartGame(gameId) {
 function toggleHiddenAndShowShop() {
     updateMerchant()
     toggleHidden(['canvasId','Village','showShopGameScreen'], ['shopTable','playerConsoleId'])
+}
+
+function toggleHiddenAndReturnShop() {
+    toggleHidden(['playerInfo','GameScreen', 'canvasId'],['shopTable'])
 }
 
 function toggleHiddenAndStartMaze() {
@@ -72,10 +77,6 @@ function loadImgs() {
     var base_image = new Image();
     base_image.src = 'Visual/img/darkPortal.png';
     imageBase.putImg(new PassiveEntity(new DarkPortal()).key, base_image);
-}
-
-function toggleHiddenAndReturnShop() {
-    toggleHidden(['playerInfo','GameScreen', 'canvasId'],['shopTable'])
 }
 
 function updateMerchant() {

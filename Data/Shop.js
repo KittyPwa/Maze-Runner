@@ -29,7 +29,16 @@ function Shop() {
     this.getItem = function(keyMap, keyItem) {
 		var map = this.stock.get(keyMap).getConsumableMap();
         return returnElementFromMap(map,keyItem);
-    } 
+	}
+	
+	this.toJSON  = function(){
+		let obj= {
+			stock: mapToObjectRec(this.stock),
+			merchantGold:this.merchantGold,
+			investementLevel:this.investementLevel
+		}
+		return obj
+	}
 }
 
 function sellItem(item, itemKey,quantity, character) {
