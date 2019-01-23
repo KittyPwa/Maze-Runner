@@ -276,3 +276,4 @@ function Room(x,y,n) {
 		this.CanvasRoom.drawRoom(this.x, this.y+1);
 	}
 }
+typeMap.set('Room', Room)

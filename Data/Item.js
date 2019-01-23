@@ -1,5 +1,5 @@
-function Item(item){
-
+function Item(item = new Key()){
+    
     this.key = item.name;
 
     this.type = item.type;
@@ -33,6 +33,7 @@ function Item(item){
         
     }
 }
+typeMap.set('Item', Item)
 
 function Key() {
     this.name = 'Key';
@@ -67,6 +68,7 @@ function Key() {
 
     this.buyPrice = this.sellPrice * 4;
 }
+typeMap.set('Key', Key)
 
 function IdolBust() {
     this.name = 'Strange idol';
@@ -97,6 +99,7 @@ function IdolBust() {
 
     this.buyPrice = this.sellPrice * 10;
 }
+typeMap.set('IdolBust', IdolBust)
 
 function PotionB() {
 	
@@ -160,6 +163,7 @@ function ShinyBaubble() {
     }
 
 }
+typeMap.set('ShinyBaubble', ShinyBaubble)
 
 function Ruby() {
 
@@ -184,6 +188,7 @@ function Ruby() {
     }
     
 }
+typeMap.set('Ruby', Ruby)
 
 function Sapphire() {
 
@@ -208,6 +213,7 @@ function Sapphire() {
     }
     
 }
+typeMap.set('Sapphire', Sapphire)
 
 function DiamondSetVase() {
 	this.name = 'Diamond Set Vase';
@@ -230,6 +236,7 @@ function DiamondSetVase() {
         return new DiamondSetVase();
     }
 }
+typeMap.set('DiamondSetVase', DiamondSetVase)
 
 function AncientVase() {
 	
@@ -253,6 +260,7 @@ function AncientVase() {
         return new AncientVase();
     }
 }
+typeMap.set('AncientVase', AncientVase)
 
 
 function getItemArray() {

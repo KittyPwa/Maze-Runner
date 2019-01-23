@@ -40,12 +40,12 @@
   <body id="bodyId">
 	<div class="container">
 		<div class="row full-width">
-			<!--<div id="MainMenu" class="toggleShow mainMenu">
+			<div id="MainMenu" class="toggleShow mainMenu">
 				<h1>Maze Runner</h1>
 				<input id="StartGame" type="button" value="Continue Game" onclick="toggleHideAndSelectGame()"/>
-				<!--<input id="showOptions" type="button" value="Options" onclick="toggleHidden(['MainMenu'],['optionsId'])"/>
+				<!--<input id="showOptions" type="button" value="Options" onclick="toggleHidden(['MainMenu'],['optionsId'])"/>-->
 				<input id="showInstructions" type="button" value="Instructions" onclick="toggleHidden(['MainMenu'],['instructionsId'])"/>
-			</div>-->
+			</div>
 			<div id="ChooseGame" class="toggleHide">
 				<input id="game1" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
 				<input id="game1" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
@@ -208,6 +208,7 @@
 	
 
 	</body>
+		<script src="Toolbox/Utils.js"></script>
 		<script src="Data/Equipement.js"></script>
 		<script src="Data/Weapon.js"></script>
 		<script src="Data/Attribut.js"></script>
@@ -231,9 +232,12 @@
 		<script src="Data/Character.js"></script>
 		<script src="Maze/MazeMaker.js"></script>
 		<script src="Maze/Room.js"></script>
-		<script src="Toolbox/Utils.js"></script>
 		<script src="Data/gameTimer.js"></script>
 		<script src="Visual/Canvas.js"></script>
 		<script src="DataTransformation/Events.js"></script>
 		<script src="Maze/MazeRunner.js"></script>
+		<script>
+			/*loadGames()
+			store(game)*/
+		</script>
 </html>

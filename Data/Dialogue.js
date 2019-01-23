@@ -3,6 +3,7 @@ function Dialogue(rarity, dialogue) {
 
     this.dialogue = dialogue;
 }
+typeMap.set('Dialogue', Dialogue)
 
 function getRandomDialogue(dialogueArray) {
     rarifiedArray = []

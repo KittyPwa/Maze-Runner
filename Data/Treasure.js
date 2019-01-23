@@ -27,3 +27,4 @@ function Treasure() {
         this.goldAmount = goldAmount;
     }
 }
+typeMap.set('Treasure', Treasure)

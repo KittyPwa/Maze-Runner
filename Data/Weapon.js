@@ -18,6 +18,7 @@ function Weapon(entity) {
         }, weapon.entity.attackSpeed, weapon);
     }
 }
+typeMap.set('Weapon', Weapon)
 
 function Fists() {
     this.name = 'Fists'
@@ -35,6 +36,7 @@ function Fists() {
 
     this.damageElementType = damageElementTypeEnum.BASIC
 }
+typeMap.set('Fists', Fists)
 
 function Claws() {
 	this.name = 'Claws'
@@ -56,3 +58,4 @@ function Claws() {
 
     this.damageElementType = damageElementTypeEnum.BASIC
 }
+typeMap.set('Claws', Claws)

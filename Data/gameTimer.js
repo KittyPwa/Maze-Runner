@@ -12,6 +12,7 @@ function gameTimer(duration, timerInc) {
 	
 	this.timerInc = timerInc;
 }
+typeMap.set('gameTimer', gameTimer)
 
 function launchTimer(timer) {
 	return setInterval(function() {

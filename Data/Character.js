@@ -179,25 +179,8 @@ function Character(i,j, maze, radius, color, maxSpeed, type) {
 		this.CanvasChar = new CanvasCharacter(i,j,this, maze);
 	}
 
-	this.toJSON  = function(){
-		let obj= {
-			attributs: mapToObjectRec(this.attributs),
-			type:this.type,
-			roomsInSight:this.roomsInSight,
-			modifiers:this.modifiers,
-			equipements:this.equipements,
-			states:this.states,
-			speed:this.speed,
-			endurance:this.endurance,
-			health:this.health,
-			color:this.color,
-			CanvasChar:this.CanvasChar,
-			radius:this.radius,
-		}
-		return obj
-	}
-
 }
+typeMap.set('Character', Character)
 
 function Monster(movementType) {
 	this.name = 'monster'
@@ -234,6 +217,7 @@ function Monster(movementType) {
 		this.toBeRemoved = true;
 	}
 }
+typeMap.set('Monster', Monster)
 
 function Player() {
 	this.name = 'You '
@@ -352,22 +336,8 @@ function Player() {
 	}
 	//to delete
 	this.addItem(new Item(new Key()))
-
-	this.toJSON  = function(){
-		let obj= {
-			items: mapToObjectRec(this.items),
-			name:this.name,
-			equipements:this.equipements,
-			healthAmount:this.healthAmount,
-			sightRadius:this.sightRadius,
-			goldAmount:this.goldAmount,
-			playerType:this.playerType,
-			activeItem:this.activeItem,
-			toBeRemoved:this.toBeRemoved,
-		}
-		return obj
-	}
 }
+typeMap.set('Player', Player)
 
 function ShadowHunter(movementType) {
 	this.name = 'Shadow hunter'
@@ -402,4 +372,5 @@ function ShadowHunter(movementType) {
 	this.endEffect = function() {
 		this.toBeRemoved = true;
 	}
+	typeMap.set('ShadowHunter', ShadowHunter)
 }

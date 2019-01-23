@@ -107,19 +107,8 @@ function GameState() {
 	//timerBooleansArray = [cycleActiveItem,useActiveItem,useActivatableEntity,sprint]
 	this.timerBooleansArray= [false,false,false,false];
 
-	this.toJSON  = function(){
-		let obj= {
-			entities: mapToObjectRec(this.entities),
-			id:this.id,
-			maze:this.maze,
-			characters:this.characters,
-			monsters:this.monsters,
-			allies:this.allies,
-			shop:this.shop,
-		}
-		return obj
-	}
 }
+typeMap.set('GameState', GameState)
 
 function Games() {
 	this.gameStates = new Map()
@@ -141,8 +130,6 @@ function Games() {
 
 	this.getAllGameStates = function() {
 		var existingGameStates = [];
-		console.log(this)
-		console.log(this.gameStates.entries)
         var entries = this.gameStates.entries();
         var entry = entries.next()
         while(!entry.done) {
@@ -151,20 +138,17 @@ function Games() {
         }
         return existingGameStates
 	}
-
-	this.toJSON  = function(){
-		let obj= {
-			gameStates: mapToObjectRec(this.gameStates),
-			id:this.id,
-		}
-		return obj
-	}
 }
+typeMap.set('Games', Games)
 
 function saveGame() {
 	store(game)
 }
 
 function loadGame() {
-	return load("game")
+	var game = load("game")
+	if (game == null) {
+		game = new Games()
+	}
+	return game
 }

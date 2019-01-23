@@ -14,6 +14,7 @@ function Attribut(attribut, value, maxValue) {
 
     this.critique = false;
 }
+typeMap.set('Attribut', Attribut)
 
 function Endurance() {
     this.name = 'endurance'
@@ -28,15 +29,18 @@ function Endurance() {
 
     this.exhausted = false;
 }
+typeMap.set('Endurance', Endurance)
 
 function Speed() {
     this.name = 'speed'
 
     this.minValue = 0.5;
 }
+typeMap.set('Speed', Speed)
 
 function Health() {
     this.name = 'health'
 
     this.minValue = 0;
 }
+typeMap.set('Health', Health)

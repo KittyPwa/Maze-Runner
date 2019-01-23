@@ -15,6 +15,7 @@ function playerConsole() {
         this.console.value = this.text
     }
 }
+typeMap.set('playerConsole', playerConsole)
 
 var playCons = new playerConsole();
 

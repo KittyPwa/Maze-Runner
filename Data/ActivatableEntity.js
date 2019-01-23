@@ -40,6 +40,7 @@ function ActivatableEntity(entity) {
 
     this.discovered = false;
 }
+typeMap.set('ActivatableEntity', ActivatableEntity)
 
 function End() {
 	this.name = 'Exit';
@@ -61,6 +62,7 @@ function End() {
         return new End();
     }
 }
+typeMap.set('End', End)
 
 function TreasureChest() {
     this.name = 'Treasure Chest';
@@ -98,6 +100,7 @@ function TreasureChest() {
         return new TreasureChest();
     }
 }
+typeMap.set('TreasureChest', TreasureChest)
 
 function Door() {
 	
@@ -134,6 +137,8 @@ function Door() {
         return new Door();
     }
 }
+typeMap.set('Door', Door)
+
 
 function AltarOfTheThunderLord() {
 
@@ -185,6 +190,7 @@ function AltarOfTheThunderLord() {
         return new AltarOfTheThunderLord();
     }
 }
+typeMap.set('AltarOfTheThunderLord', AltarOfTheThunderLord)
 
 function AltarOfTheOldKnight() {
 
@@ -225,6 +231,7 @@ function AltarOfTheOldKnight() {
         return new AltarOfTheOldKnight();
     }
 }
+typeMap.set('AltarOfTheOldKnight', AltarOfTheOldKnight)
 
 function AltarOfTheFrostQueen() {
 
@@ -265,6 +272,7 @@ function AltarOfTheFrostQueen() {
         return new AltarOfTheFrostQueen();
     }
 }
+typeMap.set('AltarOfTheFrostQueen', AltarOfTheFrostQueen)
 
 function ShadowHunterCamp() {
 
@@ -313,6 +321,7 @@ function ShadowHunterCamp() {
         return new ShadowHunterCamp();
     }
 }
+typeMap.set('ShadowHunterCamp', ShadowHunterCamp)
 
 function getActivatableEntityArray () {
     var array = [];

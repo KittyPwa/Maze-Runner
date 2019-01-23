@@ -22,7 +22,9 @@ function Shop() {
     }
 
     this.getMapFromKey = function(keyMap) {
-        return this.stock.get(keyMap).getConsumableMap();
+		console.log(this.stock)
+		console.log(keyMap)
+        return this.stock.get(keyMap.toString()).getConsumableMap();
         
     }
 
@@ -31,15 +33,8 @@ function Shop() {
         return returnElementFromMap(map,keyItem);
 	}
 	
-	this.toJSON  = function(){
-		let obj= {
-			stock: mapToObjectRec(this.stock),
-			merchantGold:this.merchantGold,
-			investementLevel:this.investementLevel
-		}
-		return obj
-	}
 }
+typeMap.set('Shop', Shop)
 
 function sellItem(item, itemKey,quantity, character) {
 	var keyMap = parseInt(itemKey.trim());

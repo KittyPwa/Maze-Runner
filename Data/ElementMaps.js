@@ -8,14 +8,8 @@ function ElementMaps() {
     this.getConsumableMap = function() {
         return this.ConsumableMap;
     }
-
-    this.toJSON  = function(){
-		let obj= {
-            ConsumableMap: mapToObjectRec(this.ConsumableMap),
-		}
-		return obj
-	}
 }
+typeMap.set('ElementMaps', ElementMaps)
 
 function returnElementFromMap (map, key) {
     return map.get(key);

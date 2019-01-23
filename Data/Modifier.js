@@ -9,6 +9,7 @@ function Modifier(key, type, value, duration, elementKey) {
 
     this.value = value;
 }
+typeMap.set('Modifier', Modifier)
 
 function updateWithModifier(modifiers, toUpdate, baseStat, attribut) {
     toUpdate = baseStat;

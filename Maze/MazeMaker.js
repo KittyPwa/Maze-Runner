@@ -488,3 +488,4 @@ function MazeMaker (n) {
     this.SRooms = SpecialRooms;
   }
 }
+typeMap.set('MazeMaker', MazeMaker)

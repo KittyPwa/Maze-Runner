@@ -22,6 +22,7 @@ function Trap(trap) {
         }
     }
 }
+typeMap.set('Trap', Trap)
 
 function FrostTrap() {
     
@@ -48,6 +49,7 @@ function FrostTrap() {
         return new FrostTrap();
     }
 }
+typeMap.set('FrostTrap', FrostTrap)
 
 function getTrapArray () {
     var array = [];

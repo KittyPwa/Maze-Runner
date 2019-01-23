@@ -285,3 +285,4 @@ function Maze(n) {
 		this.Rooms[i][j].addEnd();
   }
 }
+typeMap.set('Maze', Maze)

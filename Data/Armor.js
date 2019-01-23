@@ -13,3 +13,4 @@ function Armor(id, name, defense){
 		this.effects.append(effect);
 	}
 }
+typeMap.set('Armor', Armor)

@@ -1,15 +1,21 @@
 //Utils
 function store(entity) {
-	console.log(entity)
-	console.log(JSON.stringify(entity))
-	localStorage.setItem(entity.id, JSON.stringify(entity));	
+	var objectified = objectAssignerRec(entity)
+	var stringy = JSON.stringify(objectified)
+	localStorage.setItem(entity.id, stringy);	
 }
 
 function load(id) {
-	console.log(JSON.parse(localStorage.getItem(id)))
-	return Object.assign(new Games(), JSON.parse(localStorage.getItem(id)));
+	entity = localStorage.getItem(id)
+	if (entity != null) {
+		var parsed = JSON.parse(entity)
+		var mappy = namelessobjectToObject(parsed, typeMap.get('Games'))
+		console.log(mappy)
+		//delete mappy['gameStates,Map']
+		return mappy
+	}
+	return null
 }
-
 
 function mapToJson(map) {
     return JSON.stringify([...map]);
@@ -26,57 +32,8 @@ function isPrimitive(test) {
     return (test !== Object(test));
 };
 
-var typeMap = new Map()
-typeMap.set('mapper', mapper)
-typeMap.set('tester', tester)
-
-function mapper() {
-	this.objName = 'mapper'
-
-	this.and = new Map();
-
-	this.toJSON = function() {
-		let obj = {
-			objName: this.objName,
-			and: mapToObjectRec(this.and)
-		}
-		return obj
-	}
-}
-
-function tester() {
-	this.objName = 'tester'
-
-	this.bla = new Map()
-
-	this.and = new mapper();
-
-	this.andName = 'mapper'
-	
-	this.bla.set("d", this.and)
-
-	this.other = []
-
-	this.null = null;
-
-	this.int = 1;
-
-	this.string = 'string'
-	
-
-	this.toJSON  = function(){
-		let obj= {
-			objName: this.objName,
-			bla: mapToObjectRec(this.bla),
-			and: this.and,
-			other:this.other,
-			null: this.null,
-			int: this.int,
-			string: this.string,
-			andName: this.andName
-		}
-		return obj
-	}
+function isFunction(functionToCheck) {
+	return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
 /*function parseStoredJson(parsed) {
@@ -125,28 +82,182 @@ for (var key in parsed) {
 	console.log(parsed[key])
 }*/
 
+function mapper() {
+	this.thingy = new Map();
+
+	/*this.toJSON = function() {
+		let obj = {
+			thingy: mapToObjectRec(this.thingy)
+		}
+		return obj
+	}*/
+}
+
+function tester() {
+	this.bla = new Map()
+
+	this.and = new mapper();
+	
+	//this.bla.set("d", this.and)
+
+	this.other = []
+
+	this.null = null;
+
+	this.int = 1;
+
+	this.string = 'string'
+	
+
+	/*this.toJSON  = function(){
+		let obj= {
+			bla: mapToObjectRec(this.bla),
+			and: this.and,
+			other:this.other,
+			null: this.null,
+			int: this.int,
+			string: this.string,
+		}
+		return obj
+	}*/
+}
+
 function mapToObjectRec(m) {
-    let lo = {}
-    for(let[k,v] of m) {
-		console.log(v)
+    var lo = {}
+    for(var [k,v] of m) {
         if(v instanceof Map) {
+			
+			k = [k,'Map']					
             lo[k] = mapToObjectRec(v)
-        }
+        } else if (!isPrimitive(v) && !isFunction(v)) {
+			if (!Array.isArray(v)) {
+				
+				k = [k,v.constructor.name]
+				lo[k] = objectAssignerRec(v)
+			} else {
+				
+				lo[k] = arrayToObjectRec(v)
+			}
+		}
         else {
+			
+			if (!isPrimitive(v) && !Array.isArray(v)) {
+				k = [k,v.constructor.name]
+			}
+			
 			lo[k] = v
         }
 	}
     return lo
 }
 
-function objectToMap(o) {
-    let m = new Map()
-    for(let k of Object.keys(o)) {
-        if(o[k] instanceof Object) {
-            m.set(k, objectToMap(o[k]))   
-        }
+function objectAssignerRec(m) {
+	
+	var lo = {}
+	for (var k in m) {
+		if (m.hasOwnProperty(k)) {
+			v = m[k]
+			if(v instanceof Map) {
+				
+				k = [k,'Map']
+				lo[k] = mapToObjectRec(v)
+			} else if (!isPrimitive(v) && !isFunction(v)) {
+				if (!Array.isArray(v)) {
+					
+					k = [k,v.constructor.name]
+					lo[k] = objectAssignerRec(v)
+				} else {
+					
+					lo[k] = arrayToObjectRec(v)
+				}
+			}
+			else {
+				
+				if (!isPrimitive(v) && !Array.isArray(v) && !isFunction(v)) {
+					k = [k,v.constructor.name]
+				}
+				
+				lo[k] = v
+			}
+		}
+	}
+	return lo
+}
+
+function arrayToObjectRec(m) {
+	var lo = []
+	for (var i = 0; i < m.length; i++) {
+		v = m[i]
+		if(v instanceof Map) {
+			
+			k = [k,'Map']
+			lo[i] = mapToObjectRec(v)
+		} else if (!isPrimitive(v) && !isFunction(v)) {
+			if (!Array.isArray(v)) {
+				
+				k = [k,v.constructor.name]
+				lo[i] = objectAssignerRec(v)
+			} else {
+				
+				lo[i] = arrayToObjectRec(v)
+			}
+		} else {
+			if (!isPrimitive(v) && !Array.isArray(v)) {
+				lo[i] = [v.constructor.name,v]
+			} else {
+				lo[i] = v
+			}
+		}
+	}
+	return lo
+}
+
+function namelessobjectToObject(o, type) {
+	var m = Object.assign(new (type), o);
+	/*console.log(m)
+	console.log(type)
+	console.log(Object.keys(o))*/
+    for(var k of Object.keys(o)) {
+		split = k.split(',')
+		var oldk = k.concat('')
+		k = split[0]
+		if (split.length > 1) {
+			var propertyName = oldk.toString()
+			if (split[1].startsWith('Map')) {
+				m[k] = objectToMap(o[oldk])
+				delete m[propertyName]
+			} else {
+				m[k] = namelessobjectToObject(o[oldk], typeMap.get(split[1]))
+				delete m[propertyName]
+				/*console.log(m)
+				console.log(k)
+				console.log(m[k])
+				console.log(oldk)
+				console.log(m[oldk])*/
+			}
+		}
         else {
-            m.set(k, o[k])
+            m[k] = o[oldk]
+        }    
+	}
+    return m
+}
+
+function objectToMap(o) {
+	var m = new Map()
+    for(var k of Object.keys(o)) {
+		split = k.split(',')
+		oldk = k
+		k = split[0]
+        if (split.length > 1 ) {
+			if(!split[1].startsWith('Map')) {
+				m.set(k, namelessobjectToObject(o[oldk], typeMap.get(split[1])))   
+			} else {
+				m.set(k, objectToMap(o[oldk]))
+			}
+		}
+        else {
+            m.set(k, o[oldk])
         }    
     }
     return m
@@ -158,50 +269,34 @@ var m = new Map([
  [ "b", "two"], 
  [ "c", "three"],
  [ "d", new tester()],
- [ "e", new Map([["f", "five"]])]
+ [ "e", new Map()],
+ [ "g", ["elem1", "elem2"]]
 ]) 	
-
+var typeMap = new Map()
+typeMap.set('mapper', mapper)
+typeMap.set('tester', tester)
 //m.d.bla.set("a", "b")
-console.log(m)
+/*var tester = new tester();
+console.log(tester)
+objy = objectAssignerRec(tester)
+console.log(objy)
+stringy = JSON.stringify(objy)
+console.log(stringy)
+var parsed = JSON.parse(stringy)
+console.log(parsed)
+var mappy = namelessobjectToObject(parsed, typeMap.get('tester'))
+console.log(mappy)
+
+/*console.log(m)
 
 var o2 = mapToObjectRec(m)
 console.log(o2)
 var stringy = JSON.stringify(o2)
 console.log(JSON.stringify(o2))
 var parsed = JSON.parse(stringy)
-//console.log(parsed)
-var mappy = objectToMap(parsed)
-//console.log(mappy)
-/*var parsed = JSON.parse(thing)
 console.log(parsed)
-console.log(jsonToMap(parsed.bla))
-console.log(JSON.parse(thing))
-//console.log(jsonToMap(JSON.parse(thing)))
-//console.log(jsonToMap(mapToJson(test.bla)))
-/*var stringy = JSON.stringify(test)
-var newy = Object.assign(new tester(), JSON.parse(stringy))
-console.log(stringy)
-console.log(newy)*/
-
-/*
-
-var o2 = mapToObjectRec(test.map)
-console.log(o2)
-console.log(JSON.stringify(mapToObject(o2, test.map)))*/
-
-
-function objectToMap(o) {
-    let m = new Map()
-    for(let k of Object.keys(o)) {
-        if(o[k] instanceof Object) {
-            m.set(k, objectToMap(o[k]))   
-        }
-        else {
-            m.set(k, o[k])
-        }    
-    }
-    return m
-}
+var mappy = objectToMap(parsed)
+console.log(mappy)*/
 
 function uuidv4() {
 	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -478,6 +573,8 @@ function toggleOldLightRooms(oldLightRooms, newLightRooms, character) {
 		toUpdate[i].setRoomInSight(character, false)
 	}
 }
+
+//var typeMap = new Map()
 
 //ENUMS
 

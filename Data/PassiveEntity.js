@@ -27,6 +27,7 @@ function PassiveEntity(entity) {
 
     this.discovered = false;
 }
+typeMap.set('PassiveEntity', PassiveEntity)
 
 function DarkPortal() {
 
@@ -73,6 +74,7 @@ function DarkPortal() {
         return new DarkPortal();
     }
 }
+typeMap.set('DarkPortal', DarkPortal)
 
 function getPassiveEntityArray () {
     var array = [];
