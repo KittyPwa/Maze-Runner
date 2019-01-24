@@ -1,4 +1,4 @@
-function Weapon(entity) {
+function Weapon(entity = new Fists()) {
     this.type = equipementEnum.WEAPON;
 	
 	this.name = entity.name

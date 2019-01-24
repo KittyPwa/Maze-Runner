@@ -1,4 +1,4 @@
-function Attribut(attribut, value, maxValue) {
+function Attribut(attribut = new Endurance(), value, maxValue) {
 
     this.type = attribut
 

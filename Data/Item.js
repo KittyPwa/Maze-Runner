@@ -1,5 +1,5 @@
 function Item(item = new Key()){
-    
+
     this.key = item.name;
 
     this.type = item.type;
@@ -52,8 +52,8 @@ function Key() {
 
     this.effect = function(room, maze, consumable) {
 		if (room.activatableEntity != null && (room.activatableEntity.type == activatableEntityTypes.DOOR || room.activatableEntity.type == activatableEntityTypes.TREASURE)) {
-            var Char = gameState.entities.get(playerTypes.CHARACTER)[0]
-            var monsters = gameState.entities.get(playerTypes.MONSTER)
+            var Char = gameState.getCharacter()
+            var monsters = gameState.getMonsters()
 			var charRoom = maze.getRoomFromChar(Char.CanvasChar)
 			addTextToConsole(this.useText);
 			room.activatableEntity.effect(monsters, Char.type, charRoom)

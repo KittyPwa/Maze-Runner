@@ -32,6 +32,7 @@ function loadGames() {
 function newGame() {
     gameState = new GameState();
     game.addGameState(gameState);
+    createPlayer();
     shop = new Shop();
     shop.InitializeShop();
     gameState.addShop(shop);
@@ -61,6 +62,18 @@ function updateGlobalValues() {
 	gameDifficulty = parseInt(e.options[e.selectedIndex].value)
 }
 
+function createPlayer() {
+    if (gameState.state != gameStateEnum.VICTORY) {
+        clearText();
+        globalTimer = new gameTimer(null, 50)
+        player = new Player()
+        Char = new Character(null,null, null, radius, 'blue', charSpeed, player);
+        console.log(Char)
+        gameState.updateCharacter(Char);
+        console.log(gameState)
+    }
+}
+
 function initializeGame() {
 	document.getElementById('newGameId').blur()
 	updateGlobalValues();
@@ -84,12 +97,14 @@ function initializeGame() {
             globalTimer = new gameTimer(null, 50)
             player = new Player()
             Char = new Character(startRoom.CanvasRoom.posX,startRoom.CanvasRoom.posY, gameState.maze, radius, 'blue', charSpeed, player);
-            gameState.createCharacter(Char);
+            gameState.updateCharacter(Char);
         }
-        Char = gameState.entities.get(playerTypes.CHARACTER)[0]
+        Char = gameState.getCharacter()
         Char.updateCanvasChar(startRoom.CanvasRoom.posX,startRoom.CanvasRoom.posY, gameState.maze)
         Char.updateDrawnAttributs();
         Char.CanvasChar.teleport(startRoom.x, startRoom.y);
+        gameState.updateCharacter(Char)
+        console.log(gameState)
         var patrollerAmount = Random(1,(mazeSize / gameDifficulty) / 3)
         for (var i = 0; i < mazeSize / gameDifficulty; i++) {
         //for (var i = 0; i < 1; i++) {
@@ -114,7 +129,7 @@ function initializeGame() {
 }
 
 function startGame() {   
-    gameState.entities.get(playerTypes.CHARACTER)[0].CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
+    gameState.getCharacter().CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
 	addTextToConsole('You\'ve entered the maze')
 	if (timer != null) {
 		clearTimeout(timer)
@@ -157,7 +172,7 @@ function keyPress() {
     if (keys[69]) {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = true;
-            Char = gameState.entities.get(playerTypes.CHARACTER)[0]
+            Char = gameState.getCharacter()
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useItem(charRoom, gameState.maze);
 			Char.CanvasChar.drawCharacter();
@@ -174,9 +189,9 @@ function keyPress() {
     if (keys[32]) {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = true;
-			Char = gameState.entities.get(playerTypes.CHARACTER)[0]
+			Char = gameState.getCharacter()
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
-			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.entities.get(playerTypes.MONSTER));
+			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getMonsters());
 			Char.CanvasChar.drawCharacter();
 			Char.updateDrawnAttributs();
 			setTimeout(function() {
@@ -191,7 +206,7 @@ function keyPress() {
     if (keys[90]) {
         if (!timerBooleans[timerBooleans.CYCLEACTIVEITEM]) {
             timerBooleans[0] = true;
-            Char = gameState.entities.get(playerTypes.CHARACTER)[0]
+            Char = gameState.getCharacter()
             Char.type.activateNextItem();
             setTimeout(function() {
                 if (timerBooleans[0]) {
@@ -202,9 +217,9 @@ function keyPress() {
     }
 
     if (keys[16] && (x != 0 || y != 0)) {
-        gameState.entities.get(playerTypes.CHARACTER)[0].sprint()
+        gameState.getCharacter().sprint()
     } else {
-        gameState.entities.get(playerTypes.CHARACTER)[0].walk()
+        gameState.getCharacter().walk()
     }
     //any other key
     if (!keys[37] &&!keys[38] && !keys[39] && !keys[40]) {
@@ -240,7 +255,7 @@ function updateGameArea() {
         }
     }
     var lightRooms = gameState.maze.getLightRooms();
-    toggleOldLightRooms(oldlightRooms, lightRooms, gameState.entities.get(playerTypes.CHARACTER)[0])
+    toggleOldLightRooms(oldlightRooms, lightRooms, gameState.getCharacter())
     for (var i = 0; i < lightRooms.length; i++) {
         remove(oldlightRooms, lightRooms[i]);
         remove(drawRooms, lightRooms[i])
@@ -280,7 +295,7 @@ function updateGameArea() {
         }
     }
     checkConflicts()
-	if (gameState.entities.get(playerTypes.CHARACTER)[0].health.currentValue <= 0) {
+	if (gameState.getCharacter().health.currentValue <= 0) {
 		gameState.loseGame()
     }
 	switch (gameState.state) {

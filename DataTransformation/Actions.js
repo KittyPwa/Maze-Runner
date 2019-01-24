@@ -157,7 +157,7 @@ function moveTo(i,j, char, maze){
 }
 
 function moveAI(entity, mazeMaker) {
-    var charRoom = gameState.maze.getRoomFromChar(gameState.entities.get(playerTypes.CHARACTER)[0].CanvasChar)
+    var charRoom = gameState.maze.getRoomFromChar(gameState.getCharacter().CanvasChar)
     var seenRooms = entity.roomsInSight;
     var hunt = false;
     for (var i = 0; i < seenRooms.length; i++) {
@@ -210,9 +210,9 @@ function conflict(foe, attacker) {
 
 function checkConflicts() {
 	var maze = gameState.maze
-	var monsters = gameState.entities.get(playerTypes.MONSTER)
-	var allies = gameState.entities.get(playerTypes.ALLY)
-	var player = gameState.entities.get(playerTypes.CHARACTER)[0]
+	var monsters = gameState.getMonsters()
+	var allies = gameState.getAllies()
+	var player = gameState.getCharacter()
     var monsterRoom;
     var allyRoom;
 	var playerRoom = maze.getRoomFromChar(player.CanvasChar)
@@ -456,7 +456,7 @@ function returnFromMaze() {
     clearText()
     gameState.maze.deactivatePassiveEntities()
     initializeGame()
-    gameState.entities.get(playerTypes.CHARACTER)[0].clearTemporaryModifiers()
+    gameState.getCharacter().clearTemporaryModifiers()
     var entries = this.Char.attributs.entries();
     var entry = entries.next()
     while(!entry.done) {

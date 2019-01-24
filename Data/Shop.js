@@ -7,8 +7,8 @@ function Shop() {
 
     this.InitializeShop = function(){
 		var arraysMaps = new Map();
-		arraysMaps.set(itemTypeEnum.CONSUMABLE,getConsumableArray());
-		arraysMaps.set(itemTypeEnum.ITEM, getItemArray());
+		arraysMaps.set(itemTypeEnum.CONSUMABLE.toString(),getConsumableArray());
+		arraysMaps.set(itemTypeEnum.ITEM.toString(), getItemArray());
         var elementsMap = new ElementMaps()
 		var consumableMapstock = elementsMap.getConsumableMap()
 		for (var [type, array] of arraysMaps){
@@ -22,14 +22,11 @@ function Shop() {
     }
 
     this.getMapFromKey = function(keyMap) {
-		console.log(this.stock)
-		console.log(keyMap)
         return this.stock.get(keyMap.toString()).getConsumableMap();
-        
     }
 
     this.getItem = function(keyMap, keyItem) {
-		var map = this.stock.get(keyMap).getConsumableMap();
+		var map = this.stock.get(keyMap.toString()).getConsumableMap();
         return returnElementFromMap(map,keyItem);
 	}
 	
@@ -38,12 +35,13 @@ typeMap.set('Shop', Shop)
 
 function sellItem(item, itemKey,quantity, character) {
 	var keyMap = parseInt(itemKey.trim());
-	var map = gameState.shop.stock.get(keyMap).getConsumableMap();
+	console.log(gameState)
+	var map = gameState.shop.stock.get(keyMap.toString()).getConsumableMap();
 	item = item.trim()
 	var stock = returnElementFromMap(map,item);
 	quantity = parseInt(quantity)
 	if (character.type.items.has(item)) {
-		if (stock.item.entity.sellPrice * quantity <= gameState.shop.merchantGold && character.type.items.get(item).totalUses >= quantity) {
+		if (stock.item.entity.sellPrice * quantity <= gameState.shop.merchantGold && character.type.items.get(item.toString()).totalUses >= quantity) {
 			gameState.shop.merchantGold -= stock.item.entity.sellPrice * quantity;
 			stock.quantity += quantity;
 			addTextToConsole('You sell : ' + stock.item.entity.name + ' x' + quantity + ' to the merchant');
@@ -60,7 +58,7 @@ function sellItem(item, itemKey,quantity, character) {
 
 function buyItem(item, itemKey,quantity, character) {
 	var keyMap = parseInt(itemKey.trim());
-	var map = gameState.shop.stock.get(keyMap).getConsumableMap();
+	var map = gameState.shop.stock.get(keyMap.toString()).getConsumableMap();
 	item = item.trim()
 	var stock = returnElementFromMap(map,item);
 	quantity = parseInt(quantity)

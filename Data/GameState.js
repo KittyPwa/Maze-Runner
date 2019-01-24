@@ -36,6 +36,11 @@ function GameState() {
 	this.allies = [];
 	
 	this.entities = new Map();
+
+	this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
+	this.entities.set((playerTypes.MONSTER).toString(), this.monsters)
+	this.entities.set((playerTypes.ALLY).toString(), this.allies)
+	
 	this.clearEntries = function() {
 		this.clearCharacters();
 		this.clearMonsters();
@@ -47,51 +52,74 @@ function GameState() {
 		this.clearAllies();
 	}
 	
-	this.createCharacter = function(character) {
+	this.updateCharacter = function(character) {
 		this.characters[0] = character
+		this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
 	}
 
 	this.addCharacter = function(character) {
 		this.characters.push(character)
+		this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
 	}
 	
 	this.clearCharacters = function() {
-		this.caracters = [];
-		this.entities.set(playerTypes.CHARACTER,this.characters)
+		this.characters = [];
+		this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
+	}
+
+	this.getCharacter = function() {
+		return this.characters[0]
 	}
 	
 	this.removeCharacter = function(character) {
 		Remove(this.characters, character);
+		this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
 	}
 	
+	this.getMonsters = function() {
+		return this.monsters;
+	}
+
 	this.addMonster = function(monster) {
 		this.monsters.push(monster)
+		this.entities.set((playerTypes.MONSTER).toString(), this.monsters)
 	}
 	
 	this.clearMonsters = function() {
 		this.monsters = [];
-		this.entities.set(playerTypes.MONSTER,this.monsters)
+		this.entities.set((playerTypes.MONSTER).toString(), this.monsters)
 	}
 	
 	this.removeMonsters = function(monster) {
 		Remove(this.monsters, monster);
+		this.entities.set((playerTypes.MONSTER).toString(), this.monsters)
 	}
-	
+
+	this.getMonsters = function() {
+		return this.monsters
+	}
+
 	this.addAlly = function(ally) {
 		this.allies.push(ally)
+		this.entities.set((playerTypes.ALLY).toString(), this.allies)
 	}
 	
 	this.clearAllies = function() {
 		this.allies = [];		
-		this.entities.set(playerTypes.ALLY,this.allies)
+		this.entities.set((playerTypes.ALLY).toString(), this.allies)
 	}
 	
 	this.removeAlly = function(ally) {
 		Remove(this.allies, ally);
+		this.entities.set((playerTypes.ALLY).toString(), this.allies)
+	}
+
+	this.getAllies = function() {
+		return this.allies
 	}
 	
 	this.removeEntity = function(entity, key) {
-		remove(this.entities.get(key), entity)
+		remove(this.entities.get(key.toString()), entity)
 	}
 
 	this.shop = null;

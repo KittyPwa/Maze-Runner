@@ -1,5 +1,4 @@
-function Character(i,j, maze, radius, color, maxSpeed, type) {
-
+function Character(i,j, maze, radius, color, maxSpeed, type = new Player()) {
 	this.type = type;
 
 	this.roomsInSight = []
@@ -66,7 +65,7 @@ function Character(i,j, maze, radius, color, maxSpeed, type) {
 	this.removeState = function(state) {
 		remove(this.states, state);
 	}
-
+	
 	this.equipements = this.type.equipements;
 
 	this.states = []
@@ -78,8 +77,6 @@ function Character(i,j, maze, radius, color, maxSpeed, type) {
 	this.endurance = new Attribut(new Endurance(), 100, 100);
 
 	this.health = new Attribut(new Health(), type.healthAmount, type.healthAmount)
-	
-	
 	
 	this.attributs.set(this.speed.key, this.speed);
 	this.attributs.set(this.endurance.key, this.endurance);
@@ -169,7 +166,7 @@ function Character(i,j, maze, radius, color, maxSpeed, type) {
 
 	this.color = color;
 	
-	this.CanvasChar = new CanvasCharacter(i,j,this, maze);
+	this.CanvasChar = (maze == null ? null : new CanvasCharacter(i,j,this, maze));
 
 	this.updateDrawnAttributs = function() {
 		this.CanvasChar.drawAttributs(this.type.activeItem, this.type.goldAmount)

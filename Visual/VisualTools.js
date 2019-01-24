@@ -20,7 +20,7 @@ function toggleHideAndStartGame(gameId) {
 
 function toggleHiddenAndShowShop() {
     updateMerchant()
-    toggleHidden(['canvasId','Village','showShopGameScreen'], ['shopTable','playerConsoleId'])
+    toggleHidden(['Village','showShopGameScreen'], ['shopTable','playerConsoleId'])
 }
 
 function toggleHiddenAndReturnShop() {
@@ -89,6 +89,7 @@ function updateMerchant() {
     var cloned = document.getElementById('shopTrToClone');
     var elem;
     var itemsMap = shop.getMapFromKey(itemTypeEnum.CONSUMABLE);
+    Char = gameState.getCharacter()
     for (var [key,value] of itemsMap) {
         playerQty = Char.type.items.has(key) ? Char.type.items.get(key).getAmount() : 0
         if (playerQty > 0 || value.quantity > 0) {
@@ -147,7 +148,6 @@ function toggleHidden(hideArrayStr, showArrayStr) {
 	for (var i = 0; i < showArray.length; i++) {
         showArray[i].className = showArray[i].className.split("toggleHide").join(' toggleShow ');
     }
-    
 	for (var i = 0; i < hideArray.length; i++) {
         hideArray[i].className = hideArray[i].className.split("toggleShow").join(' toggleHide ');
     }
@@ -155,7 +155,7 @@ function toggleHidden(hideArrayStr, showArrayStr) {
 }
 
 function setCharacterInfo() {
-    var character = gameState.entities.get(playerTypes.CHARACTER)[0]
+    var character = gameState.getCharacter()
     var updatableInfo = document.getElementsByClassName('updatableInfo')
     for (var i = 0; i < updatableInfo.length; i++) {
         var attribut = character.attributs.get(updatableInfo[i].getAttribute('name'))
@@ -165,7 +165,7 @@ function setCharacterInfo() {
     }
 }
 function updateCharacterInfo() {
-    var character = gameState.entities.get(playerTypes.CHARACTER)[0]
+    var character = gameState.getCharacter()
     var updatableInfo = document.getElementsByClassName('updatableInfo')
     for (var i = 0; i < updatableInfo.length; i++) {
         var attribut = character.attributs.get(updatableInfo[i].getAttribute('name'))

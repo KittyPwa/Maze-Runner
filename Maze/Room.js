@@ -232,7 +232,7 @@ function Room(x,y,n) {
 	}
 	
 	this.isRoomInDark = function() {
-		return !this.inCharacterSight.get(gameState.entities.get(playerTypes.CHARACTER)[0])
+		return !this.inCharacterSight.get(gameState.getCharacter())
 	}
 
 	//initializes the checked orientations
