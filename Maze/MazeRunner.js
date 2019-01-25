@@ -68,9 +68,8 @@ function createPlayer() {
         globalTimer = new gameTimer(null, 50)
         player = new Player()
         Char = new Character(null,null, null, radius, 'blue', charSpeed, player);
-        console.log(Char)
+        Char.type.addItem(new Item(new Key()))
         gameState.updateCharacter(Char);
-        console.log(gameState)
     }
 }
 

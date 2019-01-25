@@ -332,7 +332,7 @@ function Player() {
 		}
 	}
 	//to delete
-	this.addItem(new Item(new Key()))
+	//this.addItem(new Item(new Key()))
 }
 typeMap.set('Player', Player)
 
