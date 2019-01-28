@@ -28,6 +28,10 @@ function GameState() {
 	this.removeMaze = function() {
 		this.maze = null;
 	}
+
+	this.getMaze = function() {
+		return this.maze;
+	}
 	
 	this.characters = [];
 	
@@ -75,10 +79,6 @@ function GameState() {
 		Remove(this.characters, character);
 		this.entities.set((playerTypes.CHARACTER).toString(), this.characters)
 	}
-	
-	this.getMonsters = function() {
-		return this.monsters;
-	}
 
 	this.addMonster = function(monster) {
 		this.monsters.push(monster)
@@ -95,7 +95,16 @@ function GameState() {
 		this.entities.set((playerTypes.MONSTER).toString(), this.monsters)
 	}
 
-	this.getMonsters = function() {
+	this.getMonster = function(uid) { 
+		for (var mon of this.monsters) {
+			if (mon.id == uid) {
+				return mon
+			}
+		}
+		return null
+	}
+
+	this.getAllMonsters = function() {
 		return this.monsters
 	}
 
@@ -117,6 +126,35 @@ function GameState() {
 	this.getAllies = function() {
 		return this.allies
 	}
+
+	this.getAlly = function(uid) { 
+		for (var ally in this.allies) {
+			if (ally.id == uid) {
+				return ally
+			}
+		}
+		return null
+	}
+
+	this.getAllAllies = function() {
+		return this.allies
+	}
+
+	this.getEntity = function(type, uid) {
+		var toReturn;
+		switch(type) {
+			case playerTypes.MONSTER : 
+				toReturn = this.getMonster(uid);
+				break;
+			case playerTypes.ALLY : 
+				toReturn = this.getAlly(uid);
+				break;
+			default :
+				toReturn = this.getCharacter();
+				break;
+		}
+		return toReturn;
+	}
 	
 	this.removeEntity = function(entity, key) {
 		remove(this.entities.get(key.toString()), entity)
@@ -135,6 +173,19 @@ function GameState() {
 	//timerBooleansArray = [cycleActiveItem,useActiveItem,useActivatableEntity,sprint]
 	this.timerBooleansArray= [false,false,false,false];
 
+	this.gameTimer = null;
+
+	this.addGameTimer = function(gameTimer) {
+		this.gameTimer = gameTimer;
+	}
+
+	this.removeGameTimer = function() {
+		this.gameTimer = null;
+	}
+
+	this.getGameTimer = function() {
+		return this.gameTimer
+	}
 }
 typeMap.set('GameState', GameState)
 

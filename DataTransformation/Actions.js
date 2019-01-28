@@ -210,8 +210,8 @@ function conflict(foe, attacker) {
 
 function checkConflicts() {
 	var maze = gameState.maze
-	var monsters = gameState.getMonsters()
-	var allies = gameState.getAllies()
+	var monsters = gameState.getAllMonsters()
+	var allies = gameState.getAllAllies()
 	var player = gameState.getCharacter()
     var monsterRoom;
     var allyRoom;
@@ -294,6 +294,7 @@ function returnAndToggleSeenRooms(character) {
     room.setRoomInSight(character, true)
     if (character.type.playerType == playerTypes.CHARACTER) {
         gameState.maze.addLightRoom(room)
+        console.log(gameState.maze.lightRooms[0].x,gameState.maze.lightRooms[0].y)
         room.discovered = true;
     }
     var unlinkedRooms = gameState.maze.getLinkedRoom(room.x, room.y);
@@ -402,6 +403,7 @@ function moveAIChar(orientation, char, maze) {
         }
         var tempVals = [];
         tempVals.push(tempX, tempY);
+
         var destinationRoom = maze.getRoomFromPosXY(char.type.destination[0], char.type.destination[1]);
         if (tempVals[0] != char.type.destination[0] || tempVals[1] != char.type.destination[1]) {
             switch(orientation) {

@@ -4,7 +4,7 @@ function toggleHideAndSelectGame() {
     selects = document.getElementsByClassName('chooseGame');
     gameStates = game.getAllGameStates()
     for (var i = 0; i < gameStates.length; i++) {
-        console.log(gameStates[i].id)
+        //console.log(gameStates[i].id)
         selects[i].setAttribute('gameId',gameStates[i].id)
         selects[i].setAttribute('value', 'Continue')
     }

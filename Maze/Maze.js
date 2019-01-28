@@ -1,6 +1,8 @@
 function Maze(n) {
+  this.id = this.id = uuidv4();
 
   this.n = n;
+  
   this.Rooms = [];
 
   this.treasureRooms = [];

@@ -1,4 +1,4 @@
-function ActivatableEntity(entity) {
+function ActivatableEntity(entity = new End()) {
 
     this.entity = entity;
 
@@ -302,11 +302,11 @@ function ShadowHunterCamp() {
             return false;
         } else {
             char.removeGold(this.price);
-            var monsterSpeed = Random(1,charSpeed-1);
             var type = monsterMovementType.ROAMER;
             entity = new ShadowHunter(type)
-            shadowHunter = new Character(room.CanvasRoom.posX, room.CanvasRoom.posY, gameState.maze, radius, 'yellow', this.shadowHunterSpeed, entity);
+            shadowHunter = new Character(radius, 'yellow', this.shadowHunterSpeed, entity);
             gameState.addAlly(shadowHunter)
+            updateVisuals([shadowHunter])
             return true;
         }
 	}

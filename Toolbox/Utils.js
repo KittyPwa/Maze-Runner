@@ -58,7 +58,6 @@ function mapToObjectRec(m) {
 			if (!isPrimitive(v) && !Array.isArray(v)) {
 				k = [k,v.constructor.name]
 			}
-			
 			lo[k] = v
         }
 	}
@@ -67,6 +66,7 @@ function mapToObjectRec(m) {
 
 function objectAssignerRec(m) {
 	var lo = {}
+	//console.log(m)
 	for (var k in m) {
 		if (m.hasOwnProperty(k)) {
 			var v = m[k]
@@ -79,7 +79,9 @@ function objectAssignerRec(m) {
 					lo[k] = objectAssignerRec(v)
 				} else {
 					var type = ''
-					if (v.length > 0) {
+					if (v.length > 0 && v[0] != null) {
+						//console.log(v)
+						//console.log(v[0])
 						type = v[0].constructor.name
 					}
 					var mapped = arrayToMap(v, type)
@@ -464,6 +466,8 @@ function blurElement(showShopGameScreen) {
 }
 
 function toggleOldLightRooms(oldLightRooms, newLightRooms, character) {
+	/*console.log(oldLightRooms[0])
+	console.log(newLightRooms[0])*/
 	toUpdate = [].concat(oldLightRooms);
 	for (var i = 0; i < newLightRooms.length; i++) {
 		remove(toUpdate, newLightRooms[i]);

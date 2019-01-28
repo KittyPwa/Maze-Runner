@@ -1,5 +1,7 @@
-function Character(i,j, maze, radius, color, maxSpeed, type = new Player()) {
+function Character( color, maxSpeed, type = new Player()) {
 	this.type = type;
+
+	this.id = this.id = uuidv4();
 
 	this.roomsInSight = []
 
@@ -162,18 +164,16 @@ function Character(i,j, maze, radius, color, maxSpeed, type = new Player()) {
 		}
 	}
 
-	this.radius = radius;
-
 	this.color = color;
 	
-	this.CanvasChar = (maze == null ? null : new CanvasCharacter(i,j,this, maze));
+	this.CanvasChar = null;
 
 	this.updateDrawnAttributs = function() {
 		this.CanvasChar.drawAttributs(this.type.activeItem, this.type.goldAmount)
 	}
 
-	this.updateCanvasChar = function( i,j, maze) {
-		this.CanvasChar = new CanvasCharacter(i,j,this, maze);
+	this.updateCanvasChar = function( i,j) {
+		this.CanvasChar = new CanvasCharacter(i,j, this.id, this.type.playerType);
 	}
 
 }

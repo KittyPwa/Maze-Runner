@@ -23,24 +23,24 @@ var myGameArea = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
+typeMap.set('myGameArea', myGameArea)
 
-function CanvasMaze(Maze) {
-    this.Maze = Maze;
+function CanvasMaze() {
 
     this.drawMaze = function() {
-        var roomSize = CSize/this.Maze.n;
+        var Maze = gameState.maze
+        var roomSize = CSize/Maze.n;
         myGameArea.clear();
-        for (var i = 0; i < this.Maze.n; i++) {
-            for (var j = 0; j < this.Maze.n; j++) {
-                this.Maze.Rooms[i][j].drawRoom(roomSize*i, roomSize*j, roomSize);
+        for (var i = 0; i < Maze.n; i++) {
+            for (var j = 0; j < Maze.n; j++) {
+                Maze.Rooms[i][j].drawRoom(roomSize*i, roomSize*j, roomSize);
             }
         }
     }
 }
+typeMap.set('CanvasMaze', CanvasMaze)
 
 function CanvasRoom(Room, n) {
-    this.Room = Room;
-
     this.size = CSize;
 
     this.roomSize = CSize/n;
@@ -57,6 +57,10 @@ function CanvasRoom(Room, n) {
 
     this.getRoomSize = function() {
         return this.roomSize;
+    }
+
+    this.getRoom = function(i,j) {
+        return this.gameState.maze.Rooms[i][j]
     }
 
     this.drawRoom = function(i,j){
@@ -177,14 +181,16 @@ function CanvasRoom(Room, n) {
         ctx.clearRect(i, j, this.roomSize, this.roomSize);
     }
 }
+typeMap.set('CanvasRoom', CanvasRoom)
 
-function CanvasCharacter(posX, posY, This, maze) {
-    this.maze = maze;
+function CanvasCharacter(posX, posY, charId, charType) {
+    this.charId = charId;
 
-    this.n = maze.n;
+    this.charType = charType;
+
+    this.n = gameState == undefined ? 0 : gameState.getMaze().n;
 
     this.posX = posX;
-
 
     this.posY = posY;
 
@@ -193,10 +199,10 @@ function CanvasCharacter(posX, posY, This, maze) {
     this.Speed = this.MinSpeed;
 
     this.Acceleration = 0;
-	
-    this.MaxSpeed = (maze.Rooms[0][0].CanvasRoom.roomSize / 50) * This.speed.modifiedMaxValue;
+    
+    this.MaxSpeed = gameState == undefined  ? 0 : (gameState.getMaze().Rooms[0][0].CanvasRoom.roomSize / 50) * gameState.getEntity(charType, charId).speed.modifiedMaxValue;
 
-	this.AccelerationInc = This.speed.modifiedMaxValue / 40;
+	this.AccelerationInc =  gameState == undefined ? 0 : gameState.getEntity(charType, charId).speed.modifiedMaxValue / 40;
 
     this.AccelerationIncBase = this.AccelerationInc;
 
@@ -208,17 +214,18 @@ function CanvasCharacter(posX, posY, This, maze) {
         this.AccelerationInc = this.AccelerationIncBase;
     }
 
-    this.radius = This.radius;
+    this.radius =  gameState == undefined ? 0 : gameState.maze.Rooms[0][0].CanvasRoom.roomSize / 6;
 
-    this.color = This.color;
+    this.color =  gameState == undefined ? '' : gameState.getEntity(charType, charId).color;
 
     ctx = myGameArea.context;
 
     this.updateStatsFromChar = function(modifiedMaxSpeed) {
-        this.MaxSpeed = (maze.Rooms[0][0].CanvasRoom.roomSize / 50) * modifiedMaxSpeed < this.MinSpeed ? this.MinSpeed : (maze.Rooms[0][0].CanvasRoom.roomSize / 50) * modifiedMaxSpeed;
+        this.MaxSpeed = (gameState.getMaze().Rooms[0][0].CanvasRoom.roomSize / 50) * modifiedMaxSpeed < this.MinSpeed ? this.MinSpeed : (gameState.getMaze().Rooms[0][0].CanvasRoom.roomSize / 50) * modifiedMaxSpeed;
     }
 
     this.drawAttributs = function(activeItem,goldAmount) {
+        ctx = myGameArea.context;
         ctx.font = "15px Arial";
         ctx.fillStyle = "black"
         ctx.clearRect(25, CSize + 1,125,30);
@@ -233,12 +240,12 @@ function CanvasCharacter(posX, posY, This, maze) {
 
     this.drawCharacter = function() {
         ctx.fillStyle = this.color;
-        var roomSize = maze.Rooms[0][0].CanvasRoom.getRoomSize();
+        var roomSize = gameState.getMaze().Rooms[0][0].CanvasRoom.getRoomSize();
         ctx.fillRect((this.posX - roomSize / 4), (this.posY - roomSize / 4), this.radius*2, this.radius*2);
     }
 
     this.teleport = function(x,y) {
-        var roomSize = maze.Rooms[0][0].CanvasRoom.getRoomSize();
+        var roomSize = gameState.getMaze().Rooms[0][0].CanvasRoom.getRoomSize();
         this.posX = x * (CSize/this.n) + (roomSize / 2);
         this.posY = y * (CSize/this.n) + (roomSize / 2);
         this.drawCharacter();
@@ -264,10 +271,11 @@ function CanvasCharacter(posX, posY, This, maze) {
         this.Acceleration = 0;
     }
     this.clear = function() {
-        var roomSize = maze.Rooms[0][0].CanvasRoom.getRoomSize();
+        var roomSize = gameState.getMaze().Rooms[0][0].CanvasRoom.getRoomSize();
         ctx.clearRect(this.posX - 1 - roomSize / 4, this.posY - 1 - roomSize / 4, this.radius*2 + 3, this.radius*2 + 3);
     }
 }
+typeMap.set('CanvasCharacter', CanvasCharacter)
 
 function drawGlobalTimer(timer) {
 	ctx.clearRect(CSize - 60, CSize + 1,100,250);

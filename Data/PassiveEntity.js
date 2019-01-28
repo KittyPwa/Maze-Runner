@@ -1,4 +1,4 @@
-function PassiveEntity(entity) {
+function PassiveEntity(entity = new DarkPortal()) {
 
     this.entity = entity;
 
@@ -55,10 +55,11 @@ function DarkPortal() {
                         var monsterSpeed = Random(1,charSpeed-1);
                         var type = monsterMovementType.ROAMER;
                         var player = new Monster(type)
-                        var monster = new Character(room.CanvasRoom.posX, room.CanvasRoom.posY, gameState.maze, radius, 'red', monsterSpeed, player);
+                        var monster = new Character('red', monsterSpeed, player);
                         gameState.addMonster(monster);
                     }
                 }
+                updateVisuals(gameState.getAllMonsters())
                 entity.entity.monsterAmount += monsterAmountIncrease;
                 entity.entity.effectDuration = Random(30,60) * 1000;
                 entity.effect(room)

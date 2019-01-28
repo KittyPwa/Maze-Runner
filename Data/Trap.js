@@ -1,4 +1,4 @@
-function Trap(trap) {
+function Trap(trap = new FrostTrap()) {
     
     this.entity = trap;
 

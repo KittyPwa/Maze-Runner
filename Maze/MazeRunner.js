@@ -18,10 +18,9 @@ var keys = [];
 var mazeSize = 20;
 var gameDifficulty = 5;
 var charSpeed = 3;
-var radius;
+
 var currentAnimationReq = null;
 var CSize = 600;
-var globalTimer = null;
 var timer = null;
 
 function loadGames() {
@@ -65,12 +64,29 @@ function updateGlobalValues() {
 function createPlayer() {
     if (gameState.state != gameStateEnum.VICTORY) {
         clearText();
-        globalTimer = new gameTimer(null, 50)
+        gameState.addGameTimer(new gameTimer(null, 50));
         player = new Player()
-        Char = new Character(null,null, null, radius, 'blue', charSpeed, player);
+        Char = new Character('blue', charSpeed, player);
         Char.type.addItem(new Item(new Key()))
         gameState.updateCharacter(Char);
     }
+}
+
+function updatePlayerVisuals() {
+    Char = gameState.getCharacter()
+    var startRoom = gameState.maze.getStartRoom();
+    Char.updateCanvasChar(startRoom.x,startRoom.y)
+    Char.updateDrawnAttributs();
+    Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
+}
+
+function updateVisuals(chars) {
+    for (var Char of chars) {
+        var randomRoom = gameState.maze.getRandomNonSpecialRoom(mazeMaker)
+        Char.updateCanvasChar(randomRoom.x,randomRoom.y)
+        Char.updateDrawnAttributs();
+        Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
+    }   
 }
 
 function initializeGame() {
@@ -89,25 +105,10 @@ function initializeGame() {
 		gameState.clearAllButCharacter();
 	}
     if (mazeMaker.Notify) {
-        var startRoom = gameState.maze.getStartRoom();
-        radius = Math.floor(startRoom.CanvasRoom.roomSize / 6);
-        if (gameState.state != gameStateEnum.VICTORY) {
-            clearText();
-            globalTimer = new gameTimer(null, 50)
-            player = new Player()
-            Char = new Character(startRoom.CanvasRoom.posX,startRoom.CanvasRoom.posY, gameState.maze, radius, 'blue', charSpeed, player);
-            gameState.updateCharacter(Char);
-        }
-        Char = gameState.getCharacter()
-        Char.updateCanvasChar(startRoom.CanvasRoom.posX,startRoom.CanvasRoom.posY, gameState.maze)
-        Char.updateDrawnAttributs();
-        Char.CanvasChar.teleport(startRoom.x, startRoom.y);
-        gameState.updateCharacter(Char)
-        console.log(gameState)
+        createPlayer()  
         var patrollerAmount = Random(1,(mazeSize / gameDifficulty) / 3)
         for (var i = 0; i < mazeSize / gameDifficulty; i++) {
         //for (var i = 0; i < 1; i++) {
-            var randomRoom = gameState.maze.getRandomNonSpecialRoom(mazeMaker)
             var monsterSpeed = Random(1,charSpeed);
             var type = monsterMovementType.ROAMER;
             if (patrollerAmount > 0) {
@@ -115,8 +116,8 @@ function initializeGame() {
                 type = monsterMovementType.PATROLLER
             }
             player = new Monster(type)
-            monster = new Character(randomRoom.CanvasRoom.posX, randomRoom.CanvasRoom.posY, gameState.maze, radius, 'red', monsterSpeed, player);
-			gameState.addMonster(monster);
+            monster = new Character('red', monsterSpeed, player);
+            gameState.addMonster(monster);
         }
 		var rooms = gameState.maze.Rooms;
 		for (var i = 0; i < rooms.length; i++) {
@@ -128,12 +129,15 @@ function initializeGame() {
 }
 
 function startGame() {   
-    gameState.getCharacter().CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
+    updatePlayerVisuals()
+    updateVisuals(gameState.getAllMonsters())
+    var Char = gameState.getCharacter()
+    Char.CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
 	addTextToConsole('You\'ve entered the maze')
 	if (timer != null) {
 		clearTimeout(timer)
-	}
-    timer = launchTimer(globalTimer);
+    }
+    timer = launchTimer(gameState.getGameTimer());
     passiveEntityRooms = gameState.maze.getPassiveEntityRooms();
     for (var i = 0; i < passiveEntityRooms.length; i++) {
         passiveEntityRooms[i].passiveEntity.effect(passiveEntityRooms[i])
@@ -142,6 +146,7 @@ function startGame() {
     gameState.maze.drawMaze()
     setCharacterInfo()
     requestAnimationFrame(updateGameArea);
+    console.log(gameState)
 }
 
 function keyPress() { 
@@ -190,7 +195,7 @@ function keyPress() {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = true;
 			Char = gameState.getCharacter()
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
-			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getMonsters());
+			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
 			Char.updateDrawnAttributs();
 			setTimeout(function() {
@@ -229,7 +234,7 @@ function keyPress() {
     moveChar(x,y,Char, gameState.maze);
 }
 
-function updateGameArea() {
+function updateGameArea() { 
     updateCharacterInfo()
     var oldlightRooms = gameState.maze.getLightRooms();
     gameState.maze.resetLightRooms()
@@ -244,9 +249,7 @@ function updateGameArea() {
 					gameState.removeEntity(playerArray[i],key)
 				} else {
                     returnAndToggleSeenRooms(playerArray[i])
-                    //drawRooms.push(gameState.maze.getRoomFromChar(playerArray[i].CanvasChar))
                     moveAI(playerArray[i], mazeMaker);
-                    //drawRooms.push(gameState.maze.getRoomFromChar(playerArray[i].CanvasChar))
                 }   
 			}
         } else {
