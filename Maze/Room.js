@@ -215,24 +215,24 @@ function Room(x,y,n) {
 	this.initializeSightMap = function() {
 		for (var [key, value] of gameState.entities) {
 			for (var i = 0; i < value.length; i++) {
-				this.inCharacterSight.set(value[i], false)
+				this.inCharacterSight.set(value[i].id, false)
 			}
 		}	
 	}
 
 	this.setRoomInSight = function(character, inSight) {
-		if (this.inCharacterSight.has(character)) {
-			this.inCharacterSight.delete(character)
+		if (this.inCharacterSight.has(character.id)) {
+			this.inCharacterSight.delete(character.id)
 		}
-		this.inCharacterSight.set(character, inSight)
+		this.inCharacterSight.set(character.id, inSight)
 	}
 
 	this.isRoomInSight = function(character) {
-		return this.inCharacterSight.get(character)
+		return this.inCharacterSight.get(character.id)
 	}
 	
 	this.isRoomInDark = function() {
-		return !this.inCharacterSight.get(gameState.getCharacter())
+		return !this.inCharacterSight.get(gameState.getCharacter().id)
 	}
 
 	//initializes the checked orientations

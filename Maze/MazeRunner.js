@@ -43,7 +43,8 @@ function startVars(id) {
     }
     shop = gameState.shop
     loadImgs();
-    saveGame()
+    saveGame();
+    updateCharacterInfo()
 }
 
 function updateGlobalValues() {
@@ -78,15 +79,7 @@ function updatePlayerVisuals() {
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     Char.updateDrawnAttributs();
     Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
-}
-
-function updateVisuals(chars) {
-    for (var Char of chars) {
-        var randomRoom = gameState.maze.getRandomNonSpecialRoom(mazeMaker)
-        Char.updateCanvasChar(randomRoom.x,randomRoom.y)
-        Char.updateDrawnAttributs();
-        Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
-    }   
+    gameState.updateCharacter(Char);
 }
 
 function initializeGame() {
@@ -117,7 +110,10 @@ function initializeGame() {
             }
             player = new Monster(type)
             monster = new Character('red', monsterSpeed, player);
+            var randomRoom = gameState.maze.getRandomNonSpecialRoom(mazeMaker)
             gameState.addMonster(monster);
+            monster.updateCanvasChar(randomRoom.x,randomRoom.y)
+            monster.CanvasChar.teleport(monster.CanvasChar.posX, monster.CanvasChar.posY);
         }
 		var rooms = gameState.maze.Rooms;
 		for (var i = 0; i < rooms.length; i++) {
@@ -130,7 +126,6 @@ function initializeGame() {
 
 function startGame() {   
     updatePlayerVisuals()
-    updateVisuals(gameState.getAllMonsters())
     var Char = gameState.getCharacter()
     Char.CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
 	addTextToConsole('You\'ve entered the maze')
@@ -145,8 +140,10 @@ function startGame() {
     gameState.state = gameStateEnum.CONTINUE;
     gameState.maze.drawMaze()
     setCharacterInfo()
-    requestAnimationFrame(updateGameArea);
+    updateCharacterInfo()
+    gameState.resetBooleansArray()
     console.log(gameState)
+    requestAnimationFrame(updateGameArea);
 }
 
 function keyPress() { 
@@ -194,7 +191,7 @@ function keyPress() {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = true;
 			Char = gameState.getCharacter()
-			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
+            charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
 			Char.updateDrawnAttributs();

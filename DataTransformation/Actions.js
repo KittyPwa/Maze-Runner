@@ -294,7 +294,6 @@ function returnAndToggleSeenRooms(character) {
     room.setRoomInSight(character, true)
     if (character.type.playerType == playerTypes.CHARACTER) {
         gameState.maze.addLightRoom(room)
-        console.log(gameState.maze.lightRooms[0].x,gameState.maze.lightRooms[0].y)
         room.discovered = true;
     }
     var unlinkedRooms = gameState.maze.getLinkedRoom(room.x, room.y);
@@ -454,16 +453,20 @@ function checkReturnToTown() {
 }
 
 function returnFromMaze() {
-    saveGame()
     clearText()
     gameState.maze.deactivatePassiveEntities()
     initializeGame()
+    gameState.getCharacter().rest()
     gameState.getCharacter().clearTemporaryModifiers()
-    var entries = this.Char.attributs.entries();
-    var entry = entries.next()
-    while(!entry.done) {
-        Char.updateModifiedAttribut(entry.value[1])
-        entry = entries.next()
+    if (gameState.state == gameStateEnum.VICTORY) {
+        var entries = gameState.getCharacter().attributs.entries();
+        var entry = entries.next()
+        while(!entry.done) {
+            gameState.getCharacter().updateModifiedAttribut(entry.value[1])
+            entry = entries.next()
+        }
     }
+    updateCharacterInfo()
+    saveGame()
     toggleHiddenAndVillage();
 }

@@ -78,6 +78,9 @@ function CanvasRoom(Room, n) {
             } else {
                 ctx.font = "5px Arial black";
                 ctx.fillStyle = (room.isRoomInDark() ? '#b3b3b3' : 'white');
+                /*console.log(room)
+                console.log(room.isRoomInDark())
+                console.log(ctx.fillStyle)*/
                 ctx.fillRect(i, j, this.roomSize, this.roomSize);
 				ctx.moveTo(i,j);
 				ctx.beginPath();
@@ -248,7 +251,7 @@ function CanvasCharacter(posX, posY, charId, charType) {
         var roomSize = gameState.getMaze().Rooms[0][0].CanvasRoom.getRoomSize();
         this.posX = x * (CSize/this.n) + (roomSize / 2);
         this.posY = y * (CSize/this.n) + (roomSize / 2);
-        this.drawCharacter();
+        //this.drawCharacter();
     }
 
     this.move = function(i,j) {

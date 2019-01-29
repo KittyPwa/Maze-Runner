@@ -173,6 +173,12 @@ function GameState() {
 	//timerBooleansArray = [cycleActiveItem,useActiveItem,useActivatableEntity,sprint]
 	this.timerBooleansArray= [false,false,false,false];
 
+	this.resetBooleansArray = function(){
+		for (var i = 0; i < this.timerBooleansArray.length; i++) {
+			this.timerBooleansArray[i] = false;
+		}
+	}
+
 	this.gameTimer = null;
 
 	this.addGameTimer = function(gameTimer) {

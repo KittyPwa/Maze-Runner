@@ -57,9 +57,10 @@ function DarkPortal() {
                         var player = new Monster(type)
                         var monster = new Character('red', monsterSpeed, player);
                         gameState.addMonster(monster);
+                        monster.updateCanvasChar(room.x,room.y)
+                        monster.CanvasChar.teleport(monster.CanvasChar.posX, monster.CanvasChar.posY);
                     }
                 }
-                updateVisuals(gameState.getAllMonsters())
                 entity.entity.monsterAmount += monsterAmountIncrease;
                 entity.entity.effectDuration = Random(30,60) * 1000;
                 entity.effect(room)

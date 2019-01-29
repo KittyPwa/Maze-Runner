@@ -83,10 +83,35 @@ function Character( color, maxSpeed, type = new Player()) {
 	this.attributs.set(this.speed.key, this.speed);
 	this.attributs.set(this.endurance.key, this.endurance);
 	this.attributs.set(this.health.key, this.health);
+
+	//GENERIC
+	this.loseGenericAttribut = function(attribut, amount) {
+		attribut.currentValue = (attribut.currentValue - amount >= attribut.minValue ? attribut.currentValue - amount : attribut.minValue);
+		this.attributs.set(attribut.key, attribut);
+	}
+
+	this.gainGenericAttribut = function(attribut, amount) {
+		attribut.currentValue = (attribut.currentValue + amount <= attribut.maxValue ? attribut.currentValue + amount : attribut.maxValue);
+		this.attributs.set(attribut.key, attribut);
+	}
+
+	//ENDURANCE
+	this.loseEndurance = function(amount) {
+		this.loseGenericAttribut(this.endurance, amount)
+	}
+
+	this.gainEndurance = function(amount) {
+		this.gainGenericAttribut(this.endurance, amount)
+	}
+
+	this.rest = function() {
+		this.gainGenericAttribut(this.endurance, this.endurance.maxValue)
+	}
+
 	//HEALTH
 
 	this.loseHealth = function(amount) {
-		this.health.currentValue = (this.health.currentValue - amount >= this.health.minValue ? this.health.currentValue - amount : this.health.minValue);
+		this.loseGenericAttribut(this.health, amount)
 	}
 
 	//ATTACK
@@ -121,7 +146,7 @@ function Character( color, maxSpeed, type = new Player()) {
 				var char = this;
 				setTimeout(function() {
 					gameState.timerBooleansArray[3] = false;
-					char.endurance.currentValue -= char.endurance.type.consumeAmount
+					char.loseEndurance(char.endurance.type.consumeAmount)
 					if (char.endurance.currentValue < 1) {
 						char.endurance.critique = true;
 					}
@@ -136,6 +161,8 @@ function Character( color, maxSpeed, type = new Player()) {
 				this.CanvasChar.increaseAcceleration(sprintAcceleration)
 			}
 			this.updateModifiedAttribut(this.speed);
+			this.attributs.set(this.speed.key, this.speed);
+			this.attributs.set(this.endurance.key, this.endurance);
 		} else {
 			this.walk()
 		}
@@ -151,7 +178,7 @@ function Character( color, maxSpeed, type = new Player()) {
 			var gainAmount = this.endurance.critique ? char.endurance.type.gainAmount / 2: char.endurance.type.gainAmount;
 			setTimeout(function() {
 				gameState.timerBooleansArray[3] = false;
-				char.endurance.currentValue = (char.endurance.currentValue + gainAmount >= char.endurance.maxValue ? char.endurance.maxValue : char.endurance.currentValue + gainAmount)
+				char.gainEndurance(gainAmount)
 				if (char.endurance.currentValue > 15) {
 					char.endurance.critique = false;
 				}
@@ -162,6 +189,8 @@ function Character( color, maxSpeed, type = new Player()) {
 			this.CanvasChar.resetAcceleration();
 			this.updateModifiedAttribut(this.speed);
 		}
+		this.attributs.set(this.speed.key, this.speed);
+		this.attributs.set(this.endurance.key, this.endurance);
 	}
 
 	this.color = color;

@@ -53,7 +53,7 @@ function Key() {
     this.effect = function(room, maze, consumable) {
 		if (room.activatableEntity != null && (room.activatableEntity.type == activatableEntityTypes.DOOR || room.activatableEntity.type == activatableEntityTypes.TREASURE)) {
             var Char = gameState.getCharacter()
-            var monsters = gameState.getMonsters()
+            var monsters = gameState.getAllMonsters()
 			var charRoom = maze.getRoomFromChar(Char.CanvasChar)
 			addTextToConsole(this.useText);
 			room.activatableEntity.effect(monsters, Char.type, charRoom)
