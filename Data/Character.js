@@ -197,10 +197,6 @@ function Character( color, maxSpeed, type = new Player()) {
 	
 	this.CanvasChar = null;
 
-	this.updateDrawnAttributs = function() {
-		this.CanvasChar.drawAttributs(this.type.activeItem, this.type.goldAmount)
-	}
-
 	this.updateCanvasChar = function( i,j) {
 		this.CanvasChar = new CanvasCharacter(i,j, this.id, this.type.playerType);
 	}

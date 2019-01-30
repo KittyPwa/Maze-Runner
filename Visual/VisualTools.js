@@ -35,7 +35,7 @@ function toggleHiddenAndStartMaze() {
 }
 
 function toggleHiddenAndVillage() {
-    toggleHidden(['canvasId','showShopGameScreen'], ['Village','playerConsoleId'])
+    toggleHidden(['canvasId','showShopGameScreen', 'GameScreen'], ['Village','playerConsoleId'])
 }
 
 function loadImgs() {
@@ -164,6 +164,15 @@ function setCharacterInfo() {
         updatableInfo[i].setAttribute('aria-valuemin',attribut.minValue)
         updatableInfo[i].setAttribute('aria-valuemax',attribut.maxValue)
     }
+    var activatebleItem = document.getElementById('ActiveItem')
+    var goldAmount = document.getElementById('goldAmount')
+    goldAmount.innerHTML = character.type.goldAmount
+    activeItem = character.type.activeItem
+    if (activeItem != null) {
+        activatebleItem.innerHTML = activeItem.entity.name + ' x' + activeItem.totalUses;
+    } else {
+        activatebleItem.innerHTML = 'No Item'
+    }
 }
 function updateCharacterInfo() {
     var character = gameState.getCharacter()
@@ -180,5 +189,14 @@ function updateCharacterInfo() {
                 updatableInfo[i].className = updatableInfo[i].className.split("bg-danger").join(' bg-info ');
             }
         }
+    }
+    var activatebleItem = document.getElementById('ActiveItem')
+    var goldAmount = document.getElementById('goldAmount')
+    goldAmount.innerHTML = character.type.goldAmount
+    activeItem = character.type.activeItem
+    if (activeItem != null) {
+        activatebleItem.innerHTML = activeItem.entity.name + ' x' + activeItem.totalUses;
+    } else {
+        activatebleItem.innerHTML = 'No Item'
     }
 }

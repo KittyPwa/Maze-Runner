@@ -13,15 +13,15 @@ function MazeMaker (n) {
 
   this.cycleAmount = this.n / 4
   
-  this.doorAmount = this.n / 6
+  this.doorAmount = this.n / 4
 
-  this.itemAmount = this.n / 15
+  this.itemAmount = this.n / 3
 
-  this.treasureAmount = this.n / 20
+  this.treasureAmount = this.n / 7
 
-  this.activatableEntityAmount = this.n / 15
+  this.activatableEntityAmount = this.n / 5
 
-  this.passiveEntityAmount = this.n / 20
+  this.passiveEntityAmount = this.n / 15
 
   //this.trapAmount = this.n / 1
   this.trapAmount = this.n / 10

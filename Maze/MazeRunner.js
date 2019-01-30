@@ -77,7 +77,7 @@ function updatePlayerVisuals() {
     Char = gameState.getCharacter()
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
-    Char.updateDrawnAttributs();
+    updateCharacterInfo();
     Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
     gameState.updateCharacter(Char);
 }
@@ -177,7 +177,7 @@ function keyPress() {
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useItem(charRoom, gameState.maze);
 			Char.CanvasChar.drawCharacter();
-			Char.updateDrawnAttributs()
+			updateCharacterInfo()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = false;
@@ -194,7 +194,7 @@ function keyPress() {
             charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
-			Char.updateDrawnAttributs();
+			updateCharacterInfo()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = false;

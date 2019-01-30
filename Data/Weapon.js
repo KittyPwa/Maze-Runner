@@ -29,7 +29,7 @@ function Fists() {
 
     this.maxDamage = 2;
 
-    //1 second
+    //1.5 second
     this.attackSpeed = 1500;
 
     this.damageType = damageTypeEnum.BLUNT
@@ -43,15 +43,15 @@ function Claws() {
 	
 	this.equipHands = handEquipEnum.DOUBLE;
 
-    /*this.minDamage = 5;
+    this.minDamage = 5;
 
-    this.maxDamage = 10;*/
+    this.maxDamage = 10;
 
-    this.minDamage = 1;
+    /*this.minDamage = 1;
 
-    this.maxDamage = 1;
+    this.maxDamage = 1;*/
 
-    //1 second
+    //2 second
     this.attackSpeed = 2000;
 
     this.damageType = damageTypeEnum.PIERCING
