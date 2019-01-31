@@ -87,7 +87,7 @@ function IdolBust() {
 	
 	this.useText = 'The ' + this.name + ' does not seem to react. You are watched.';
 
-    this.effect = function() {
+    this.effect = function(room, maze, consumable) {
 		addTextToConsole(this.useText)
     }
 
@@ -101,9 +101,47 @@ function IdolBust() {
 }
 typeMap.set('IdolBust', IdolBust)
 
-function PotionB() {
+function HealthPotion() {
+	this.name = 'Health potion';
+
+    this.uses = 1;
+
+    this.itemType = itemTypeEnum.CONSUMABLE
+
+    this.type = consumableType.ROOM;
+
+    this.rarity = rarityEnum.COMMON;
+
+    this.subRarity = subRarityEnum.COMMON;
+    
+    this.pickupText = this.name + ' x' + this.uses;
 	
+    this.useText = 'The ' + this.name + ' goes down your gullet.'
+    
+    this.usefulUseText = 'You feel your wounds recovering.'
+
+    this.healthAmount = Random(3,9);
+
+    this.effect = function(room, maze, consumable) {
+        addTextToConsole(this.useText)
+        var Char = gameState.getCharacter()
+        var oldHealthAmount = Char.health.currentValue
+        Char.gainHealth(this.healthAmount)
+        if (oldHealthAmount < Char.health.currentValue) {
+            addTextToConsole(this.usefulUseText)
+        }
+        consumable.totalUses --;
+    }
+
+    this.createNew = function() {
+        return new HealthPotion();
+    }
+
+    this.sellPrice = Random(10,25);
+
+    this.buyPrice = this.sellPrice * 2;
 }
+typeMap.set('HealthPotion', HealthPotion)
 
 function ScrollScrap() {
 	
@@ -270,6 +308,7 @@ function getItemArray() {
 	result.push(new Item(new AncientVase()))
     result.push(new Item(new Sapphire()))
     result.push(new Item(new Ruby()))
+    result.push(new Item(new HealthPotion()))
     return result;
 }
 

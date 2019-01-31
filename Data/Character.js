@@ -114,6 +114,9 @@ function Character( color, maxSpeed, type = new Player()) {
 		this.loseGenericAttribut(this.health, amount)
 	}
 
+	this.gainHealth = function(amount) {
+		this.gainGenericAttribut(this.health, amount)
+	}
 	//ATTACK
 
 	this.strike = function(foe) {
