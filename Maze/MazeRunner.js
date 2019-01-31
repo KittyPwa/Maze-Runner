@@ -69,6 +69,9 @@ function createPlayer() {
         player = new Player()
         Char = new Character('blue', charSpeed, player);
         Char.type.addItem(new Item(new Key()))
+        for (var i = 0; i < 2; i++) {
+            Char.type.addItem(new Item(new HealthPotion()))
+        }
         gameState.updateCharacter(Char);
     }
 }
@@ -142,7 +145,6 @@ function startGame() {
     setCharacterInfo()
     updateCharacterInfo()
     gameState.resetBooleansArray()
-    console.log(gameState)
     requestAnimationFrame(updateGameArea);
 }
 

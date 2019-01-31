@@ -359,8 +359,6 @@ function Player() {
 			activatableEntity.effect(monsters, this, charRoom);
 		}
 	}
-	//to delete
-	//this.addItem(new Item(new Key()))
 }
 typeMap.set('Player', Player)
 
