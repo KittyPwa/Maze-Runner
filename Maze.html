@@ -48,8 +48,8 @@
 			</div>
 			<div id="ChooseGame" class="toggleHide">
 				<input id="game1" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
-				<input id="game1" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
-				<input id="game1" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
+				<input id="game2" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
+				<input id="game3" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
 			</div>
 			<div id="playerInfo" class="toggleHide col">
 					<h2>Player info</h2>					
@@ -67,7 +67,10 @@
 					</div>
 					<div>
 						<span>Active Item: </span>
+						<input id="leftArrow" class="chooseGame" type="button" value="&#x25C0;" onclick="previousActiveItem()"/>
 						<span id="ActiveItem"></span>
+						<input id="rightArrow" class="chooseGame" type="button" value="&#x25B6;" onclick="nextActiveItem()"/>
+						<input id="useItem" class="chooseGame" type="button" value="use" onclick="useItem()"/>
 					</div>
 				</div>
 

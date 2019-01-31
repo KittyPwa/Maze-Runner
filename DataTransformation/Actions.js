@@ -441,6 +441,25 @@ function moveAIChar(orientation, char, maze) {
     }    
 }
 
+function previousActiveItem() {
+    Char = gameState.getCharacter().type;
+    Char.activatePreviousItem()
+    updateCharacterInfo()
+}
+
+function nextActiveItem() {
+    Char = gameState.getCharacter().type;
+    Char.activateNextItem()
+    updateCharacterInfo()
+}
+
+function useItem() {
+    item = gameState.getCharacter().type.activeItem;
+    item.useConsumable(null, null)
+    updateCharacterInfo()
+    saveGame()
+}
+
 function checkReturnToTown() {
     gameState.pauseGame();
     if (confirm("Are you certain you want to return to town? All current progress will be lost.")) {

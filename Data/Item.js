@@ -24,6 +24,7 @@ function Item(item = new Key()){
         switch(this.type) {
             case consumableType.ROOM: 
                 if (this.totalUses > 0) {
+                    console.log(item.effect)
                     item.effect(room, maze, this);
                 }
                 break;
@@ -50,14 +51,21 @@ function Key() {
 
     this.useText = 'The key enters the lock, you lose a key'
 
+    this.failUseText = 'There\s nothing to use your ' + this.name + ' with';
+
     this.effect = function(room, maze, consumable) {
-		if (room.activatableEntity != null && (room.activatableEntity.type == activatableEntityTypes.DOOR || room.activatableEntity.type == activatableEntityTypes.TREASURE)) {
-            var Char = gameState.getCharacter()
-            var monsters = gameState.getAllMonsters()
-			var charRoom = maze.getRoomFromChar(Char.CanvasChar)
-			addTextToConsole(this.useText);
-			room.activatableEntity.effect(monsters, Char.type, charRoom)
-		}
+        if (room != null && maze != null) {
+            if (room.activatableEntity != null && (room.activatableEntity.type == activatableEntityTypes.DOOR || room.activatableEntity.type == activatableEntityTypes.TREASURE)) {
+                var Char = gameState.getCharacter()
+                var monsters = gameState.getAllMonsters()
+                var charRoom = maze.getRoomFromChar(Char.CanvasChar)
+                addTextToConsole(this.useText);
+                room.activatableEntity.effect(monsters, Char.type, charRoom)
+            }
+        } else {
+            console.log(this)
+            addTextToConsole(this.failUseText);
+        }
     }
 
     this.createNew = function() {

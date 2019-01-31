@@ -202,7 +202,6 @@ function Games() {
 
 	this.addGameState = function(gameState) {
 		this.gameStates.set(gameState.id, gameState)
-		console.log(this)
 	}
 
 	this.removeGameState = function(gameState) {

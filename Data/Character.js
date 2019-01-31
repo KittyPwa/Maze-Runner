@@ -314,6 +314,37 @@ function Player() {
 		}
 	}
 
+	this.activatePreviousItem = function() {
+		if (this.activeItem != null) {
+			var entries = this.items.entries();
+			var entry = entries.next()
+			if (entry.value[0] == this.activeItem.key) {
+				entry = entries.next()
+			}
+			var previousEntry = entry;
+			while(!entry.done && entry.value[0] != this.activeItem.key ) {
+				previousEntry = entry;
+				entry = entries.next()
+			}
+			if (previousEntry.done) {
+				entries = this.items.entries();
+				previousEntry = entry
+				entry = entries.next()
+			}
+			if (!entry.done) {
+				while (!entry.done && entry.value[1].entity.itemType == itemTypeEnum.ITEM) {
+					previousEntry = entry
+					entry = entries.next()
+				}
+			}
+			if(previousEntry.done) {
+				this.activeItem = null
+			} else {
+				this.activeItem = previousEntry.value[1]
+			}
+		}
+	}
+
 	this.useItem = function(room, maze, item = null) {
 		var usingItem = this.activeItem;
 		if (item != null) {
