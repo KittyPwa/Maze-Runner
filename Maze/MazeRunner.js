@@ -45,6 +45,7 @@ function startVars(id) {
     loadImgs();
     saveGame();
     updateCharacterInfo()
+    console.log(gameState)
 }
 
 function updateGlobalValues() {
@@ -63,21 +64,21 @@ function updateGlobalValues() {
 }
 
 function createPlayer() {
-    if (gameState.state != gameStateEnum.VICTORY) {
-        clearText();
-        gameState.addGameTimer(new gameTimer(null, 50));
-        player = new Player()
-        Char = new Character('blue', charSpeed, player);
-        Char.type.addItem(new Item(new Key()))
-        for (var i = 0; i < 2; i++) {
-            Char.type.addItem(new Item(new HealthPotion()))
-        }
-        gameState.updateCharacter(Char);
+    clearText();
+    gameState.addGameTimer(new gameTimer(null, 50));
+    player = new Player()
+    Char = new Character('blue', charSpeed, player);
+    Char.type.addItem(new Item(new Key()))
+    for (var i = 0; i < 2; i++) {
+        Char.type.addItem(new Item(new HealthPotion()))
     }
+    gameState.updateCharacter(Char);
 }
 
 function updatePlayerVisuals() {
     Char = gameState.getCharacter()
+    console.log(gameState)
+    console.log(Char)
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
@@ -101,7 +102,6 @@ function initializeGame() {
 		gameState.clearAllButCharacter();
 	}
     if (mazeMaker.Notify) {
-        createPlayer()  
         var patrollerAmount = Random(1,(mazeSize / gameDifficulty) / 3)
         for (var i = 0; i < mazeSize / gameDifficulty; i++) {
         //for (var i = 0; i < 1; i++) {

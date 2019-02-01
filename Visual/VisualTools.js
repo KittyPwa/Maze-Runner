@@ -173,6 +173,10 @@ function setCharacterInfo() {
     } else {
         activatebleItem.innerHTML = 'No Item'
     }
+    var currentValue = updatableInfo[i].getElementsByClassName('currentValue')[0]
+    currentValue.innerHTML = attribut.currentValue
+    var maxValue = updatableInfo[i].getElementsByClassName('maxValue')[0]
+    maxValue.innerHTML = attribut.maxValue
 }
 function updateCharacterInfo() {
     var character = gameState.getCharacter()
@@ -189,6 +193,10 @@ function updateCharacterInfo() {
                 updatableInfo[i].className = updatableInfo[i].className.split("bg-danger").join(' bg-info ');
             }
         }
+        var currentValue = updatableInfo[i].getElementsByClassName('currentValue')[0]
+        currentValue.innerHTML = attribut.currentValue
+        var maxValue = updatableInfo[i].getElementsByClassName('maxValue')[0]
+        maxValue.innerHTML = attribut.maxValue
     }
     var activatebleItem = document.getElementById('ActiveItem')
     var goldAmount = document.getElementById('goldAmount')

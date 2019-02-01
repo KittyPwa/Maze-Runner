@@ -24,8 +24,7 @@ function Item(item = new Key()){
         switch(this.type) {
             case consumableType.ROOM: 
                 if (this.totalUses > 0) {
-                    console.log(item.effect)
-                    item.effect(room, maze, this);
+                    this.entity.effect(room, maze, this);
                 }
                 break;
             default : 
@@ -63,7 +62,6 @@ function Key() {
                 room.activatableEntity.effect(monsters, Char.type, charRoom)
             }
         } else {
-            console.log(this)
             addTextToConsole(this.failUseText);
         }
     }
@@ -125,10 +123,12 @@ function HealthPotion() {
     this.pickupText = this.name + ' x' + this.uses;
 	
     this.useText = 'The ' + this.name + ' goes down your gullet.'
-    
-    this.usefulUseText = 'You feel your wounds recovering.'
 
     this.healthAmount = Random(3,9);
+
+    this.usefulUseText = 'You feel your wounds recovering. You gain ' + this.healthAmount + ' HP'
+
+    this.notUsefulUseText = 'Your body is as healthy as it could be. The ' + this.name + ' has no effect on you.'
 
     this.effect = function(room, maze, consumable) {
         addTextToConsole(this.useText)
@@ -137,6 +137,8 @@ function HealthPotion() {
         Char.gainHealth(this.healthAmount)
         if (oldHealthAmount < Char.health.currentValue) {
             addTextToConsole(this.usefulUseText)
+        } else {
+            addTextToConsole(this.notUsefulUseText)
         }
         consumable.totalUses --;
     }
@@ -151,6 +153,52 @@ function HealthPotion() {
 }
 typeMap.set('HealthPotion', HealthPotion)
 
+function VigorPotion() {
+	this.name = 'Potion of vigor';
+
+    this.uses = 1;
+
+    this.itemType = itemTypeEnum.CONSUMABLE
+
+    this.type = consumableType.ROOM;
+
+    this.rarity = rarityEnum.COMMON;
+
+    this.subRarity = subRarityEnum.COMMON;
+    
+    this.pickupText = this.name + ' x' + this.uses;
+	
+    this.useText = 'The ' + this.name + ' goes down your gullet.'
+
+    this.enduranceAmount = Random(25,50);
+
+    this.usefulUseText = 'You breath comes more easily. You gain ' + this.enduranceAmount + ' endurance points'
+
+    this.notUsefulUseText = 'You aren\'t fatigued. The ' + this.name + ' has no effect on you.'
+
+    this.effect = function(room, maze, consumable) {
+        addTextToConsole(this.useText)
+        var Char = gameState.getCharacter()
+        var oldEnduranceAmount = Char.endurance.currentValue
+        Char.gainEndurance(this.enduranceAmount)
+        if (oldEnduranceAmount < Char.endurance.currentValue) {
+            addTextToConsole(this.usefulUseText)
+        } else {
+            addTextToConsole(this.notUsefulUseText)
+        }
+        consumable.totalUses --;
+    }
+
+    this.createNew = function() {
+        return new VigorPotion();
+    }
+
+    this.sellPrice = Random(15,35);
+
+    this.buyPrice = this.sellPrice * 2;
+}
+typeMap.set('VigorPotion', VigorPotion)
+
 function ScrollScrap() {
 	
 }
@@ -163,6 +211,8 @@ function getConsumableArray() {
     var result = [];
     result.push(new Item(new Key()))
     result.push(new Item(new IdolBust()))
+    result.push(new Item(new HealthPotion()))
+    result.push(new Item(new VigorPotion()))
     return result;
 }
 
@@ -170,6 +220,8 @@ function getTreasureConsumableArray() {
     var result = [];
     result.push(new Item(new Key()))
     result.push(new Item(new IdolBust()))
+    result.push(new Item(new HealthPotion()))
+    result.push(new Item(new VigorPotion()))
     return result;
 }
 
@@ -317,6 +369,7 @@ function getItemArray() {
     result.push(new Item(new Sapphire()))
     result.push(new Item(new Ruby()))
     result.push(new Item(new HealthPotion()))
+    result.push(new Item(new VigorPotion()))
     return result;
 }
 

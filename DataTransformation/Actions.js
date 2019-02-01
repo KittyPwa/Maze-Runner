@@ -454,8 +454,10 @@ function nextActiveItem() {
 }
 
 function useItem() {
-    item = gameState.getCharacter().type.activeItem;
-    item.useConsumable(null, null)
+    var item = gameState.getCharacter().type.activeItem;
+    var maze = gameState.getMaze();
+    var room = maze != null ? maze.getRoomFromChar(gameState.getCharacter().CanvasChar) : null
+    gameState.getCharacter().type.useItem(maze, room, item)
     updateCharacterInfo()
     saveGame()
 }
@@ -475,6 +477,9 @@ function returnFromMaze() {
     clearText()
     gameState.maze.deactivatePassiveEntities()
     initializeGame()
+    if (gameState.state != gameStateEnum.VICTORY) {
+        createPlayer()  
+    }
     gameState.getCharacter().rest()
     gameState.getCharacter().clearTemporaryModifiers()
     if (gameState.state == gameStateEnum.VICTORY) {
