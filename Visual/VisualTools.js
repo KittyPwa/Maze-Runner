@@ -4,7 +4,6 @@ function toggleHideAndSelectGame() {
     selects = document.getElementsByClassName('chooseGame');
     gameStates = game.getAllGameStates()
     for (var i = 0; i < gameStates.length; i++) {
-        //console.log(gameStates[i].id)
         selects[i].setAttribute('gameId',gameStates[i].id)
         selects[i].setAttribute('value', 'Continue')
     }
@@ -17,6 +16,8 @@ function toggleHideAndStartGame(gameId) {
     }
     startVars(id)
     gameState.winGame()
+    gameState.removeMaze()
+    console.log(gameState)
     toggleHidden(['ChooseGame'], ['playerInfo','Village','playerConsoleId'])
 }
 
@@ -197,14 +198,15 @@ function updateCharacterInfo() {
         var goldAmount = document.getElementById('goldAmount')
         goldAmount.innerHTML = character.type.goldAmount
         var activeItem = character.type.activeItem
-        var itemImage = imageBase.getImg(activeItem.key)
-        var itemImageSrc = itemImage.getAttribute('src')
         if (activeItem != null) {
+            toggleHidden([],['activeItem'])
+            var itemImage = imageBase.getImg(activeItem.key)
+            var itemImageSrc = itemImage.getAttribute('src')
             activatebleItem.setAttribute('src', itemImageSrc);
-            activeItemAmount.innerHtml = 'hi';
-            console.log(activeItemAmount.innerHTML)
+            activeItemAmount.innerText = ' x' + activeItem.totalUses;
         } else {
-            activeItemAmount.innerHTML = 'No Item'
+            toggleHidden(['activeItem'], [])
+            activeItemAmount.innerText = 'No Item'
         }
         var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
         currentValue.innerHTML = attribut.currentValue

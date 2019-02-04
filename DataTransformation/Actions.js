@@ -478,6 +478,7 @@ function returnFromMaze() {
     gameState.maze.deactivatePassiveEntities()
     initializeGame()
     if (gameState.state != gameStateEnum.VICTORY) {
+        console.log('loss, generate new character')
         createPlayer()  
     }
     gameState.getCharacter().rest()

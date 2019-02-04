@@ -9,6 +9,7 @@ function ActivatableEntity(entity = new End()) {
     this.type = entity.type
 
     this.effect = function(monsters, char, room) {
+        var result = false;
         if (this.activatableState == activatableState.ACTIVE) {
             if (this.entity.itemToActivate != null && !this.UsedItemToActivate) {
                 var item = char.items.has(this.entity.itemToActivate.key) ? char.items.get(this.entity.itemToActivate.key) : null;
@@ -19,12 +20,14 @@ function ActivatableEntity(entity = new End()) {
                     addTextToConsole(this.entity.failUse);
                 }
             } else {
-                var result = this.entity.effect(monsters, char, room);
+                 result = this.entity.effect(monsters, char, room);
                 if (result) {
                     this.deactivateEntity()
                 }
             }
         }
+        return result;
+
     }
 
     this.discoverEntity = function() {
@@ -92,7 +95,6 @@ function TreasureChest() {
 			char.addItem(this.treasure.items[i]);
 		}
         char.addGold(this.treasure.goldAmount);
-        consumable.totalUses --;
         return true;
     }
 	
@@ -124,7 +126,6 @@ function Door() {
                 gameState.maze.openDoors(room.x, room.y, otherRoom[0], otherRoom[1],i)
                 gameState.maze.Rooms[otherRoom[0]][otherRoom[1]].activatableEntity.discovered = true; 
                 gameState.maze.Rooms[otherRoom[0]][otherRoom[1]].activatableEntity.deactivateEntity(); 
-                consumable.totalUses --;
                 addTextToConsole(this.useText);
             }
         }

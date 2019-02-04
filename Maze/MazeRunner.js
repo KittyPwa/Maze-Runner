@@ -72,10 +72,15 @@ function createPlayer() {
         Char.type.addItem(new Item(new HealthPotion()))
     }
     gameState.updateCharacter(Char);
+    console.log('gameState updated with new character')
+    console.log(gameState)
+    console.log(gameState.getCharacter())
 }
 
 function updatePlayerVisuals() {
     Char = gameState.getCharacter()
+    console.log(gameState)
+    console.log(gameState.getCharacter())
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
@@ -125,6 +130,8 @@ function initializeGame() {
 }
 
 function startGame() {   
+    console.log(gameState)
+    console.log(gameState.getCharacter())
     updatePlayerVisuals()
     var Char = gameState.getCharacter()
     Char.CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
@@ -222,11 +229,7 @@ function keyPress() {
         gameState.getCharacter().walk()
     }
     //any other key
-    if (!keys[37] &&!keys[38] && !keys[39] && !keys[40]) {
-        x = 0;
-        y = 0;
-        Char.CanvasChar.Stop(); 
-    }
+    
     moveChar(x,y,Char, gameState.maze);
 }
 

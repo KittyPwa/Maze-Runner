@@ -84,10 +84,9 @@
 					<div>
 						<span>Active Item: </span>
 						<input id="leftArrow" class="chooseGame" type="button" value="&#x25C0;" onclick="previousActiveItem()"/>
-						<img id="activeItem" src="" style="width:50px; height:50px;">
-						<span id="activeItemAmount"></span>
+						<img id="activeItem" class="toggleHide" src="" style="width:50px; height:50px;cursor:pointer;" onclick="useItem()">
+						<span id="activeItemAmount">x1</span>
 						<input id="rightArrow" class="chooseGame" type="button" value="&#x25B6;" onclick="nextActiveItem()"/>
-						<input id="useItem" class="chooseGame" type="button" value="use" onclick="useItem()"/>
 					</div>
 				</div>
 

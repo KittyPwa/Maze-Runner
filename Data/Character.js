@@ -279,6 +279,7 @@ function Player() {
 
 	this.removeItem = function(item,quantity = 1) {
 		item = this.items.get(item.key);
+		console.log(this.items)
 		addTextToConsole('You lose : ' + item.entity.name + ' x' + quantity);
 		item.totalUses = item.totalUses >= quantity ? item.totalUses - quantity : 0;
 		if (item.totalUses == 0) {
@@ -353,6 +354,7 @@ function Player() {
 		if (usingItem != null) {
 			usingItem.useConsumable(room,maze)
 			if (usingItem.totalUses == 0){
+				console.log(usingItem)
 				this.removeItem(usingItem);
 			}
 		}
