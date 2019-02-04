@@ -45,7 +45,6 @@ function startVars(id) {
     loadImgs();
     saveGame();
     updateCharacterInfo()
-    console.log(gameState)
 }
 
 function updateGlobalValues() {
@@ -77,8 +76,6 @@ function createPlayer() {
 
 function updatePlayerVisuals() {
     Char = gameState.getCharacter()
-    console.log(gameState)
-    console.log(Char)
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();

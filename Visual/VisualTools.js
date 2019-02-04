@@ -16,6 +16,7 @@ function toggleHideAndStartGame(gameId) {
         newGame()
     }
     startVars(id)
+    gameState.winGame()
     toggleHidden(['ChooseGame'], ['playerInfo','Village','playerConsoleId'])
 }
 
@@ -58,6 +59,12 @@ function loadImgs() {
     var base_image = new Image();
     base_image.src = 'Visual/img/Sapphire.png';
     imageBase.putImg(new Item(new Sapphire()).key, base_image);
+    var base_image = new Image();
+    base_image.src = 'Visual/img/healingPotion.png';
+    imageBase.putImg(new Item(new HealthPotion()).key, base_image);
+    var base_image = new Image();
+    base_image.src = 'Visual/img/vigorPotion.png';
+    imageBase.putImg(new Item(new VigorPotion()).key, base_image);
     //ACTIVATABLE ENTITIES
     var base_image = new Image();
     base_image.src = 'Visual/img/Chest.png';
@@ -164,19 +171,7 @@ function setCharacterInfo() {
         updatableInfo[i].setAttribute('aria-valuemin',attribut.minValue)
         updatableInfo[i].setAttribute('aria-valuemax',attribut.maxValue)
     }
-    var activatebleItem = document.getElementById('ActiveItem')
-    var goldAmount = document.getElementById('goldAmount')
-    goldAmount.innerHTML = character.type.goldAmount
-    activeItem = character.type.activeItem
-    if (activeItem != null) {
-        activatebleItem.innerHTML = activeItem.entity.name + ' x' + activeItem.totalUses;
-    } else {
-        activatebleItem.innerHTML = 'No Item'
-    }
-    var currentValue = updatableInfo[i].getElementsByClassName('currentValue')[0]
-    currentValue.innerHTML = attribut.currentValue
-    var maxValue = updatableInfo[i].getElementsByClassName('maxValue')[0]
-    maxValue.innerHTML = attribut.maxValue
+    
 }
 function updateCharacterInfo() {
     var character = gameState.getCharacter()
@@ -193,18 +188,27 @@ function updateCharacterInfo() {
                 updatableInfo[i].className = updatableInfo[i].className.split("bg-danger").join(' bg-info ');
             }
         }
-        var currentValue = updatableInfo[i].getElementsByClassName('currentValue')[0]
+        var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
         currentValue.innerHTML = attribut.currentValue
-        var maxValue = updatableInfo[i].getElementsByClassName('maxValue')[0]
+        var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
-    }
-    var activatebleItem = document.getElementById('ActiveItem')
-    var goldAmount = document.getElementById('goldAmount')
-    goldAmount.innerHTML = character.type.goldAmount
-    activeItem = character.type.activeItem
-    if (activeItem != null) {
-        activatebleItem.innerHTML = activeItem.entity.name + ' x' + activeItem.totalUses;
-    } else {
-        activatebleItem.innerHTML = 'No Item'
+        var activatebleItem = document.getElementById('activeItem')
+        var activeItemAmount = document.getElementById('activeItemAmount')
+        var goldAmount = document.getElementById('goldAmount')
+        goldAmount.innerHTML = character.type.goldAmount
+        var activeItem = character.type.activeItem
+        var itemImage = imageBase.getImg(activeItem.key)
+        var itemImageSrc = itemImage.getAttribute('src')
+        if (activeItem != null) {
+            activatebleItem.setAttribute('src', itemImageSrc);
+            activeItemAmount.innerHtml = 'hi';
+            console.log(activeItemAmount.innerHTML)
+        } else {
+            activeItemAmount.innerHTML = 'No Item'
+        }
+        var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
+        currentValue.innerHTML = attribut.currentValue
+        var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
+        maxValue.innerHTML = attribut.maxValue
     }
 }

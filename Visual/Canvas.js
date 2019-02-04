@@ -134,7 +134,7 @@ function CanvasRoom(Room, n) {
 				else if (Room.hasItem()) {
 					var key = Room.item.key
 					if (imageBase.hasImg(key)) {
-						img = imageBase.getImg(key);
+                        img = imageBase.getImg(key);
 						ctx.drawImage(img, i + pixelDisplacement / 2, j + pixelDisplacement / 2 , (this.roomSize - pixelDisplacement), (this.roomSize - pixelDisplacement));
 					} else {
 						ctx.fillText('I', i-1+this.roomSize/2, j +this.roomSize/2);

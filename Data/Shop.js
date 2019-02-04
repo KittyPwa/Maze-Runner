@@ -35,12 +35,11 @@ typeMap.set('Shop', Shop)
 
 function sellItem(item, itemKey,quantity, character) {
 	var keyMap = parseInt(itemKey.trim());
-	console.log(gameState)
 	var map = gameState.shop.stock.get(keyMap.toString()).getConsumableMap();
 	item = item.trim()
 	var stock = returnElementFromMap(map,item);
 	quantity = parseInt(quantity)
-	if (character.type.items.has(item)) {
+	if (character.type.items.has(item) && quantity > 0) {
 		if (stock.item.entity.sellPrice * quantity <= gameState.shop.merchantGold && character.type.items.get(item.toString()).totalUses >= quantity) {
 			gameState.shop.merchantGold -= stock.item.entity.sellPrice * quantity;
 			stock.quantity += quantity;
@@ -62,7 +61,7 @@ function buyItem(item, itemKey,quantity, character) {
 	item = item.trim()
 	var stock = returnElementFromMap(map,item);
 	quantity = parseInt(quantity)
-	if (stock.item.entity.buyPrice * quantity <= character.type.goldAmount && stock.quantity >= quantity) {
+	if (stock.item.entity.buyPrice * quantity <= character.type.goldAmount && stock.quantity >= quantity && quantity > 0) {
 		addTextToConsole('You buy : ' + stock.item.entity.name + ' x' + quantity + ' from the merchant');
 		character.type.goldAmount -= stock.item.entity.buyPrice * quantity;
 		character.type.addItem(stock.item, quantity)
