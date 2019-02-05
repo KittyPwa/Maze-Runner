@@ -17,7 +17,6 @@ function toggleHideAndStartGame(gameId) {
     startVars(id)
     gameState.winGame()
     gameState.removeMaze()
-    console.log(gameState)
     toggleHidden(['ChooseGame'], ['playerInfo','Village','playerConsoleId'])
 }
 

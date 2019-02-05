@@ -72,15 +72,10 @@ function createPlayer() {
         Char.type.addItem(new Item(new HealthPotion()))
     }
     gameState.updateCharacter(Char);
-    console.log('gameState updated with new character')
-    console.log(gameState)
-    console.log(gameState.getCharacter())
 }
 
 function updatePlayerVisuals() {
     Char = gameState.getCharacter()
-    console.log(gameState)
-    console.log(gameState.getCharacter())
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
@@ -98,11 +93,6 @@ function initializeGame() {
     mazeMaker = new MazeMaker(mazeSize);
     mazeMaker.MakeMaze();
     gameState.updateMaze(mazeMaker.Maze)
-	if (gameState.state != gameStateEnum.VICTORY) {
-		gameState.clearEntries();
-	} else {
-		gameState.clearAllButCharacter();
-	}
     if (mazeMaker.Notify) {
         var patrollerAmount = Random(1,(mazeSize / gameDifficulty) / 3)
         for (var i = 0; i < mazeSize / gameDifficulty; i++) {
@@ -130,8 +120,6 @@ function initializeGame() {
 }
 
 function startGame() {   
-    console.log(gameState)
-    console.log(gameState.getCharacter())
     updatePlayerVisuals()
     var Char = gameState.getCharacter()
     Char.CanvasChar.drawAttributs(Char.type.activeItem, Char.type.goldAmount)
@@ -188,7 +176,7 @@ function keyPress() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = false;
                 }
-            }, 750)
+            }, 500)
 		}
     }
 
@@ -200,29 +188,44 @@ function keyPress() {
             charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
-			updateCharacterInfo()
+            updateCharacterInfo()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = false;
                 }
-            }, 750)
+            }, 500)
 		}
     }
 
-    //Z : cycle item
+    //Z : cycle next item
     if (keys[90]) {
-        if (!timerBooleans[timerBooleans.CYCLEACTIVEITEM]) {
-            timerBooleans[0] = true;
+        if (!gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
+            gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = true;
             Char = gameState.getCharacter()
             Char.type.activateNextItem();
             setTimeout(function() {
-                if (timerBooleans[0]) {
-                    timerBooleans[0] = false;
+                if (gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
+                    gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = false;
                 }
             }, 500)
         }
     }
 
+    //Z : cycle previous item
+    if (keys[82]) {
+        if (!gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
+            gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM];
+            Char = gameState.getCharacter()
+            Char.type.activateNextItem();
+            setTimeout(function() {
+                if (gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
+                    gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = false;
+                }
+            }, 500)
+        }
+    }
+    
+    //Shift : Sprint
     if (keys[16] && (x != 0 || y != 0)) {
         gameState.getCharacter().sprint()
     } else {

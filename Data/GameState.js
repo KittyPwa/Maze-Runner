@@ -170,8 +170,8 @@ function GameState() {
 		this.shop = null
 	}
 
-	//timerBooleansArray = [cycleActiveItem,useActiveItem,useActivatableEntity,sprint]
-	this.timerBooleansArray= [false,false,false,false];
+	//timerBooleansArray = [cycleNextActiveItem, cyclePreviousActiveItem,useActiveItem,useActivatableEntity,sprint]
+	this.timerBooleansArray= [false,false,false,false,false];
 
 	this.resetBooleansArray = function(){
 		for (var i = 0; i < this.timerBooleansArray.length; i++) {
@@ -226,6 +226,7 @@ function Games() {
 typeMap.set('Games', Games)
 
 function saveGame() {
+	gameState.removeMaze()
 	store(game)
 }
 

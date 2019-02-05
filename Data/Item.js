@@ -48,7 +48,7 @@ function Key() {
 
     this.uses = 1;
 
-    this.useText = 'The '+this.name+' enters the lock, you lose a '+this.name
+    this.useText = 'You lose '+  this.uses + ' '+this.name
 
     this.failUseText = 'There\s nothing to use your ' + this.name + ' with';
 
@@ -58,10 +58,10 @@ function Key() {
                 var Char = gameState.getCharacter()
                 var monsters = gameState.getAllMonsters()
                 var charRoom = maze.getRoomFromChar(Char.CanvasChar)
+                room.activatableEntity.useItemToActivate();
                 var retVal = room.activatableEntity.effect(monsters, Char.type, charRoom)
                 if (retVal) {
                     addTextToConsole(this.useText);
-                    consumable.totalUses --;
                 } else {
                     addTextToConsole(this.failUseText);        
                 }
@@ -145,7 +145,6 @@ function HealthPotion() {
         } else {
             addTextToConsole(this.notUsefulUseText)
         }
-        consumable.totalUses --;
     }
 
     this.createNew = function() {

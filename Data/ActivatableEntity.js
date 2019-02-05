@@ -6,7 +6,12 @@ function ActivatableEntity(entity = new End()) {
 
     this.UsedItemToActivate = false;
 
-    this.type = entity.type
+    this.useItemToActivate = function() {
+        this.UsedItemToActivate = true;
+    }
+
+    this.type = entity.type;
+
 
     this.effect = function(monsters, char, room) {
         var result = false;
@@ -14,7 +19,7 @@ function ActivatableEntity(entity = new End()) {
             if (this.entity.itemToActivate != null && !this.UsedItemToActivate) {
                 var item = char.items.has(this.entity.itemToActivate.key) ? char.items.get(this.entity.itemToActivate.key) : null;
                 if (item != null) {
-                    this.UsedItemToActivate = true;
+                    this.useItemToActivate();
                     char.useItem(room, gameState.maze, item)
                 } else {
                     addTextToConsole(this.entity.failUse);
