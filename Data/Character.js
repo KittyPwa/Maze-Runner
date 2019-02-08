@@ -355,8 +355,10 @@ function Player() {
 			usingItem = item;
 		}
 		if (usingItem != null) {
-			usingItem.useConsumable(room,maze)
-			this.removeItem(usingItem);
+			var used = usingItem.useConsumable(room,maze)
+			if (used) {
+				this.removeItem(usingItem);
+			}
 		}
 	}
 

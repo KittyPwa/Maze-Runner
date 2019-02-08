@@ -67,11 +67,12 @@ function createPlayer() {
     gameState.addGameTimer(new gameTimer(null, 50));
     player = new Player()
     Char = new Character('blue', charSpeed, player);
+    Char.type.addItem(new Item(new ShinyBaubble()))
     Char.type.addItem(new Item(new Key()))
     for (var i = 0; i < 2; i++) {
         Char.type.addItem(new Item(new HealthPotion()))
     }
-    Char.type.addItem(new Item(new Sapphire()))
+    Char.type.addItem(new Item(new VigorPotion()))
     gameState.updateCharacter(Char);
 }
 
@@ -198,7 +199,7 @@ function keyPress() {
 		}
     }
 
-    //Z : cycle next item
+    //R : cycle next item
     if (keys[90]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
             gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = true;
@@ -208,21 +209,21 @@ function keyPress() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = false;
                 }
-            }, 500)
+            }, 150)
         }
     }
 
     //Z : cycle previous item
     if (keys[82]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
-            gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM];
+            gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = true;
             Char = gameState.getCharacter()
-            Char.type.activateNextItem();
+            Char.type.activatePreviousItem();
             setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = false;
                 }
-            }, 500)
+            }, 150)
         }
     }
     

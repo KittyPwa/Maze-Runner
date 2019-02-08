@@ -21,16 +21,17 @@ function Item(item = new Key()){
     }
 
     this.useConsumable = function(room,maze) {
+        var consumed = false;
         switch(this.type) {
             case consumableType.ROOM: 
                 if (this.totalUses > 0) {
-                    this.entity.effect(room, maze, this);
+                    consumed = this.entity.effect(room, maze, this);
                 }
                 break;
             default : 
                 break;
         }
-        
+        return consumed
     }
 }
 typeMap.set('Item', Item)
@@ -62,13 +63,16 @@ function Key() {
                 var retVal = room.activatableEntity.effect(monsters, Char.type, charRoom)
                 if (retVal) {
                     addTextToConsole(this.useText);
+                    return true;
                 } else {
                     addTextToConsole(this.failUseText);        
                 }
+                
             }
         } else {
             addTextToConsole(this.failUseText);
         }
+        return false;
     }
 
     this.createNew = function() {
@@ -99,7 +103,8 @@ function IdolBust() {
 	this.useText = 'The ' + this.name + ' does not seem to react. You are watched.';
 
     this.effect = function(room, maze, consumable) {
-		addTextToConsole(this.useText)
+        addTextToConsole(this.useText);
+        return false;
     }
 
     this.createNew = function() {
@@ -145,6 +150,7 @@ function HealthPotion() {
         } else {
             addTextToConsole(this.notUsefulUseText)
         }
+        return true;
     }
 
     this.createNew = function() {
@@ -190,7 +196,7 @@ function VigorPotion() {
         } else {
             addTextToConsole(this.notUsefulUseText)
         }
-        consumable.totalUses --;
+        return true;
     }
 
     this.createNew = function() {
