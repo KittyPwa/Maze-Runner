@@ -290,7 +290,6 @@ function Player() {
 	}
 
 	this.activateNextItem = function() {
-		console.log(this.items.entries())
 		if (this.activeItem != null) {
 			var entries = this.items.entries();
 			var entry = entries.next()
@@ -306,8 +305,15 @@ function Player() {
 				while (!entry.done && entry.value[1].entity.itemType == itemTypeEnum.ITEM) {
 					entry = entries.next()
 				}
+			}
+			if (entry.done) {
+				entries = this.items.entries();
+				entry = entries.next()
+				while (!entry.done && entry.value[1].entity.itemType == itemTypeEnum.ITEM) {
+					entry = entries.next()
+				}
 			} 
-			if(entry.done) {
+			if(entry.done || entry.value[0] == this.activeItem.key) {
 				this.activeItem = null
 			} else {
 				this.activeItem = entry.value[1]
@@ -323,22 +329,19 @@ function Player() {
 				entry = entries.next()
 			}
 			var previousEntry = entry;
-			while(!entry.done && entry.value[0] != this.activeItem.key ) {
-				previousEntry = entry;
-				entry = entries.next()
-			}
-			if (previousEntry.done) {
-				entries = this.items.entries();
-				previousEntry = entry
-				entry = entries.next()
-			}
-			if (!entry.done) {
-				while (!entry.done && entry.value[1].entity.itemType == itemTypeEnum.ITEM) {
-					previousEntry = entry
+			itemToFind = this.activeItem;
+			do {
+				while(entry.value[0] != itemToFind.key) {
+					previousEntry = entry;
 					entry = entries.next()
+					if (entry.done) {
+						entries = this.items.entries();
+						entry = entries.next()
+					}
 				}
-			}
-			if(previousEntry.done) {
+				itemToFind = previousEntry.value[1]
+			} while(previousEntry.value[1].entity.itemType == itemTypeEnum.ITEM);
+			if(previousEntry.done || previousEntry.value[0] == this.activeItem.key) {
 				this.activeItem = null
 			} else {
 				this.activeItem = previousEntry.value[1]

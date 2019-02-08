@@ -71,6 +71,7 @@ function createPlayer() {
     for (var i = 0; i < 2; i++) {
         Char.type.addItem(new Item(new HealthPotion()))
     }
+    Char.type.addItem(new Item(new Sapphire()))
     gameState.updateCharacter(Char);
 }
 
