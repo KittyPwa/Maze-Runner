@@ -45,3 +45,16 @@ table, th, td {
 .container{
 	max-width: 80%;
 }
+
+
+.tooltip > .tooltip-inner {
+	border: 1px solid;
+	padding: 10px;
+	color: black;
+	text-align: left;
+	background-color: white;
+	background: white;
+	 
+	opacity: 1.0;
+	filter: alpha(opacity=100);
+  } 

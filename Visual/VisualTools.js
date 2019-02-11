@@ -94,23 +94,33 @@ function updateMerchant() {
     for (var i = 0; i < trToDelete.length; i++) {
         emptyChildNodes(trToDelete[i])
     }
-    var cloned = document.getElementById('shopTrToClone');
-    var elem;
+    var tableCloned = document.getElementById('shopTrToClone');
+    var cardCloned = document.getElementById('cardToClone')
+    var elem,cardElem;
     var itemsMap = shop.getMapFromKey(itemTypeEnum.CONSUMABLE);
     Char = gameState.getCharacter()
+    var tempNode = document.createElement("div")
     for (var [key,value] of itemsMap) {
         playerQty = Char.type.items.has(key) ? Char.type.items.get(key).getAmount() : 0
         if (playerQty > 0 || value.quantity > 0) {
-            elem = cloned.cloneNode(true);
+            elem = tableCloned.cloneNode(true);
             elem.id = ''
+            cardElem = cardCloned.cloneNode(true);
+            cardElem.id = ''
 
             elemType = elem.getElementsByClassName('itemKey')[0];
             textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
             elemType.appendChild(textNode)
 
-            elemName = elem.getElementsByClassName('itemName')[0];
-            textNode = document.createTextNode(key);
-            elemName.appendChild(textNode)
+            elemImageTd = elem.getElementsByClassName('itemImage')[0];
+            var itemImage = imageBase.getImg(key)
+            var itemImageSrc = itemImage.getAttribute('src')
+            elemImageTd.setAttribute('src', itemImageSrc);
+            elemImageTd.setAttribute('key', key);
+            emptyNode(tempNode);
+            tempNode.appendChild(cardElem)
+
+            elemImageTd.setAttribute('title', tempNode.innerHTML)
 
             elemQty = elem.getElementsByClassName('itemQuantity')[0];
             textNode = document.createTextNode(value.quantity)
@@ -138,7 +148,7 @@ function updateMerchant() {
     textNode = document.createTextNode(Char.type.goldAmount);
     emptyChildNodes(playerGold)
     playerGold.appendChild(textNode)
-    
+    activateTooltip()
 }
 
 
@@ -211,5 +221,17 @@ function updateCharacterInfo() {
         currentValue.innerHTML = attribut.currentValue
         var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
+    }
+}
+
+function activateTooltip() {
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+}
+
+function emptyNode(myNode) {
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
     }
 }

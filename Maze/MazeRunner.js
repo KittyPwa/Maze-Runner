@@ -67,12 +67,10 @@ function createPlayer() {
     gameState.addGameTimer(new gameTimer(null, 50));
     player = new Player()
     Char = new Character('blue', charSpeed, player);
-    Char.type.addItem(new Item(new ShinyBaubble()))
     Char.type.addItem(new Item(new Key()))
     for (var i = 0; i < 2; i++) {
         Char.type.addItem(new Item(new HealthPotion()))
     }
-    Char.type.addItem(new Item(new VigorPotion()))
     gameState.updateCharacter(Char);
 }
 

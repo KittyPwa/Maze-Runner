@@ -313,7 +313,7 @@ function Player() {
 					entry = entries.next()
 				}
 			} 
-			if(entry.done || entry.value[0] == this.activeItem.key) {
+			if(entry.done) {
 				this.activeItem = null
 			} else {
 				this.activeItem = entry.value[1]
@@ -325,14 +325,16 @@ function Player() {
 		if (this.activeItem != null) {
 			var entries = this.items.entries();
 			var entry = entries.next()
+			var previousEntry = entry;
 			if (entry.value[0] == this.activeItem.key) {
 				entry = entries.next()
 			}
-			var previousEntry = entry;
 			itemToFind = this.activeItem;
 			do {
-				while(entry.value[0] != itemToFind.key) {
-					previousEntry = entry;
+				while(entry.done || entry.value[0] != itemToFind.key) {
+					if (!entry.done) {
+						previousEntry = entry;
+					}
 					entry = entries.next()
 					if (entry.done) {
 						entries = this.items.entries();
@@ -341,7 +343,7 @@ function Player() {
 				}
 				itemToFind = previousEntry.value[1]
 			} while(previousEntry.value[1].entity.itemType == itemTypeEnum.ITEM);
-			if(previousEntry.done || previousEntry.value[0] == this.activeItem.key) {
+			if(previousEntry.done) {
 				this.activeItem = null
 			} else {
 				this.activeItem = previousEntry.value[1]
