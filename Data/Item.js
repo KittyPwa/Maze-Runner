@@ -39,6 +39,8 @@ typeMap.set('Item', Item)
 function Key() {
     this.name = 'Key';
 
+    this.description = 'A key that opens locks.'
+
     this.itemType = itemTypeEnum.CONSUMABLE
 
     this.type = consumableType.ROOM;
@@ -88,6 +90,8 @@ typeMap.set('Key', Key)
 function IdolBust() {
     this.name = 'Strange idol';
 
+    this.description = 'A strange bust that ressembles nothing coherant at first glance. It could look like... no, not really, perhaps...'
+
     this.uses = 1;
 
     this.itemType = itemTypeEnum.CONSUMABLE
@@ -118,7 +122,7 @@ function IdolBust() {
 typeMap.set('IdolBust', IdolBust)
 
 function HealthPotion() {
-	this.name = 'Health potion';
+    this.name = 'Health potion';
 
     this.uses = 1;
 
@@ -135,6 +139,8 @@ function HealthPotion() {
     this.useText = 'The ' + this.name + ' goes down your gullet.'
 
     this.healthAmount = Random(3,9);
+
+    this.description = 'A potion full of red-colored liquid that heals your wounds upon consumption. It heals for ' + this.healthAmount + ' hitpoints.'
 
     this.usefulUseText = 'You feel your wounds recovering. You gain ' + this.healthAmount + ' HP'
 
@@ -181,6 +187,8 @@ function VigorPotion() {
     this.useText = 'The ' + this.name + ' goes down your gullet.'
 
     this.enduranceAmount = Random(25,50);
+
+    this.description = 'A potion full of green-colored liquid that grants energy upon consumption. It grants ' + this.enduranceAmount + ' endurance points.'
 
     this.usefulUseText = 'You breath comes more easily. You gain ' + this.enduranceAmount + ' endurance points'
 
@@ -252,6 +260,8 @@ function getConsumableFromRarifiedArray() {
 function ShinyBaubble() {
     this.name = 'Shiny Baubble';
 
+    this.description = 'A shiny trinket that holds no visible use. Perhaps a merchant could want this.'
+
     this.type = null;
 
     this.uses = 1;
@@ -276,6 +286,8 @@ typeMap.set('ShinyBaubble', ShinyBaubble)
 function Ruby() {
 
     this.name = 'Ruby';
+
+    this.description = 'A sparkling red gem. The merchant would probably interested in this.'
 	
 	this.uses = 1;
 	
@@ -301,7 +313,9 @@ typeMap.set('Ruby', Ruby)
 function Sapphire() {
 
     this.name = 'Sapphire';
-	
+    
+    this.description = 'A sparkling blue gem. The merchant would probably interested in this.'
+    
 	this.uses = 1;
 	
 	this.type = null;
@@ -324,7 +338,9 @@ function Sapphire() {
 typeMap.set('Sapphire', Sapphire)
 
 function DiamondSetVase() {
-	this.name = 'Diamond Set Vase';
+    this.name = 'Diamond Set Vase';
+    
+    this.description = 'An old diamond-set vase. The merchant would probably interested in this.'
 	
 	this.uses = 1;
 	
@@ -348,7 +364,9 @@ typeMap.set('DiamondSetVase', DiamondSetVase)
 
 function AncientVase() {
 	
-	this.name = 'Ancient Vase';
+    this.name = 'Ancient Vase';
+    
+    this.description = 'An ancient vase. The merchant would probably interested in this.'
 	
 	this.uses = 1;
 	

@@ -50,6 +50,7 @@ table, th, td {
 .tooltip > .tooltip-inner {
 	border: 1px solid;
 	padding: 10px;
+	max-width: 250px;
 	color: black;
 	text-align: left;
 	background-color: white;

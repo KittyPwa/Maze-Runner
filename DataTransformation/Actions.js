@@ -453,7 +453,9 @@ function nextActiveItem() {
     updateCharacterInfo()
 }
 
-function useItem() {
+function useItem(node) {
+    $(node).tooltip('hide')
+    $(node).tooltip('show')
     var item = gameState.getCharacter().type.activeItem;
     var maze = gameState.getMaze();
     var room = maze != null ? maze.getRoomFromChar(gameState.getCharacter().CanvasChar) : null
