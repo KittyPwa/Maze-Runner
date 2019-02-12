@@ -23,9 +23,9 @@ function Endurance() {
 
     this.consumeAmount = 1;
 
-    //this.gainAmount = 0.5;
+    this.gainAmount = 0.5;
 
-    this.gainAmount = 5;
+    //this.gainAmount = 5;
 
     this.exhausted = false;
 }

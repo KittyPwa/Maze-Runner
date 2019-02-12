@@ -447,6 +447,12 @@ function previousActiveItem() {
     updateCharacterInfo()
 }
 
+function resetLocalStorage() {
+    if (confirm("Are you certain you want to continue? All saved data will be lost.")) {
+        localStorage.clear();
+    }
+}
+
 function nextActiveItem() {
     Char = gameState.getCharacter().type;
     Char.activateNextItem()
