@@ -45,6 +45,7 @@ function startVars(id) {
     loadImgs();
     saveGame();
     updateCharacterInfo()
+    updateActiveItem()
 }
 
 function updateGlobalValues() {
@@ -66,7 +67,7 @@ function createPlayer() {
     clearText();
     gameState.addGameTimer(new gameTimer(null, 50));
     player = new Player()
-    Char = new Character('blue', charSpeed, player);
+    var Char = new Character('blue', charSpeed, player);
     Char.type.addItem(new Item(new Key()))
     for (var i = 0; i < 2; i++) {
         Char.type.addItem(new Item(new HealthPotion()))
@@ -75,10 +76,11 @@ function createPlayer() {
 }
 
 function updatePlayerVisuals() {
-    Char = gameState.getCharacter()
+    var Char = gameState.getCharacter()
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
+    updateActiveItem()
     Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
     gameState.updateCharacter(Char);
 }
@@ -136,6 +138,7 @@ function startGame() {
     gameState.maze.drawMaze()
     setCharacterInfo()
     updateCharacterInfo()
+    updateActiveItem()
     gameState.resetBooleansArray()
     requestAnimationFrame(updateGameArea);
 }
@@ -143,6 +146,7 @@ function startGame() {
 function keyPress() { 
     var x=0;
     var y=0;
+    var Char = gameState.getCharacter()
     //left
     if (keys[37]) {
         x = -1;
@@ -167,11 +171,10 @@ function keyPress() {
     if (keys[69]) {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = true;
-            Char = gameState.getCharacter()
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useItem(charRoom, gameState.maze);
 			Char.CanvasChar.drawCharacter();
-			updateCharacterInfo()
+			updateActiveItem()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = false;
@@ -184,11 +187,10 @@ function keyPress() {
     if (keys[32]) {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = true;
-			Char = gameState.getCharacter()
             charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
-            updateCharacterInfo()
+            updateActiveItem()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = false;
@@ -201,8 +203,8 @@ function keyPress() {
     if (keys[90]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
             gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = true;
-            Char = gameState.getCharacter()
             Char.type.activateNextItem();
+            updateActiveItem()
             setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = false;
@@ -215,8 +217,8 @@ function keyPress() {
     if (keys[82]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
             gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = true;
-            Char = gameState.getCharacter()
             Char.type.activatePreviousItem();
+            updateActiveItem()
             setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = false;

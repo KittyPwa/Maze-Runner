@@ -442,9 +442,9 @@ function moveAIChar(orientation, char, maze) {
 }
 
 function previousActiveItem() {
-    Char = gameState.getCharacter().type;
+    var Char = gameState.getCharacter().type;
     Char.activatePreviousItem()
-    updateCharacterInfo()
+    updateActiveItem()
 }
 
 function resetLocalStorage() {
@@ -454,9 +454,9 @@ function resetLocalStorage() {
 }
 
 function nextActiveItem() {
-    Char = gameState.getCharacter().type;
+    var Char = gameState.getCharacter().type;
     Char.activateNextItem()
-    updateCharacterInfo()
+    updateActiveItem()
 }
 
 function useItem(node) {
@@ -466,8 +466,11 @@ function useItem(node) {
     var maze = gameState.getMaze();
     var room = maze != null ? maze.getRoomFromChar(gameState.getCharacter().CanvasChar) : null
     gameState.getCharacter().type.useItem(maze, room, item)
-    updateCharacterInfo()
-    saveGame()
+    updateActiveItem()
+    if (maze == null) {
+        console.log('save')
+        saveGame()
+    }
 }
 
 function checkReturnToTown() {

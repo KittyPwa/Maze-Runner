@@ -66,14 +66,10 @@ function Key() {
                 if (retVal) {
                     addTextToConsole(this.useText);
                     return true;
-                } else {
-                    addTextToConsole(this.failUseText);        
-                }
-                
+                }                
             }
-        } else {
-            addTextToConsole(this.failUseText);
-        }
+        }  
+        addTextToConsole(this.failUseText);
         return false;
     }
 

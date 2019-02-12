@@ -159,7 +159,7 @@ function updateImage(node, value) {
     emptyNode(tempNode)
     tempNode.appendChild(cardElem)
     node.setAttribute('title', tempNode.innerHTML)
-
+    node.removeAttribute('data-original-title')
     activateTooltip()
 }
 
@@ -192,7 +192,6 @@ function setCharacterInfo() {
         updatableInfo[i].setAttribute('aria-valuemin',attribut.minValue)
         updatableInfo[i].setAttribute('aria-valuemax',attribut.maxValue)
     }
-    
 }
 function updateCharacterInfo() {
     var character = gameState.getCharacter()
@@ -213,31 +212,36 @@ function updateCharacterInfo() {
         currentValue.innerHTML = attribut.currentValue
         var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
-        var oldactivatebleItem = document.getElementById('activeItem')
-        var activatebleItem = oldactivatebleItem.cloneNode(true);
-        var parentNode = oldactivatebleItem.parentNode;
-        parentNode.replaceChild(activatebleItem, oldactivatebleItem)
-        var activeItemAmount = document.getElementById('activeItemAmount')
         var goldAmount = document.getElementById('goldAmount')
         goldAmount.innerHTML = character.type.goldAmount
-        var activeItem = character.type.activeItem
-        if (activeItem != null) {
-            toggleHidden([],['activeItem'])
-            var itemImage = imageBase.getImg(activeItem.key)
-            var itemImageSrc = itemImage.getAttribute('src')
-            activatebleItem.setAttribute('src', itemImageSrc);
-            updateImage(activatebleItem, activeItem)
-            activeItemAmount.innerText = ' x' + activeItem.totalUses;
-        } else {
-            toggleHidden(['activeItem'], [])
-            activeItemAmount.innerText = 'No Item'
-        }
+        
         var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
         currentValue.innerHTML = attribut.currentValue
         var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
-        activateTooltip()
     }
+}
+
+function updateActiveItem() {
+    var character = gameState.getCharacter()
+    var oldactivatebleItem = document.getElementById('activeItem')
+    var activatebleItem = oldactivatebleItem.cloneNode(true);
+    var parentNode = oldactivatebleItem.parentNode;
+    parentNode.replaceChild(activatebleItem, oldactivatebleItem)
+    var activeItemAmount = document.getElementById('activeItemAmount')
+    var activeItem = character.type.activeItem
+    if (activeItem != null) {
+        toggleHidden([],['activeItem'])
+        var itemImage = imageBase.getImg(activeItem.key)
+        var itemImageSrc = itemImage.getAttribute('src')
+        activatebleItem.setAttribute('src', itemImageSrc);
+        updateImage(activatebleItem, activeItem)
+        activeItemAmount.innerText = ' x' + activeItem.totalUses;
+    } else {
+        toggleHidden(['activeItem'], [])
+        activeItemAmount.innerText = 'No Item'
+    }
+    activateTooltip()
 }
 
 function activateTooltip() {
