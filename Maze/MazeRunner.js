@@ -23,68 +23,6 @@ var currentAnimationReq = null;
 var CSize = 600;
 var timer = null;
 
-function loadGames() {
-    game = loadGame();
-}
-
-
-function newGame() {
-    gameState = new GameState();
-    game.addGameState(gameState);
-    createPlayer();
-    shop = new Shop();
-    shop.InitializeShop();
-    gameState.addShop(shop);
-}
-
-function startVars(id) {
-    if (id != 'null') {
-        gameState = game.getGameState(id)
-    }
-    shop = gameState.shop
-    loadImgs();
-    saveGame();
-    updateCharacterInfo()
-    updateActiveItem()
-}
-
-function updateGlobalValues() {
-    e = document.getElementById("cSizeSelect");
-    windowSize = getWindowSize()
-    windowSize[1] -= windowSize[1] % 100 
-    windowSize[0] -= windowSize[0] % 100 
-    CSize = windowSize[0] > windowSize[1] ? windowSize[1] : windowSize[0];
-    CSize -= 20;
-    e = document.getElementById("playerSpeedSelect");
-	charSpeed = parseInt(e.options[e.selectedIndex].value)
-    e = document.getElementById("gameLengthSelect");
-	mazeSize = parseInt(e.options[e.selectedIndex].value)
-    e = document.getElementById("gameDifficultySelect");
-	gameDifficulty = parseInt(e.options[e.selectedIndex].value)
-}
-
-function createPlayer() {
-    clearText();
-    gameState.addGameTimer(new gameTimer(null, 50));
-    player = new Player()
-    var Char = new Character('blue', charSpeed, player);
-    Char.type.addItem(new Item(new Key()))
-    for (var i = 0; i < 2; i++) {
-        Char.type.addItem(new Item(new HealthPotion()))
-    }
-    gameState.updateCharacter(Char);
-}
-
-function updatePlayerVisuals() {
-    var Char = gameState.getCharacter()
-    var startRoom = gameState.maze.getStartRoom();
-    Char.updateCanvasChar(startRoom.x,startRoom.y)
-    updateCharacterInfo();
-    updateActiveItem()
-    Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
-    gameState.updateCharacter(Char);
-}
-
 function initializeGame() {
 	document.getElementById('newGameId').blur()
 	updateGlobalValues();

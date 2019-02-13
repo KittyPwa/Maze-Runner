@@ -1,27 +1,12 @@
-function toggleHideAndSelectGame() {
-    loadGames()
+function toggleHideSelectGame() {
     toggleHidden(['MainMenu'], ['ChooseGame'])
-    selects = document.getElementsByClassName('chooseGame');
-    gameStates = game.getAllGameStates()
-    for (var i = 0; i < gameStates.length; i++) {
-        selects[i].setAttribute('gameId',gameStates[i].id)
-        selects[i].setAttribute('value', 'Continue')
-    }
 }
 
-function toggleHideAndStartGame(gameId) {
-    var id = gameId.getAttribute('gameId')
-    if (id == 'null') {
-        newGame()
-    }
-    startVars(id)
-    gameState.winGame()
-    gameState.removeMaze()
+function toggleHideStartGame() {
     toggleHidden(['ChooseGame'], ['playerInfo','Village','playerConsoleId'])
 }
 
-function toggleHiddenAndShowShop() {
-    updateMerchant()
+function toggleHiddenShowShop() {
     toggleHidden(['Village','showShopGameScreen'], ['shopTable','playerConsoleId'])
 }
 
@@ -29,10 +14,8 @@ function toggleHiddenAndReturnShop() {
     toggleHidden(['playerInfo','GameScreen', 'canvasId'],['shopTable'])
 }
 
-function toggleHiddenAndStartMaze() {
-    initializeGame()
+function toggleHiddenStartMaze() {
     toggleHidden(['Village'], ['GameScreen','canvasId'])
-    startGame();
 }
 
 function toggleHiddenAndVillage() {
