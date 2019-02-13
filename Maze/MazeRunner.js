@@ -98,7 +98,6 @@ function initializeGame() {
     if (mazeMaker.Notify) {
         var patrollerAmount = Random(1,(mazeSize / gameDifficulty) / 3)
         for (var i = 0; i < mazeSize / gameDifficulty; i++) {
-        //for (var i = 0; i < 1; i++) {
             var monsterSpeed = Random(1,charSpeed);
             var type = monsterMovementType.ROAMER;
             if (patrollerAmount > 0) {
@@ -107,9 +106,9 @@ function initializeGame() {
             }
             player = new Monster(type)
             monster = new Character('red', monsterSpeed, player);
-            var randomRoom = gameState.maze.getRandomNonSpecialRoom(mazeMaker)
+            var darkPortalRoom = gameState.maze.getDarkPortalRoom()
             gameState.addMonster(monster);
-            monster.updateCanvasChar(randomRoom.x,randomRoom.y)
+            monster.updateCanvasChar(darkPortalRoom.x,darkPortalRoom.y)
             monster.CanvasChar.teleport(monster.CanvasChar.posX, monster.CanvasChar.posY);
         }
 		var rooms = gameState.maze.Rooms;

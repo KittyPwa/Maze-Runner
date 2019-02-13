@@ -11,6 +11,8 @@ function Maze(n) {
 
   this.passiveEntityRooms = [];
 
+  this.darkPortalRoom = null;
+
   this.activatableEntityRooms = [];
 
   this.lightRooms = []
@@ -167,6 +169,18 @@ function Maze(n) {
     for (var i = 0; i < this.passiveEntityRooms.length; i++) {
       this.passiveEntityRooms[i].returnPassiveEntity().deactivateEntity()
     }
+  }
+
+  this.addDarkPortalRoom = function(passiveEntityRoom) {
+    this.darkPortalRoom = passiveEntityRoom
+  }
+
+  this.removeDarkPortalRoom = function(passiveEntityRoom) {
+    this.darkPortalRoom = null;
+  }
+
+  this.getDarkPortalRoom = function() {
+    return this.darkPortalRoom;
   }
 
   this.addLightRoom = function(room) {

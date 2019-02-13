@@ -335,9 +335,25 @@ function MazeMaker (n) {
 
   this.placePassiveEntities = function() {
     var randomRoom;
+    do {
+      go = true;
+      randomij = this.SRooms[Random(0, this.SRooms.length - 1)]
+      randomRoom = this.Maze.Rooms[randomij[0]][randomij[1]]
+      for (var i = 0; i < randomRoom.Attributes.length; i++) {
+        if (i != 2) {
+          go = go && !randomRoom.Attributes[i]
+        }
+      }
+    } while (!go)
+    var entity = new PassiveEntity(new DarkPortal())
+    randomRoom.addPassiveEntity(entity);
+    this.Maze.addDarkPortalRoom(randomRoom);
+    this.Maze.addPassiveEntityRoom(randomRoom);
+    this.passiveEntityAmount--;
+
     for (var count = 0; count < this.passiveEntityAmount; count++) {
       do {
-		go = true;
+		    go = true;
         randomij = this.SRooms[Random(0, this.SRooms.length - 1)]
         randomRoom = this.Maze.Rooms[randomij[0]][randomij[1]]
         for (var i = 0; i < randomRoom.Attributes.length; i++) {
@@ -346,7 +362,6 @@ function MazeMaker (n) {
           }
         }
       } while (!go)
-      //console.log(includesArray(this.SRooms,[randomRoom.x, randomRoom.y]));
       var entity = getPassiveEntityFromRarifiedArray();
       randomRoom.addPassiveEntity(entity);
       this.Maze.addPassiveEntityRoom(randomRoom);
