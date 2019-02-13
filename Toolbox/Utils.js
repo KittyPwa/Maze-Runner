@@ -118,7 +118,8 @@ function mapToArray(map) {
 
 
 function namelessobjectToObject(o, type) {
-	//console.log(o)
+	/*console.log(o)
+	console.log(type)*/
 	var m = Object.assign(new (type), o);
     for(var k of Object.keys(o)) {
 		var split = k.split(',')
@@ -131,7 +132,6 @@ function namelessobjectToObject(o, type) {
 			} else if (split[1].startsWith('Array')){
 				var map = objectMapToObjectRec(o[oldk])
 				m[k] = mapToArray(map)
-				//m[k] = objectArrayToObject(array)
 			} else {
 				m[k] = namelessobjectToObject(o[oldk], typeMap.get(split[1]))
 			}
@@ -466,8 +466,6 @@ function blurElement(showShopGameScreen) {
 }
 
 function toggleOldLightRooms(oldLightRooms, newLightRooms, character) {
-	/*console.log(oldLightRooms[0])
-	console.log(newLightRooms[0])*/
 	toUpdate = [].concat(oldLightRooms);
 	for (var i = 0; i < newLightRooms.length; i++) {
 		remove(toUpdate, newLightRooms[i]);

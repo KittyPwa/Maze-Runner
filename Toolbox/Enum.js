@@ -90,12 +90,30 @@ var handEquipEnum = {
 	NONE: 3
 }
 
+var bodyPartEquipEnum = {
+	HEAD: 0,
+	TORSO: 1,
+	ARMS: 2,
+	HANDS: 3,
+	LEGS: 4,
+	FEET: 5
+}
+
 var damageTypeEnum = {
 	BLUNT: 1,
 	PIERCING: 2,
 	SLASHING: 3
 }
 
+var defenseTypeEnum = {
+	LEATHER: 1
+}
+
 var damageElementTypeEnum = {
 	BASIC: 1
+}
+
+var usabilityTypeEnum = {
+	MONSTER: 1,
+	HUMAN: 2
 }

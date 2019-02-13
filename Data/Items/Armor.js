@@ -1,16 +1,43 @@
-function Armor(id, name, defense){
+function Armor(entity = new leatherArmor()){
 	this.type = equipementEnum.ARMOR;
+	
+	this.name = entity.name
 
-	this.id = id;
+    this.entity = entity
 
-	this.name = name;
+    this.getDefense = function() {
+        return this.entity.defense
+    }
 
-	this.defense = defense;
-
-	this.effects = [];
-
-	this.addEffect = function(effect) {
-		this.effects.append(effect);
-	}
 }
 typeMap.set('Armor', Armor)
+
+function monsterHide() {
+	this.name = 'monster Hide'
+
+	this.bodyPart = bodyPartEquipEnum.TORSO
+
+    this.defense = 2;
+
+	this.usabilityType = usabilityTypeEnum.MONSTER;
+
+	this.defenseType = defenseTypeEnum.LEATHER
+
+    this.damageElementType = damageElementTypeEnum.BASIC
+}
+typeMap.set('monsterHide', monsterHide)
+
+function leatherArmor() {
+	this.name = 'Leather Armor'
+
+	this.bodyPart = bodyPartEquipEnum.TORSO
+
+	this.defense = 1;
+	
+	this.usabilityType = usabilityTypeEnum.HUMAN;
+
+	this.defenseType = defenseTypeEnum.LEATHER
+
+    this.damageElementType = damageElementTypeEnum.BASIC
+}
+typeMap.set('leatherArmor', leatherArmor)

@@ -124,18 +124,23 @@ function Character( color, maxSpeed, type = new Player()) {
 			var weapons = this.equipements.getAllEquipementType(equipementEnum.WEAPON)
             for (var i = 0; i < weapons.length; i++){
                 if (weapons[i].canStrike) {
-                    weapons[i].canStrike = false;
-                    addTextToConsole(this.type.name + ' : ' + weapons[i].name + ' strikes for : ' + weapons[i].getDamage() + ' damage to ' + foe.type.name);
-					foe.recieveDamage(weapons[i])
+					weapons[i].canStrike = false;
+					var damage = weapons[i].getDamage();
+					foe.recieveDamage(this, weapons[i],damage)
 					weapons[i].setAttackTimer()
                 }
             }
         }
 	}
 
-	this.recieveDamage = function(weapon) {
-		var damage = weapon.getDamage()
-		this.loseHealth(damage)
+	this.recieveDamage = function(attacker, weapon, damage) {
+		var armors = this.equipements.getAllEquipementType(equipementEnum.ARMOR)
+		var finalDamage = damage
+		for (var i = 0; i < armors.length; i++) {
+			finalDamage -= armors[i].getDefense()
+		}
+		addTextToConsole(attacker.type.name + ' : ' + weapon.name + ' strikes for : ' + finalDamage + ' damage to ' + this.type.name);
+		this.loseHealth(finalDamage)
 		if (this.health.currentValue <= 0) {
 			this.type.toBeRemoved = true;
         }
@@ -213,6 +218,8 @@ function Monster(movementType) {
 	this.equipements = new Equipements()
 	
 	this.equipements.addWeapon(handEquipEnum.DOUBLE, new Weapon(new Claws()))
+
+	this.equipements.addArmor(bodyPartEquipEnum.TORSO, new Armor(new monsterHide()))
 	
 	this.movementType = movementType;
 	
@@ -250,6 +257,8 @@ function Player() {
 	this.equipements = new Equipements()
 	
 	this.equipements.addWeapon(handEquipEnum.DOUBLE, new Weapon(new Fists()))
+
+	this.equipements.addArmor(bodyPartEquipEnum.TORSO, new Armor(new leatherArmor()))
 
 	this.healthAmount = Random(8,15);
 

@@ -42,5 +42,15 @@ function Equipements(entity) {
         return totalDamage
     }
 
+    //ARMOR
+    this.getTotalArmor = function() {
+        var armors = this.getAllEquipementType(equipementEnum.ARMOR)
+        var totalDefense = 0;
+        for (var i = 0; i < armors.length; i++) {
+            totalDefense += armors[i].getDefense()
+        }
+        return totalDefense;
+    }
+
 }
 typeMap.set('Equipements', Equipements)
