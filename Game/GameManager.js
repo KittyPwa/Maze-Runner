@@ -65,9 +65,9 @@ function createPlayer() {
     gameState.addGameTimer(new gameTimer(null, 50));
     player = new Player()
     var Char = new Character('blue', charSpeed, player);
-    Char.type.addItem(new Item(new Key()))
+    Char.type.inventory.addItem(new Item(new Key()))
     for (var i = 0; i < 2; i++) {
-        Char.type.addItem(new Item(new HealthPotion()))
+        Char.type.inventory.addItem(new Item(new HealthPotion()))
     }
     gameState.updateCharacter(Char);
 }
@@ -109,23 +109,23 @@ function resetLocalStorage() {
 
 function previousActiveItem() {
     var Char = gameState.getCharacter().type;
-    Char.activatePreviousItem()
+    Char.inventory.activatePreviousItem()
     updateActiveItem()
 }
 
 function nextActiveItem() {
     var Char = gameState.getCharacter().type;
-    Char.activateNextItem()
+    Char.inventory.activateNextItem()
     updateActiveItem()
 }
 
 function useItem(node) {
     $(node).tooltip('hide')
     $(node).tooltip('show')
-    var item = gameState.getCharacter().type.activeItem;
+    var item = gameState.getCharacter().type.inventory.activeItem;
     var maze = gameState.getMaze();
     var room = maze != null ? maze.getRoomFromChar(gameState.getCharacter().CanvasChar) : null
-    gameState.getCharacter().type.useItem(maze, room, item)
+    gameState.getCharacter().type.inventory.useItem(maze, room, item)
     updateActiveItem()
     if (maze == null) {
         saveGame()

@@ -118,8 +118,8 @@ function mapToArray(map) {
 
 
 function namelessobjectToObject(o, type) {
-	/*console.log(o)
-	console.log(type)*/
+	console.log(o)
+	console.log(type)
 	var m = Object.assign(new (type), o);
     for(var k of Object.keys(o)) {
 		var split = k.split(',')

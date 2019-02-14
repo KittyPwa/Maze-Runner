@@ -32,6 +32,10 @@ function leatherArmor() {
 
 	this.bodyPart = bodyPartEquipEnum.TORSO
 
+	this.rarity = rarityEnum.COMMON;
+
+    this.subRarity = subRarityEnum.COMMON;
+
 	this.defense = 1;
 	
 	this.usabilityType = usabilityTypeEnum.HUMAN;
@@ -41,3 +45,22 @@ function leatherArmor() {
     this.damageElementType = damageElementTypeEnum.BASIC
 }
 typeMap.set('leatherArmor', leatherArmor)
+
+function leatherPants() {
+	this.name = 'Leather Pants'
+
+	this.bodyPart = bodyPartEquipEnum.LEGS;
+
+	this.rarity = rarityEnum.COMMON;
+
+    this.subRarity = subRarityEnum.COMMON;
+
+	this.defense = 1;
+	
+	this.usabilityType = usabilityTypeEnum.HUMAN;
+
+	this.defenseType = defenseTypeEnum.LEATHER
+
+    this.damageElementType = damageElementTypeEnum.BASIC
+}
+typeMap.set('leatherPants', leatherPants)

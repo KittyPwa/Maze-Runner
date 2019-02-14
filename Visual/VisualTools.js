@@ -82,7 +82,7 @@ function updateMerchant() {
     var itemsMap = shop.getMapFromKey(itemTypeEnum.CONSUMABLE);
     Char = gameState.getCharacter()
     for (var [key,value] of itemsMap) {
-        playerQty = Char.type.items.has(key) ? Char.type.items.get(key).getAmount() : 0
+        playerQty = Char.type.inventory.items.has(key) ? Char.type.inventory.items.get(key).getAmount() : 0
         if (playerQty > 0 || value.quantity > 0) {
             elem = tableCloned.cloneNode(true);
             elem.id = ''
@@ -212,7 +212,7 @@ function updateActiveItem() {
     var parentNode = oldactivatebleItem.parentNode;
     parentNode.replaceChild(activatebleItem, oldactivatebleItem)
     var activeItemAmount = document.getElementById('activeItemAmount')
-    var activeItem = character.type.activeItem
+    var activeItem = character.type.inventory.activeItem
     if (activeItem != null) {
         toggleHidden([],['activeItem'])
         var itemImage = imageBase.getImg(activeItem.key)

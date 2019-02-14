@@ -185,6 +185,7 @@ function updateGameArea() {
     for (var [key,playerArray] of gameState.entities) {
         if (key != playerTypes.CHARACTER) {
             for (var i = 0; i < playerArray.length; i++) {                
+                conflict(playerArray[i], gameState.getCharacter())
 				if (playerArray[i].type.toBeRemoved) {
 					playerRoom = gameState.maze.getRoomFromChar(playerArray[i].CanvasChar)
 					gameState.removeEntity(playerArray[i],key)
