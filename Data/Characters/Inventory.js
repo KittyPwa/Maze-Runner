@@ -1,4 +1,4 @@
-function Inventory (){
+function Inventory (){	
     this.items = new Map();
 
 	this.activeItem = null;
@@ -13,8 +13,10 @@ function Inventory (){
 		if (this.activeItem == null && item.entity.itemType != itemTypeEnum.ITEM) {
 			this.activeItem = item;
 		}
-		updateInventory();
-		updateActiveItem();
+		if (gameState.getCharacter() != null) {
+			updateInventory();
+			updateActiveItem();
+		}
 	}
 
 	this.removeItem = function(item,quantity = 1) {
@@ -27,8 +29,10 @@ function Inventory (){
 				this.activateNextItem();
 			}
 		}
-		updateInventory();
-		updateActiveItem();
+		if (gameState.getCharacter() != null) {
+			updateInventory();
+			updateActiveItem();
+		}
 	}
 
 	this.activateNextItem = function() {

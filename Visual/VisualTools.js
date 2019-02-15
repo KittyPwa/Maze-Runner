@@ -91,6 +91,7 @@ function updateInventory() {
     var tableCloned = document.getElementById('inventoryTrToClone');
     var elem;
     var Char = gameState.getCharacter()
+	console.log(Char)
     var inventoryMap = Char.type.inventory.items;
     for (var [key,value] of inventoryMap) {
         elem = tableCloned.cloneNode(true);
@@ -240,16 +241,12 @@ function updateCharacterInfo() {
             }
         }
         var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
-        currentValue.innerHTML = attribut.currentValue
+		console.log(Math.floor(attribut.currentValue))
+        currentValue.innerHTML = Math.floor(attribut.currentValue)
         var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
         var goldAmount = document.getElementById('goldAmount')
         goldAmount.innerHTML = character.type.goldAmount
-        
-        var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
-        currentValue.innerHTML = attribut.currentValue
-        var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
-        maxValue.innerHTML = attribut.maxValue
     }
 }
 
