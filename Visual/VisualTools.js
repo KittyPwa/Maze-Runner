@@ -81,17 +81,51 @@ function loadImgs() {
     imageBase.putImg(new PassiveEntity(new DarkPortal()).key, base_image);
 }
 
+
+function updateInventory() {
+    var parentNode = document.getElementById('InventoryTable')
+    var trToDelete = parentNode.getElementsByClassName('inventoryTr');
+    for (var i = 0; i < trToDelete.length; i++) {
+        emptyChildNodes(trToDelete[i])
+    }
+    var tableCloned = document.getElementById('inventoryTrToClone');
+    var elem;
+    var Char = gameState.getCharacter()
+    var inventoryMap = Char.type.inventory.items;
+    for (var [key,value] of inventoryMap) {
+        elem = tableCloned.cloneNode(true);
+        elem.id = ''
+
+        var elemType = elem.getElementsByClassName('itemKey')[0];
+        var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+        elemType.appendChild(textNode)
+
+        var elemImageTd = elem.getElementsByClassName('itemImage')[0];
+        var itemImage = imageBase.getImg(key)
+        var itemImageSrc = itemImage.getAttribute('src')
+        elemImageTd.setAttribute('src', itemImageSrc);
+        elemImageTd.setAttribute('key', key);
+        updateImage(elemImageTd, value)
+
+        var itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
+        var textNode = document.createTextNode(Char.type.inventory.items.get(key).getAmount())
+        itemPlayerQuantity.appendChild(textNode)
+
+        parentNode.appendChild(elem);
+    }
+}
+
 function updateMerchant() {
     var shopHead = document.getElementsByClassName('shopHead')[0];
     var parentNode = shopHead.parentNode;
-    var trToDelete = parentNode.getElementsByClassName('itemTr');
+    var trToDelete = parentNode.getElementsByClassName('shopTr');
     for (var i = 0; i < trToDelete.length; i++) {
         emptyChildNodes(trToDelete[i])
     }
     var tableCloned = document.getElementById('shopTrToClone');
     var elem;
     var itemsMap = shop.getMapFromKey(itemTypeEnum.CONSUMABLE);
-    Char = gameState.getCharacter()
+    var Char = gameState.getCharacter()
     for (var [key,value] of itemsMap) {
         playerQty = Char.type.inventory.items.has(key) ? Char.type.inventory.items.get(key).getAmount() : 0
         if (playerQty > 0 || value.quantity > 0) {
@@ -99,29 +133,30 @@ function updateMerchant() {
             elem.id = ''
            
 
-            elemType = elem.getElementsByClassName('itemKey')[0];
-            textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+            var elemType = elem.getElementsByClassName('itemKey')[0];
+            var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
             elemType.appendChild(textNode)
 
-            elemImageTd = elem.getElementsByClassName('itemImage')[0];
+            var elemImageTd = elem.getElementsByClassName('itemImage')[0];
             var itemImage = imageBase.getImg(key)
             var itemImageSrc = itemImage.getAttribute('src')
             elemImageTd.setAttribute('src', itemImageSrc);
             elemImageTd.setAttribute('key', key);
             updateImage(elemImageTd, value.item)
            
-
-            elemQty = elem.getElementsByClassName('itemQuantity')[0];
+            console.log(elem)
+            var elemQty = elem.getElementsByClassName('itemQuantity')[0];
+            console.log(elem.getElementsByClassName('itemQuantity'))
             textNode = document.createTextNode(value.quantity)
             elemQty.appendChild(textNode)
 
-            elemBuyPrice = elem.getElementsByClassName('itemBuy')[0].getElementsByClassName('submitAction')[0];
+            var elemBuyPrice = elem.getElementsByClassName('itemBuy')[0].getElementsByClassName('submitAction')[0];
             elemBuyPrice.value = value.item.entity.buyPrice;
             
-            elemSellPrice = elem.getElementsByClassName('itemSell')[0].getElementsByClassName('submitAction')[0];
+            var elemSellPrice = elem.getElementsByClassName('itemSell')[0].getElementsByClassName('submitAction')[0];
             elemSellPrice.value = value.item.entity.sellPrice;
 
-            itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
+            var itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
             textNode = document.createTextNode(playerQty)
             itemPlayerQuantity.appendChild(textNode)
 
@@ -171,7 +206,7 @@ function toggleHidden(hideArrayStr, showArrayStr) {
     for (var i = 0; i < hideArray.length; i++) {
         hideArray[i].className = hideArray[i].className.split("toggleShow").join(' toggleHide ');
     }
-    
+
 	for (var i = 0; i < showArray.length; i++) {
         showArray[i].className = showArray[i].className.split("toggleHide").join(' toggleShow ');
     }

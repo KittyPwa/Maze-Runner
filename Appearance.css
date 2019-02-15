@@ -50,7 +50,7 @@ table, th, td {
 .tooltip > .tooltip-inner {
 	border: 1px solid;
 	padding: 10px;
-	max-width: 250px;
+	max-width: 200px;
 	color: black;
 	text-align: left;
 	background-color: white;
@@ -58,4 +58,10 @@ table, th, td {
 	 
 	opacity: 1.0;
 	filter: alpha(opacity=100);
-  } 
+} 
+
+.table-wrapper-scroll-y {
+	max-height: 500px;
+	overflow-y: auto;
+	
+}

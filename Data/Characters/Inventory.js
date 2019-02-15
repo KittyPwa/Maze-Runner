@@ -13,6 +13,8 @@ function Inventory (){
 		if (this.activeItem == null && item.entity.itemType != itemTypeEnum.ITEM) {
 			this.activeItem = item;
 		}
+		updateInventory();
+		updateActiveItem();
 	}
 
 	this.removeItem = function(item,quantity = 1) {
@@ -25,6 +27,8 @@ function Inventory (){
 				this.activateNextItem();
 			}
 		}
+		updateInventory();
+		updateActiveItem();
 	}
 
 	this.activateNextItem = function() {
@@ -57,6 +61,7 @@ function Inventory (){
 				this.activeItem = entry.value[1]
 			}
 		}
+		updateActiveItem();
 	}
 
 	this.activatePreviousItem = function() {
@@ -87,6 +92,7 @@ function Inventory (){
 				this.activeItem = previousEntry.value[1]
 			}
 		}
+		updateActiveItem();
 	}
 
 	this.useItem = function(room, maze, item = null) {

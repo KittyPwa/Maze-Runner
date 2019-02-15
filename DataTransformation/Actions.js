@@ -266,7 +266,7 @@ function moveChar(x,y,char, maze) {
 
 		CharRoom = maze.getRoomFromChar(char.CanvasChar);
 		if (CharRoom.hasItem()) {
-			char.type.pickUpItem(CharRoom)
+			char.type.inventory.pickUpItem(CharRoom)
 			updateCharacterInfo()
         }
         var seenRooms = char.roomsInSight;

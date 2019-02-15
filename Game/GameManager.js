@@ -57,6 +57,7 @@ function startVars(id) {
     saveGame();
     updateCharacterInfo()
     updateActiveItem()
+    updateInventory()
 }
 
 
@@ -93,7 +94,8 @@ function updatePlayerVisuals() {
     var startRoom = gameState.maze.getStartRoom();
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
-    updateActiveItem()
+    updateInventory();
+    updateActiveItem();
     Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
     gameState.updateCharacter(Char);
 }
@@ -166,3 +168,8 @@ function returnFromMaze() {
     toggleHiddenAndVillage();
 }
 
+function switchPlayerInfoTabUpdate(elem, tabName) {
+    switchPlayerInfoTab(elem, tabName)
+    updateCharacterInfo();
+    updateInventory();
+}

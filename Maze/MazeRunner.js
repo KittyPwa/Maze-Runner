@@ -109,9 +109,8 @@ function keyPress() {
 		if (!gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
 			gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = true;
 			charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
-			Char.type.useItem(charRoom, gameState.maze);
+			Char.type.inventory.useItem(charRoom, gameState.maze);
 			Char.CanvasChar.drawCharacter();
-			updateActiveItem()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVEITEM] = false;
@@ -127,7 +126,6 @@ function keyPress() {
             charRoom = gameState.maze.getRoomFromChar(Char.CanvasChar)
 			Char.type.useActivatableEntity(charRoom, gameState.maze,gameState.getAllMonsters());
 			Char.CanvasChar.drawCharacter();
-            updateActiveItem()
 			setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY]) {
                     gameState.timerBooleansArray[timerBooleans.USEACTIVATABLEENTITY] = false;
@@ -140,8 +138,7 @@ function keyPress() {
     if (keys[90]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
             gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = true;
-            Char.type.activateNextItem();
-            updateActiveItem()
+            Char.type.inventory.activateNextItem();
             setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLENEXTACTIVEITEM] = false;
@@ -154,8 +151,7 @@ function keyPress() {
     if (keys[82]) {
         if (!gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
             gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = true;
-            Char.type.activatePreviousItem();
-            updateActiveItem()
+            Char.type.inventory.activatePreviousItem();
             setTimeout(function() {
                 if (gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM]) {
                     gameState.timerBooleansArray[timerBooleans.CYCLEPREVIOUSACTIVEITEM] = false;
@@ -185,7 +181,7 @@ function updateGameArea() {
     for (var [key,playerArray] of gameState.entities) {
         if (key != playerTypes.CHARACTER) {
             for (var i = 0; i < playerArray.length; i++) {                
-                conflict(playerArray[i], gameState.getCharacter())
+                //conflict(playerArray[i], gameState.getCharacter())
 				if (playerArray[i].type.toBeRemoved) {
 					playerRoom = gameState.maze.getRoomFromChar(playerArray[i].CanvasChar)
 					gameState.removeEntity(playerArray[i],key)

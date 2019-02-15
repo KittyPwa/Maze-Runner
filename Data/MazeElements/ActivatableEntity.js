@@ -17,10 +17,10 @@ function ActivatableEntity(entity = new End()) {
         var result = false;
         if (this.activatableState == activatableState.ACTIVE) {
             if (this.entity.itemToActivate != null && !this.UsedItemToActivate) {
-                var item = char.items.has(this.entity.itemToActivate.key) ? char.items.get(this.entity.itemToActivate.key) : null;
+                var item = char.inventory.items.has(this.entity.itemToActivate.key) ? char.inventory.items.get(this.entity.itemToActivate.key) : null;
                 if (item != null) {
                     this.useItemToActivate();
-                    char.useItem(room, gameState.maze, item)
+                    char.inventory.useItem(room, gameState.maze, item)
                 } else {
                     addTextToConsole(this.entity.failUse);
                 }
@@ -95,9 +95,9 @@ function TreasureChest() {
 	
 	this.effect = function(monsters, char, room) {
         addTextToConsole(this.useText);
-        consumable = char.items.get(this.itemToActivate.key)
+        consumable = char.inventory.items.get(this.itemToActivate.key)
         for (var i = 0; i < this.treasure.items.length; i++) {
-			char.addItem(this.treasure.items[i]);
+			char.inventory.addItem(this.treasure.items[i]);
 		}
         char.addGold(this.treasure.goldAmount);
         return true;
@@ -124,7 +124,7 @@ function Door() {
     this.type = activatableEntityTypes.DOOR
 	
 	this.effect = function(monsters, char, room) {
-        consumable = char.items.get(this.itemToActivate.key)
+        consumable = char.inventory.items.get(this.itemToActivate.key)
         for (var i = 0; i < room.doors.length; i++) {
             if (room.doors[i] != null && !room.doors[i]) {
                 var otherRoom = getIJFromRoom(room.x, room.y, i, room.n - 1)
