@@ -22,6 +22,17 @@ function toggleHiddenAndVillage() {
     toggleHidden(['canvasId','showShopGameScreen', 'GameScreen'], ['Village','playerConsoleId'])
 }
 
+function switchPlayerInfoTab(elem, newTab) {
+    var parent = elem.parentNode;
+    var toHide = []
+    for (var child of parent.children) {
+        if (child.className.indexOf('toggleShow') !== -1) {
+            toHide.push(child.id)
+        }
+    }
+    toggleHidden(toHide,[newTab])
+}
+
 function loadImgs() {
     var base_image = new Image();
     //ITEMS
@@ -157,12 +168,14 @@ function toggleHidden(hideArrayStr, showArrayStr) {
         showArray.push(document.getElementById(showArrayStr[i]));
     }
 
+    for (var i = 0; i < hideArray.length; i++) {
+        hideArray[i].className = hideArray[i].className.split("toggleShow").join(' toggleHide ');
+    }
+    
 	for (var i = 0; i < showArray.length; i++) {
         showArray[i].className = showArray[i].className.split("toggleHide").join(' toggleShow ');
     }
-	for (var i = 0; i < hideArray.length; i++) {
-        hideArray[i].className = hideArray[i].className.split("toggleShow").join(' toggleHide ');
-    }
+	
     
 }
 

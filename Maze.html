@@ -64,7 +64,11 @@
 				<input id="game3" class="chooseGame" gameId='null' type="button" value="New Game" onclick="toggleHideAndStartGame(this)"/>
 			</div>
 			<div id="playerInfo" class="toggleHide col">
-					<h2>Player info</h2>					
+				<h2>Player info</h2>
+				<input class="generalStats" type="button" value="General" onclick="switchPlayerInfoTab(this, 'generalStats')"/>
+				<input class="Inventory" type="button" value="Inventory" onclick="switchPlayerInfoTab(this, 'Inventory')"/>
+				<div id="generalStats" class="toggleShow">
+					<h5>General</h5>
 					<span>Endurance</span>	
 					<div class="progress">
 							<div name="endurance" class="prgress-bar bg-info updatableInfo " role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
@@ -101,6 +105,10 @@
 						<input id="rightArrow" class="chooseGame" type="button" value="&#x25B6;" onclick="nextActiveItem()"/>
 					</div>
 				</div>
+				<div id="Inventory" class="toggleHide">
+					<h5>Inventory</h5>
+				</div>
+			</div>
 
 			<div id="Village" class="toggleHide col">
 				<input id="newGameId" type="button" value="Enter the Maze!" onclick="toggleHiddenAndStartMaze();" />
