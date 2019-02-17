@@ -260,7 +260,7 @@ function Player() {
 
 	this.equipements.addArmor(bodyPartEquipEnum.TORSO, new Armor(new leatherArmor()))
 	
-	//this.equipements.addArmor(bodyPartEquipEnum.LEGS, new Armor(new leatherPants()))
+	this.equipements.addArmor(bodyPartEquipEnum.LEGS, new Armor(new leatherPants()))
 
 	this.healthAmount = Random(8,15);
 

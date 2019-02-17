@@ -47,9 +47,9 @@ function Claws() {
 
     this.maxDamage = 10;
 
-    this.minDamage = 1;
+    /*this.minDamage = 1;
 
-    this.maxDamage = 1;
+    this.maxDamage = 1;*/
 
     //2 second
     this.attackSpeed = 2000;

@@ -37,16 +37,27 @@
 			</td>
 		</tr>
 		<tr id="inventoryTrToClone" class="inventoryTr">
-				<td class='itemKey hideElements'>
-	
-				</td>
-				<td>
-					<img class="itemImage" src="" style="width:50px; height:50px;" data-toggle="tooltip" data-placement="right" data-html="true" title="">
-				</td>
-				<td class="itemPlayerQuantity">
-	
-				</td>
-			</tr>
+			<td class='itemKey hideElements'>
+
+			</td>
+			<td>
+				<img class="itemImage" src="" style="width:50px; height:50px;" data-toggle="tooltip" data-placement="right" data-html="true" title="">
+			</td>
+			<td class="itemPlayerQuantity">
+
+			</td>
+		</tr>
+		<tr id="equipementTrToClone" class="equipementTr">
+			<td class='itemKey hideElements'>
+
+			</td>
+			<td class='itemType hideElements'>
+			</td>
+			<td>
+				<img class="itemImage" src="" style="width:50px; height:50px;" data-toggle="tooltip" data-placement="right" data-html="true" title="">
+			</td>
+		</tr>
+		
 	</table>
 	<div class="hideElements">
 		<div id="cardToClone" class="card">
@@ -116,10 +127,18 @@
 				</div>
 				<div>
 					<input class="Inventory" type="button" value="Inventory" onclick="switchPlayerInfoTabUpdate(this, 'Inventory')"/>
+					<input class="Equipement" type="button" value="Equipement" onclick="switchPlayerInfoTabUpdate(this, 'Equipement')"/>
 					<div id="Inventory" class="toggleShow">
 							<h5>Inventory</h5>
 							<div class="table-wrapper-scroll-y">
 									<table id="InventoryTable">
+									</table>
+							</div>
+					</div>
+					<div id="Equipement" class="toggleShow">
+							<h5>Equipement</h5>
+							<div class="table-wrapper-scroll-y">
+									<table id="EquipementTable">
 									</table>
 							</div>
 					</div>

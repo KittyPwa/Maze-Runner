@@ -81,6 +81,40 @@ function loadImgs() {
     imageBase.putImg(new PassiveEntity(new DarkPortal()).key, base_image);
 }
 
+function updateEquipement() {
+    var parentNode = document.getElementById('EquipementTable')
+    var trToDelete = parentNode.getElementsByClassName('inventoryTr');
+    for (var i = 0; i < trToDelete.length; i++) {
+        emptyChildNodes(trToDelete[i])
+    }
+    var tableCloned = document.getElementById('equipementTrToClone');
+    var elem;
+    var Char = gameState.getCharacter()
+	console.log(Char)
+    var equipemenMap = Char.equipements;
+	console.log(equipemenMap)
+    for (var [key,value] of equipemenMap) {
+        elem = tableCloned.cloneNode(true);
+        elem.id = ''
+
+        var elemType = elem.getElementsByClassName('itemKey')[0];
+        var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+        elemType.appendChild(textNode)
+
+        var elemImageTd = elem.getElementsByClassName('itemImage')[0];
+        var itemImage = imageBase.getImg(key)
+        var itemImageSrc = itemImage.getAttribute('src')
+        elemImageTd.setAttribute('src', itemImageSrc);
+        elemImageTd.setAttribute('key', key);
+        updateImage(elemImageTd, value)
+
+        var itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
+        var textNode = document.createTextNode(Char.type.inventory.items.get(key).getAmount())
+        itemPlayerQuantity.appendChild(textNode)
+
+        parentNode.appendChild(elem);
+    }
+}
 
 function updateInventory() {
     var parentNode = document.getElementById('InventoryTable')
@@ -91,7 +125,6 @@ function updateInventory() {
     var tableCloned = document.getElementById('inventoryTrToClone');
     var elem;
     var Char = gameState.getCharacter()
-	console.log(Char)
     var inventoryMap = Char.type.inventory.items;
     for (var [key,value] of inventoryMap) {
         elem = tableCloned.cloneNode(true);
@@ -241,7 +274,6 @@ function updateCharacterInfo() {
             }
         }
         var currentValue = updatableInfo[i].parentNode.getElementsByClassName('currentValue')[0]
-		console.log(Math.floor(attribut.currentValue))
         currentValue.innerHTML = Math.floor(attribut.currentValue)
         var maxValue = updatableInfo[i].parentNode.getElementsByClassName('maxValue')[0]
         maxValue.innerHTML = attribut.maxValue
