@@ -84,19 +84,19 @@ var equipementEnum = {
 }
 
 var handEquipEnum = {
-	LEFT: 0,
-	RIGHT: 1,
-	DOUBLE: 2,
-	NONE: 3
+	LEFT: 'Left',
+	RIGHT: 'Right',
+	DOUBLE: 'Dual wielding',
+	NONE: 'None'
 }
 
 var bodyPartEquipEnum = {
-	HEAD: 0,
-	TORSO: 1,
-	ARMS: 2,
-	HANDS: 3,
-	LEGS: 4,
-	FEET: 5
+	HEAD: 'Head',
+	TORSO: 'Chest',
+	ARMS: 'Arms',
+	HANDS: 'Hands',
+	LEGS: 'Legs',
+	FEET: 'Feet'
 }
 
 var damageTypeEnum = {

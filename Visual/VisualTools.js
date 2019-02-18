@@ -59,6 +59,17 @@ function loadImgs() {
     var base_image = new Image();
     base_image.src = 'Visual/img/vigorPotion.png';
     imageBase.putImg(new Item(new VigorPotion()).key, base_image);
+    //WEAPONS
+    var base_image = new Image();
+    base_image.src = 'Visual/img/fists.png';
+    imageBase.putImg(new Weapon(new Fists()).key, base_image);
+    //ARMORS
+    var base_image = new Image();
+    base_image.src = 'Visual/img/leatherArmor.png';
+    imageBase.putImg(new Armor(new leatherArmor()).key, base_image);
+    var base_image = new Image();
+    base_image.src = 'Visual/img/joker.png';
+    imageBase.putImg(new Armor(new leatherPants()).key, base_image);
     //ACTIVATABLE ENTITIES
     var base_image = new Image();
     base_image.src = 'Visual/img/Chest.png';
@@ -113,6 +124,48 @@ function updateEquipement() {
         itemPlayerQuantity.appendChild(textNode)
 
         parentNode.appendChild(elem);
+    }
+}
+
+function updateEquipement() {
+    var tableCloned = document.getElementById('equipementTrToClone');
+    var Char = gameState.getCharacter()
+    var weaponMap = Char.equipements.weapons;
+    var armorMap = Char.equipements.armors;
+    var elementMaps = new Map();
+    elementMaps.set('weapon',weaponMap);
+    elementMaps.set('armor', armorMap);
+    
+    for (var [key, value] of elementMaps) {
+        var tableHead = document.getElementsByClassName(key + 'Head')[0];
+        var parentNode = tableHead.parentNode
+        var trToDelete = parentNode.getElementsByClassName('equipementTr');
+        for (var i = 0; i < trToDelete.length; i++) {
+            emptyChildNodes(trToDelete[i])
+        }
+        var elem;
+        
+        for (var [mapkey,mapvalue] of value) {
+            elem = tableCloned.cloneNode(true);
+            elem.id = ''
+
+            var elemType = elem.getElementsByClassName('itemKey')[0];
+            var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+            elemType.appendChild(textNode)
+
+            var itemPlayerQuantity = elem.getElementsByClassName('itemType')[0];
+            var textNode = document.createTextNode(mapkey)
+            itemPlayerQuantity.appendChild(textNode)
+
+            var elemImageTd = elem.getElementsByClassName('itemImage')[0];
+            var itemImage = imageBase.getImg( mapvalue.key)
+            var itemImageSrc = itemImage.getAttribute('src')
+            elemImageTd.setAttribute('src', itemImageSrc);
+            elemImageTd.setAttribute('key', mapkey);
+            updateImage(elemImageTd, mapvalue)
+
+            parentNode.insertBefore(elem,tableHead.nextSibling);
+        }
     }
 }
 
@@ -178,9 +231,7 @@ function updateMerchant() {
             elemImageTd.setAttribute('key', key);
             updateImage(elemImageTd, value.item)
            
-            console.log(elem)
             var elemQty = elem.getElementsByClassName('itemQuantity')[0];
-            console.log(elem.getElementsByClassName('itemQuantity'))
             textNode = document.createTextNode(value.quantity)
             elemQty.appendChild(textNode)
 

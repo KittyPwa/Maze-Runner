@@ -121,23 +121,21 @@ function Character( color, maxSpeed, type = new Player()) {
 
 	this.strike = function(foe) {
         if (!foe.type.toBeRemoved) {
-			var weapons = this.equipements.getAllEquipementType(equipementEnum.WEAPON)
-            for (var i = 0; i < weapons.length; i++){
-                if (weapons[i].canStrike) {
-					weapons[i].canStrike = false;
-					var damage = weapons[i].getDamage();
-					foe.recieveDamage(this, weapons[i],damage)
-					weapons[i].setAttackTimer()
+            for (var [key, value] of this.equipements.weapons) {
+                if (value.canStrike) {
+					value.canStrike = false;
+					var damage = value.getDamage();
+					foe.recieveDamage(this, value,damage)
+					value.setAttackTimer()
                 }
             }
         }
 	}
 
 	this.recieveDamage = function(attacker, weapon, damage) {
-		var armors = this.equipements.getAllEquipementType(equipementEnum.ARMOR)
 		var finalDamage = damage
-		for (var i = 0; i < armors.length; i++) {
-			finalDamage = finalDamage - armors[i].getDefense() >= 0 ?  finalDamage - armors[i].getDefense() : 0;
+		for (var [key, value] of this.equipements.armors) {
+			finalDamage = finalDamage - value.getDefense() >= 0 ?  finalDamage - value.getDefense() : 0;
 		}
 		addTextToConsole(attacker.type.name + ' : ' + weapon.name + ' strikes for : ' + finalDamage + ' damage to ' + this.type.name);
 		this.loseHealth(finalDamage)

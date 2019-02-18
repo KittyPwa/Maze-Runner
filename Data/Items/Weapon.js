@@ -1,4 +1,6 @@
 function Weapon(entity = new Fists()) {
+    this.key = entity.name;
+
     this.type = equipementEnum.WEAPON;
 	
 	this.name = entity.name
@@ -23,6 +25,8 @@ typeMap.set('Weapon', Weapon)
 function Fists() {
     this.name = 'Fists'
 
+    this.description = 'Your own fists. Not the most effective of tools.'
+
     this.equipHands = handEquipEnum.DOUBLE;
 
     this.minDamage = 1;
@@ -39,7 +43,9 @@ function Fists() {
 typeMap.set('Fists', Fists)
 
 function Claws() {
-	this.name = 'Claws'
+    this.name = 'Claws'
+    
+    this.description = 'Vicious claws that will easily tear through flesh and bones.'
 	
 	this.equipHands = handEquipEnum.DOUBLE;
 

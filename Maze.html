@@ -51,7 +51,7 @@
 			<td class='itemKey hideElements'>
 
 			</td>
-			<td class='itemType hideElements'>
+			<td class='itemType'>
 			</td>
 			<td>
 				<img class="itemImage" src="" style="width:50px; height:50px;" data-toggle="tooltip" data-placement="right" data-html="true" title="">
@@ -91,7 +91,7 @@
 					<h5>General</h5>
 					<span>Endurance</span>	
 					<div class="progress">
-							<div name="endurance" class="prgress-bar bg-info updatableInfo " role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+							<div name="endurance" class="progress-bar bg-info updatableInfo " role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
 							</div>
 							<div class="col-4 mx-auto" style="position:absolute; left:50%">
 									<div style="position:relative;left:-50%">
@@ -103,7 +103,7 @@
 					</div>
 					<span>Health</span>	
 					<div class="progress">
-							<div name="health" class="prgress-bar bg-info updatableInfo " role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+							<div name="health" class="progress-bar bg-info updatableInfo " role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
 							</div>
 							<div class="col-4 mx-auto" style="position:absolute; left:50%">
 								<div style="position:relative;left:-50%">
@@ -135,10 +135,30 @@
 									</table>
 							</div>
 					</div>
-					<div id="Equipement" class="toggleShow">
+					<div id="Equipement" class="toggleHide">
 							<h5>Equipement</h5>
 							<div class="table-wrapper-scroll-y">
-									<table id="EquipementTable">
+									<h6>Weapons</h6>
+									<table id="weaponTable">
+										<tr class="weaponHead">
+												<th>
+													Type
+												</th>
+												<th>
+													Item
+												</th>
+										</tr>
+									</table>
+									<h6>Armor</h6>
+									<table id="armorTable">
+										<tr class="armorHead">
+												<th>
+													Type
+												</th>
+												<th>
+													Item
+												</th>
+										</tr>
 									</table>
 							</div>
 					</div>
@@ -298,7 +318,7 @@
 		<script src="Toolbox/Enum.js"></script>
 		<script src="Game/GameManager.js"></script>
 		<script src="Data/Items/Armor.js"></script>
-		<script src="Data/Items/Equipement.js"></script>
+		<script src="Data/Characters/Equipement.js"></script>
 		<script src="Data/Items/Weapon.js"></script>
 		<script src="Data/Characters/Attribut.js"></script>
 		<script src="Data/MazeElements/PassiveEntity.js"></script>

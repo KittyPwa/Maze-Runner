@@ -1,4 +1,6 @@
 function Armor(entity = new leatherArmor()){
+	this.key = entity.name;
+
 	this.type = equipementEnum.ARMOR;
 	
 	this.name = entity.name
@@ -15,6 +17,8 @@ typeMap.set('Armor', Armor)
 function monsterHide() {
 	this.name = 'monster Hide'
 
+	this.description = 'The monster\s hide is so thick, it could be considered to be an armor in itself'
+
 	this.bodyPart = bodyPartEquipEnum.TORSO
 
     this.defense = 2;
@@ -27,8 +31,10 @@ function monsterHide() {
 }
 typeMap.set('monsterHide', monsterHide)
 
-function leatherArmor() {
+function leatherArmor() {	
 	this.name = 'Leather Armor'
+
+	this.description = 'Armor made of leather, worn by every trainee adventurer'
 
 	this.bodyPart = bodyPartEquipEnum.TORSO
 
@@ -48,6 +54,8 @@ typeMap.set('leatherArmor', leatherArmor)
 
 function leatherPants() {
 	this.name = 'Leather Pants'
+
+	this.description = 'Pants made of leather, worn by every trainee adventurer'
 
 	this.bodyPart = bodyPartEquipEnum.LEGS;
 

@@ -172,4 +172,5 @@ function switchPlayerInfoTabUpdate(elem, tabName) {
     switchPlayerInfoTab(elem, tabName)
     updateCharacterInfo();
     updateInventory();
+    updateEquipement();
 }
