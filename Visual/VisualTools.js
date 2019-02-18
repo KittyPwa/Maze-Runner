@@ -101,9 +101,7 @@ function updateEquipement() {
     var tableCloned = document.getElementById('equipementTrToClone');
     var elem;
     var Char = gameState.getCharacter()
-	console.log(Char)
     var equipemenMap = Char.equipements;
-	console.log(equipemenMap)
     for (var [key,value] of equipemenMap) {
         elem = tableCloned.cloneNode(true);
         elem.id = ''
@@ -274,6 +272,16 @@ function updateImage(node, value) {
     tempNode.appendChild(cardElem)
     node.setAttribute('title', tempNode.innerHTML)
     node.removeAttribute('data-original-title')
+    node.addEventListener("contextmenu", function(e) {
+        $(this).tooltip('hide')
+        e.preventDefault();
+        const origin = {
+          left: e.pageX,
+          top: e.pageY
+        };
+        setPosition(origin);
+        return false;
+      });
     activateTooltip()
 }
 
@@ -366,3 +374,24 @@ function emptyNode(myNode) {
         myNode.removeChild(myNode.firstChild);
     }
 }
+
+//contextMenu 
+var menu = document.querySelector(".menu");
+let menuVisible = false;
+
+const toggleMenu = command => {
+  menu.style.display = command === "show" ? "block" : "none";
+  menuVisible = command === "show";
+};
+
+const setPosition = ({ top, left }) => {
+  var left  = `${left}`
+  menu.style.left = left + 'px';
+  menu.style.top = `${top}px`;
+  
+  toggleMenu("show");
+};
+
+window.addEventListener("click", e => {
+  if(menuVisible)toggleMenu("hide");
+});

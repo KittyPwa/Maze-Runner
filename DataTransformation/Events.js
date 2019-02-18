@@ -5,3 +5,8 @@ window.addEventListener("keydown", function (e) {
 window.addEventListener("keyup", function (e) {
     keys[e.keyCode] = false;
 });
+
+document.addEventListener('contextmenu', function(ev) {
+    ev.preventDefault();
+    return false;
+}, false);
