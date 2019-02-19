@@ -4,7 +4,7 @@ function sellThis(element) {
 	var itemName = grandParent.getElementsByClassName('itemImage')[0].getAttribute('key');
 	var itemSell = grandParent.getElementsByClassName('itemSell')[0];
 	var quantity = itemSell.getElementsByClassName('inputAmount')[0].value;
-	sellItem(itemName, itemKey,quantity, Char);
+	sellItem(itemName, itemKey,quantity, gameState.getCharacter());
 }
 
 function buyThis(element) {
@@ -13,5 +13,5 @@ function buyThis(element) {
 	var itemName = grandParent.getElementsByClassName('itemImage')[0].getAttribute('key');
 	var itemBuy = grandParent.getElementsByClassName('itemBuy')[0];
 	var quantity = itemBuy.getElementsByClassName('inputAmount')[0].value;
-	buyItem(itemName, itemKey,quantity, Char);
+	buyItem(itemName, itemKey,quantity, gameState.getCharacter());
 }

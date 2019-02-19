@@ -93,39 +93,6 @@ function loadImgs() {
 }
 
 function updateEquipement() {
-    var parentNode = document.getElementById('EquipementTable')
-    var trToDelete = parentNode.getElementsByClassName('inventoryTr');
-    for (var i = 0; i < trToDelete.length; i++) {
-        emptyChildNodes(trToDelete[i])
-    }
-    var tableCloned = document.getElementById('equipementTrToClone');
-    var elem;
-    var Char = gameState.getCharacter()
-    var equipemenMap = Char.equipements;
-    for (var [key,value] of equipemenMap) {
-        elem = tableCloned.cloneNode(true);
-        elem.id = ''
-
-        var elemType = elem.getElementsByClassName('itemKey')[0];
-        var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
-        elemType.appendChild(textNode)
-
-        var elemImageTd = elem.getElementsByClassName('itemImage')[0];
-        var itemImage = imageBase.getImg(key)
-        var itemImageSrc = itemImage.getAttribute('src')
-        elemImageTd.setAttribute('src', itemImageSrc);
-        elemImageTd.setAttribute('key', key);
-        updateImage(elemImageTd, value)
-
-        var itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
-        var textNode = document.createTextNode(Char.type.inventory.items.get(key).getAmount())
-        itemPlayerQuantity.appendChild(textNode)
-
-        parentNode.appendChild(elem);
-    }
-}
-
-function updateEquipement() {
     var tableCloned = document.getElementById('equipementTrToClone');
     var Char = gameState.getCharacter()
     var weaponMap = Char.equipements.weapons;
@@ -148,7 +115,7 @@ function updateEquipement() {
             elem.id = ''
 
             var elemType = elem.getElementsByClassName('itemKey')[0];
-            var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+            var textNode = document.createTextNode(mapvalue.itemType)
             elemType.appendChild(textNode)
 
             var itemPlayerQuantity = elem.getElementsByClassName('itemType')[0];
@@ -160,6 +127,7 @@ function updateEquipement() {
             var itemImageSrc = itemImage.getAttribute('src')
             elemImageTd.setAttribute('src', itemImageSrc);
             elemImageTd.setAttribute('key', mapkey);
+            elemImageTd.setAttribute('id', mapvalue.id);
             updateImage(elemImageTd, mapvalue)
 
             parentNode.insertBefore(elem,tableHead.nextSibling);
@@ -182,7 +150,7 @@ function updateInventory() {
         elem.id = ''
 
         var elemType = elem.getElementsByClassName('itemKey')[0];
-        var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+        var textNode = document.createTextNode(value.itemType)
         elemType.appendChild(textNode)
 
         var elemImageTd = elem.getElementsByClassName('itemImage')[0];
@@ -190,6 +158,7 @@ function updateInventory() {
         var itemImageSrc = itemImage.getAttribute('src')
         elemImageTd.setAttribute('src', itemImageSrc);
         elemImageTd.setAttribute('key', key);
+        elemImageTd.setAttribute('id', value.id);
         updateImage(elemImageTd, value)
 
         var itemPlayerQuantity = elem.getElementsByClassName('itemPlayerQuantity')[0];
@@ -216,10 +185,9 @@ function updateMerchant() {
         if (playerQty > 0 || value.quantity > 0) {
             elem = tableCloned.cloneNode(true);
             elem.id = ''
-           
 
             var elemType = elem.getElementsByClassName('itemKey')[0];
-            var textNode = document.createTextNode(itemTypeEnum.CONSUMABLE)
+            var textNode = document.createTextNode(value.item.type)
             elemType.appendChild(textNode)
 
             var elemImageTd = elem.getElementsByClassName('itemImage')[0];
@@ -227,6 +195,7 @@ function updateMerchant() {
             var itemImageSrc = itemImage.getAttribute('src')
             elemImageTd.setAttribute('src', itemImageSrc);
             elemImageTd.setAttribute('key', key);
+            elemImageTd.setAttribute('id', value.id);
             updateImage(elemImageTd, value.item)
            
             var elemQty = elem.getElementsByClassName('itemQuantity')[0];
@@ -273,6 +242,71 @@ function updateImage(node, value) {
     node.setAttribute('title', tempNode.innerHTML)
     node.removeAttribute('data-original-title')
     node.addEventListener("contextmenu", function(e) {
+        var menu = document.querySelector(".menu");
+        var options = menu.getElementsByClassName('context-option');
+        toggleHiddenNodes(options, [])
+        var parentNode = this.parentNode
+        //go back up to a trElement element
+        while (parentNode.className.indexOf('trElement') === -1) {
+            parentNode = parentNode.parentNode
+        }
+        var itemKey = parseInt(parentNode.getElementsByClassName('itemKey')[0].textContent.trim());
+        var itemName = this.getAttribute('key');
+        itemName = itemName.trim()
+        var itemId = this.getAttribute('id').trim()
+        var item = gameState.getItem(itemId);
+        
+        var useNode = menu.getElementsByClassName('contextUse')[0]
+        var equipNode = menu.getElementsByClassName('contextEquip')[0]
+        var unequipNode = menu.getElementsByClassName('contextUnequip')[0]
+        var noAction = menu.getElementsByClassName('noAction')[0]
+        var showNodes = []
+        var character = gameState.getCharacter()
+
+
+        switch (itemKey) {
+            case(itemTypeEnum.CONSUMABLE) : 
+                if (character.type.inventory.items.has(itemName)) {
+                    useNode.setAttribute('onclick', 'contextUseItem(\''+ itemId.toString() + '\')')
+                    showNodes.push(useNode)
+                } else {
+                    showNodes.push(noAction)
+                } 
+                break;
+            case(itemTypeEnum.ITEM) : 
+                showNodes.push(noAction)
+                break;
+            case(itemTypeEnum.WEAPON) : 
+                if (character.equipements.weaponIsEquipped(item)) {
+                    unequipNode.setAttribute('onclick', 'contextUnequipWeapon(\''+ itemId.toString() + '\')')
+                    showNodes.push(unequipNode)
+                } else {
+                    if (character.type.inventory.items.has(itemName)) {
+                        unequipNode.setAttribute('onclick', 'contextEquipWeapon(\''+ itemId.toString() + '\')')
+                        showNodes.push(equipNode)
+                    } else {
+                        showNodes.push(noAction)
+                    }
+                }
+                break;
+            case(itemTypeEnum.ARMOR) : 
+                if (character.equipements.armorIsEquipped(item)) {
+                    unequipNode.setAttribute('onclick', 'contextUnequipArmor(\''+ itemId.toString() + '\')')
+                    showNodes.push(unequipNode)
+                } else {
+                    if (character.type.inventory.items.has(itemName)) {
+                        unequipNode.setAttribute('onclick', 'contextEquipArmor(\''+ itemId.toString() + '\')')
+                        showNodes.push(equipNode)
+                    } else {
+                        showNodes.push(noAction)
+                    }
+                }
+                break;
+            default :
+                break;
+        }
+
+        toggleHiddenNodes([], showNodes)
         $(this).tooltip('hide')
         e.preventDefault();
         const origin = {
@@ -294,8 +328,12 @@ function toggleHidden(hideArrayStr, showArrayStr) {
     var showArray = [];
     for (var i = 0; i < showArrayStr.length; i++) {
         showArray.push(document.getElementById(showArrayStr[i]));
-    }
+    }	
+    
+    toggleHiddenNodes(hideArray, showArray)
+}
 
+function toggleHiddenNodes(hideArray, showArray) {
     for (var i = 0; i < hideArray.length; i++) {
         hideArray[i].className = hideArray[i].className.split("toggleShow").join(' toggleHide ');
     }
@@ -303,8 +341,6 @@ function toggleHidden(hideArrayStr, showArrayStr) {
 	for (var i = 0; i < showArray.length; i++) {
         showArray[i].className = showArray[i].className.split("toggleHide").join(' toggleShow ');
     }
-	
-    
 }
 
 function setCharacterInfo() {
@@ -376,15 +412,17 @@ function emptyNode(myNode) {
 }
 
 //contextMenu 
-var menu = document.querySelector(".menu");
+
 let menuVisible = false;
 
 const toggleMenu = command => {
+var menu = document.querySelector(".menu");
   menu.style.display = command === "show" ? "block" : "none";
   menuVisible = command === "show";
 };
 
 const setPosition = ({ top, left }) => {
+  var menu = document.querySelector(".menu");
   var left  = `${left}`
   menu.style.left = left + 'px';
   menu.style.top = `${top}px`;

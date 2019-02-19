@@ -35,6 +35,10 @@ function Inventory (){
 		}
 	}
 
+	this.hasItem = function(item) {
+		return this.items.has(item.key)
+	}
+
 	this.activateNextItem = function() {
 		if (this.activeItem != null) {
 			var entries = this.items.entries();

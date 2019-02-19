@@ -1,10 +1,11 @@
 function Item(item = new Key()){
+    this.id = uuidv4();
 
     this.key = item.name;
 
     this.type = item.type;
 	
-	this.typeName = itemTypeEnum.CONSUMABLE
+	this.itemType = item.itemType
 
     this.uses = item.uses;
 

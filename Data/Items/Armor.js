@@ -1,7 +1,9 @@
 function Armor(entity = new leatherArmor()){
+	this.id = uuidv4();
+	
 	this.key = entity.name;
 
-	this.type = equipementEnum.ARMOR;
+	this.itemType = itemTypeEnum.ARMOR;
 	
 	this.name = entity.name
 

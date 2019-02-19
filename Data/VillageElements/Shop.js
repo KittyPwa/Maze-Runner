@@ -15,6 +15,7 @@ function Shop() {
 			for (var i = 0; i < array.length; i++) {
 				var amount = array[i].entity.rarity >= this.investementLevel[0] && array[i].entity.subRarity >= this.investementLevel[1] ? Random(0,5) : 0
 				key = array[i].key;
+				gameState.addItem(array[i])
 				elementsMap.addNewKeyElementToMap(consumableMapstock, key, new Stock(array[i],amount));
 			}
 			this.stock.set(type, elementsMap);
@@ -39,12 +40,12 @@ function sellItem(item, itemKey,quantity, character) {
 	item = item.trim()
 	var stock = returnElementFromMap(map,item);
 	quantity = parseInt(quantity)
-	if (character.type.items.has(item) && quantity > 0) {
-		if (stock.item.entity.sellPrice * quantity <= gameState.shop.merchantGold && character.type.items.get(item.toString()).totalUses >= quantity) {
+	if (character.type.inventory.items.has(item) && quantity > 0) {
+		if (stock.item.entity.sellPrice * quantity <= gameState.shop.merchantGold && character.type.inventory.items.get(item.toString()).totalUses >= quantity) {
 			gameState.shop.merchantGold -= stock.item.entity.sellPrice * quantity;
 			stock.quantity += quantity;
 			addTextToConsole('You sell : ' + stock.item.entity.name + ' x' + quantity + ' to the merchant');
-			character.type.removeItem(stock.item, quantity)
+			character.type.inventory.removeItem(stock.item, quantity)
 			character.type.goldAmount += stock.item.entity.sellPrice * quantity;
 			updateMerchant()
 		} else {
@@ -64,7 +65,7 @@ function buyItem(item, itemKey,quantity, character) {
 	if (stock.item.entity.buyPrice * quantity <= character.type.goldAmount && stock.quantity >= quantity && quantity > 0) {
 		addTextToConsole('You buy : ' + stock.item.entity.name + ' x' + quantity + ' from the merchant');
 		character.type.goldAmount -= stock.item.entity.buyPrice * quantity;
-		character.type.addItem(stock.item, quantity)
+		character.type.inventory.addItem(stock.item, quantity)
 		stock.quantity -= quantity;
 		gameState.shop.merchantGold += stock.item.entity.buyPrice * quantity;
 		updateMerchant()

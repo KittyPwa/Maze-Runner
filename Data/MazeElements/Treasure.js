@@ -22,6 +22,7 @@ function Treasure() {
         for (var i = 0; i < itemsAmount; i++) {
             itemIndex = Random(0, itemArray.length - 1);
             item = new Item(itemArray[itemIndex].entity.createNew())
+            gameState.addItem(item)
             this.items.push(item) 
         }
         this.goldAmount = goldAmount;

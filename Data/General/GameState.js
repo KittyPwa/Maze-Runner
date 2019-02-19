@@ -19,6 +19,20 @@ function GameState() {
 		this.state = gameStateEnum.VICTORY;
 	}
 
+	this.items = new Map();
+
+	this.addItem = function(item) {
+		this.items.set(item.id, item)
+	}
+
+	this.removeItem = function(item) {
+		this.items.delete(item.id)
+	}
+
+	this.getItem = function(id) {
+		return this.items.get(id)
+	}
+
 	this.maze = null;
 
 	this.updateMaze = function(maze) {

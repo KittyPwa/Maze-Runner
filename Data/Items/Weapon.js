@@ -1,7 +1,9 @@
 function Weapon(entity = new Fists()) {
+    this.id = uuidv4();
+
     this.key = entity.name;
 
-    this.type = equipementEnum.WEAPON;
+    this.itemType = itemTypeEnum.WEAPON;
 	
 	this.name = entity.name
 

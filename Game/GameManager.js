@@ -58,6 +58,7 @@ function startVars(id) {
     updateCharacterInfo()
     updateActiveItem()
     updateInventory()
+    updateEquipement();
 }
 
 
@@ -66,10 +67,15 @@ function createPlayer() {
     gameState.addGameTimer(new gameTimer(null, 50));
     player = new Player()
     var Char = new Character('blue', charSpeed, player);
-    Char.type.inventory.addItem(new Item(new Key()))
+    var key = new Item(new Key());
+    gameState.addItem(key)
+    Char.type.inventory.addItem(key)
     for (var i = 0; i < 2; i++) {
-        Char.type.inventory.addItem(new Item(new HealthPotion()))
+        var healthPotion = new Item(new HealthPotion())
+        gameState.addItem(healthPotion)
+        Char.type.inventory.addItem(healthPotion)
     }
+    Char.type.setStartingEquipement()
     gameState.updateCharacter(Char);
 }
 
@@ -95,6 +101,7 @@ function updatePlayerVisuals() {
     Char.updateCanvasChar(startRoom.x,startRoom.y)
     updateCharacterInfo();
     updateInventory();
+    updateEquipement();
     updateActiveItem();
     Char.CanvasChar.teleport(Char.CanvasChar.posX, Char.CanvasChar.posY);
     gameState.updateCharacter(Char);
@@ -119,6 +126,48 @@ function nextActiveItem() {
     var Char = gameState.getCharacter().type;
     Char.inventory.activateNextItem()
     updateActiveItem()
+}
+
+function contextUnequipWeapon(id) {
+    var weapon = gameState.getItem(id)
+    var Char = gameState.getCharacter().type;
+    Char.equipements.unequipWeapon(weapon.entity.equipHands, weapon)
+    updateEquipement();
+}
+
+function contextEquipWeapon(id) {
+    var weapon = gameState.getItem(id)
+    var Char = gameState.getCharacter().type;
+    Char.equipements.equipWeapon(weapon.entity.equipHands, weapon)
+    updateEquipement();
+}
+
+function contextUnequipArmor(id) {
+    var armor = gameState.getItem(id)
+    var Char = gameState.getCharacter().type;
+    console.log('unequip')
+    console.log(Char.equipements)
+    Char.equipements.unequipArmor(armor.entity.bodyPart, armor)
+    updateEquipement();
+}
+
+function contextEquipArmor(id) {
+    var armor = gameState.getItem(id)
+    var Char = gameState.getCharacter().type;
+    Char.equipements.equipArmor(armor.entity.bodyPart, armor)
+    updateEquipement();
+}
+
+function contextUseItem(id) {
+    var item = gameState.getItem(id)
+    var maze = gameState.getMaze();
+    var room = maze != null ? maze.getRoomFromChar(gameState.getCharacter().CanvasChar) : null
+    gameState.getCharacter().type.inventory.useItem(maze, room, item)
+    updateActiveItem()
+    updateInventory();
+    if (maze == null) {
+        saveGame()
+    }
 }
 
 function useItem(node) {

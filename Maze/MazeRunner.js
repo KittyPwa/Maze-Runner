@@ -44,6 +44,7 @@ function initializeGame() {
             }
             player = new Monster(type)
             monster = new Character('red', monsterSpeed, player);
+            monster.setStartingEquipement()
             var darkPortalRoom = gameState.maze.getDarkPortalRoom()
             gameState.addMonster(monster);
             monster.updateCanvasChar(darkPortalRoom.x,darkPortalRoom.y)

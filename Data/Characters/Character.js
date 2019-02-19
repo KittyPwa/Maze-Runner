@@ -1,7 +1,7 @@
 function Character( color, maxSpeed, type = new Player()) {
 	this.type = type;
 
-	this.id = this.id = uuidv4();
+	this.id = uuidv4();
 
 	this.roomsInSight = []
 
@@ -215,10 +215,18 @@ function Monster(movementType) {
 	
 	this.equipements = new Equipements()
 	
-	this.equipements.addWeapon(handEquipEnum.DOUBLE, new Weapon(new Claws()))
+	this.setStartingEquipement = function() {
+		var weapon = new Weapon(new Claws())
+		gameState.addItem(weapon)
+		this.equipements.addWeapon(handEquipEnum.DOUBLE, weapon)
 
-	this.equipements.addArmor(bodyPartEquipEnum.TORSO, new Armor(new monsterHide()))
+		var armor = new Armor(new monsterHide())
+		gameState.addItem(armor)
+		this.equipements.addArmor(bodyPartEquipEnum.TORSO, armor)
+	}
 	
+	this.inventory = new Inventory();
+
 	this.movementType = movementType;
 	
 	this.healthAmount = Random(15,30);
@@ -253,12 +261,20 @@ function Player() {
 	this.name = 'You '
 	
 	this.equipements = new Equipements()
-	
-	this.equipements.addWeapon(handEquipEnum.DOUBLE, new Weapon(new Fists()))
 
-	this.equipements.addArmor(bodyPartEquipEnum.TORSO, new Armor(new leatherArmor()))
-	
-	this.equipements.addArmor(bodyPartEquipEnum.LEGS, new Armor(new leatherPants()))
+	this.setStartingEquipement = function() {
+		var weapon = new Weapon(new Fists())
+		gameState.addItem(weapon)
+		this.equipements.addWeapon(handEquipEnum.DOUBLE, weapon)
+
+		var torsoArmor = new Armor(new leatherArmor())
+		gameState.addItem(torsoArmor)
+		this.equipements.addArmor(bodyPartEquipEnum.TORSO, torsoArmor)
+		
+		var pantsArmor = new Armor(new leatherPants())
+		gameState.addItem(pantsArmor)
+		this.equipements.addArmor(bodyPartEquipEnum.LEGS, pantsArmor)
+	}
 
 	this.healthAmount = Random(8,15);
 

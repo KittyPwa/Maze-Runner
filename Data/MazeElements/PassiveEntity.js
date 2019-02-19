@@ -56,6 +56,7 @@ function DarkPortal() {
                         var type = monsterMovementType.ROAMER;
                         var player = new Monster(type)
                         var monster = new Character('red', monsterSpeed, player);
+                        monster.setStartingEquipement()
                         gameState.addMonster(monster);
                         monster.updateCanvasChar(room.x,room.y)
                         monster.CanvasChar.teleport(monster.CanvasChar.posX, monster.CanvasChar.posY);

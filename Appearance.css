@@ -74,17 +74,21 @@ table, th, td {
 	position: absolute;
 	display: none;}
   
-.menu-options {
+.context-options {
 	list-style: none;
 	padding: 10px 0;
 }
   
-.menu-option {
+.context-option {
 	font-weight: 500;
 	font-size: 14px;
 	padding: 10px 40px 10px 20px;
 	cursor: pointer;
 } 
+
+.context-option:hover {
+	background-color: rgba(116, 148, 235, 0.911)
+}
 		
 	  
 	

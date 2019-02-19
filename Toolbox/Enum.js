@@ -70,17 +70,14 @@ var hostilityEnum = {
 
 var itemTypeEnum = {
 	CONSUMABLE: 1,
-	ITEM: 2
+	ITEM: 2,
+	WEAPON: 3,
+	ARMOR: 4
 }
 
 var durationType = {
 	PERMANENT: 1,
 	TEMPORARY: 2
-}
-
-var equipementEnum = {
-	WEAPON: 1,
-	ARMOR: 2
 }
 
 var handEquipEnum = {

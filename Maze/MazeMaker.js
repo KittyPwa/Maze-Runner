@@ -289,6 +289,7 @@ function MazeMaker (n) {
       } while (!go)
       //console.log(includesArray(this.SRooms,[randomRoom.x, randomRoom.y]));
       item = getItemOrConsumableFromRarifiedArray()
+      gameState.addItem(item)
       randomRoom.placeItem(item);
     }
   }

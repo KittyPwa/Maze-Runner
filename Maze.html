@@ -12,20 +12,19 @@
 
 	<link rel="stylesheet" type="text/css" href="Appearance.css">
 	</head>
-	<div class="toggleHides">
+	<div>
 		<div class="menu">
-			<ul class="menu-options">
-				<li onclick="alert('hi')"class="menu-option">Back</li>
-				<li class="menu-option">Reload</li>
-				<li class="menu-option">Save</li>
-				<li class="menu-option">Save As</li>
-				<li class="menu-option">Inspect</li>
+			<ul class="context-options">
+				<li class="context-option toggleHide contextUse">Use</li>
+				<li class="context-option toggleHide contextEquip">Equip</li>
+				<li class="context-option toggleHide contextUnequip">Unequip</li>
+				<li class="context-option toggleHide noAction">No action</li>
 			</ul>
 		</div>
 	</div>
 
 	<table class="hideElements">
-		<tr id="shopTrToClone" class="shopTr">
+		<tr id="shopTrToClone" class="shopTr trElement">
 			<td class='itemKey hideElements'>
 
 			</td>
@@ -47,7 +46,7 @@
 
 			</td>
 		</tr>
-		<tr id="inventoryTrToClone" class="inventoryTr">
+		<tr id="inventoryTrToClone" class="inventoryTr trElement">
 			<td class='itemKey hideElements'>
 
 			</td>
@@ -58,7 +57,7 @@
 
 			</td>
 		</tr>
-		<tr id="equipementTrToClone" class="equipementTr">
+		<tr id="equipementTrToClone" class="equipementTr trElement">
 			<td class='itemKey hideElements'>
 
 			</td>
